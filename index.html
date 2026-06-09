@@ -238,6 +238,53 @@ section{padding:5.5rem 2rem}
 .brand-type{font-size:0.65rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--gray);margin-top:0.2rem;transition:color 0.25s;line-height:1.6}
 .brand-tile:hover .brand-type{color:rgba(255,255,255,0.75)}
 
+/* ── REVIEWS ── */
+.reviews{background:var(--white);padding:5.5rem 2rem}
+.reviews-rating-bar{
+  display:flex;align-items:center;justify-content:center;
+  gap:2rem;margin-top:1.5rem;flex-wrap:wrap;
+}
+.reviews-big-rating{display:flex;align-items:center;gap:1rem}
+.reviews-num{
+  font-family:'Montserrat',sans-serif;font-size:3.5rem;
+  font-weight:900;color:var(--black);line-height:1;
+}
+.reviews-stars{color:#FBBC05;font-size:1.4rem;letter-spacing:2px}
+.reviews-count{font-size:0.75rem;font-weight:600;color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;margin-top:0.2rem}
+.reviews-cta{
+  display:inline-block;
+  background:transparent;border:2px solid var(--red);
+  color:var(--red);padding:0.7rem 1.5rem;
+  font-family:'Montserrat',sans-serif;font-size:0.75rem;
+  font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  text-decoration:none;transition:all 0.25s;
+}
+.reviews-cta:hover{background:var(--red);color:var(--white)}
+.reviews-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1.5rem;max-width:1100px;margin:2.5rem auto 0;
+}
+.review-card{
+  background:var(--white);border:1px solid var(--border);
+  padding:1.8rem;transition:all 0.25s;
+}
+.review-card:hover{border-color:var(--red);box-shadow:0 8px 30px rgba(0,0,0,0.08);transform:translateY(-3px)}
+.review-card-featured{border-color:rgba(227,6,19,0.2);background:rgba(227,6,19,0.02)}
+.review-header{display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem}
+.review-avatar{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Montserrat',sans-serif;font-size:1rem;
+  font-weight:700;color:var(--white);flex-shrink:0;
+}
+.review-name{font-size:0.85rem;font-weight:700;color:var(--black)}
+.review-meta{font-size:0.7rem;color:var(--gray);margin-top:0.1rem}
+.review-google-icon{margin-left:auto;flex-shrink:0}
+.review-stars{color:#FBBC05;font-size:1rem;letter-spacing:1px;margin-bottom:0.2rem}
+.review-time{font-size:0.7rem;color:var(--gray);margin-bottom:0.8rem}
+.review-text{font-size:0.85rem;color:#444;line-height:1.75;font-weight:300}
+
 /* ── CERTIFICATES ── */
 .certs{background:var(--off);padding:5.5rem 2rem}
 .certs-grid{
@@ -482,6 +529,7 @@ footer{background:var(--black2);padding:2.5rem 3rem;display:flex;align-items:cen
     <li><a href="#brands">Brands</a></li>
     <li><a href="#cooling">AC & Freezers</a></li>
     <li><a href="#why">Why Us</a></li>
+    <li><a href="#reviews">Reviews</a></li>
     <li><a href="#certs">Certificates</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -757,6 +805,112 @@ footer{background:var(--black2);padding:2.5rem 3rem;display:flex;align-items:cen
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews reveal" id="reviews">
+  <div class="sec-header">
+    <span class="sec-kicker">What Our Customers Say</span>
+    <h2 class="sec-title">Real <span class="red">Reviews</span> from Real People</h2>
+    <div class="reviews-rating-bar">
+      <div class="reviews-big-rating">
+        <span class="reviews-num">4.9</span>
+        <div>
+          <div class="reviews-stars">★★★★★</div>
+          <div class="reviews-count">56 Google Reviews</div>
+        </div>
+      </div>
+      <a href="https://g.co/kgs/electricemporium" target="_blank" class="reviews-cta">Leave a Review →</a>
+    </div>
+  </div>
+
+  <div class="reviews-grid">
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar" style="background:#7B4FD6">S</div>
+        <div>
+          <div class="review-name">Shreyansh Surana</div>
+          <div class="review-meta">3 reviews · 7 photos</div>
+        </div>
+        <div class="review-google-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-time">11 weeks ago</div>
+      <p class="review-text">"Best rates, great quality, variety so much that you don't have to visit anywhere else..."</p>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar" style="background:#1A73E8">M</div>
+        <div>
+          <div class="review-name">Mani Kataria</div>
+          <div class="review-meta">1 review</div>
+        </div>
+        <div class="review-google-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-time">11 weeks ago</div>
+      <p class="review-text">"Sahi keemat, achha samaan aur badhiya service. Highly recommended 👍"</p>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar" style="background:#E53935">S</div>
+        <div>
+          <div class="review-name">Sonali Bansal</div>
+          <div class="review-meta">6 reviews</div>
+        </div>
+        <div class="review-google-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-time">11 weeks ago</div>
+      <p class="review-text">"Bahut hi accha experience raha Electric Emporium me. Quality products, wide range aur staff ka behaviour bhi kaafi cooperative hai. Jo chahiye hota hai easily mil jata hai. Balaghat me reliable electrical shop hai 👍"</p>
+    </div>
+
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar" style="background:#F57C00">S</div>
+        <div>
+          <div class="review-name">Sarvin Bothra</div>
+          <div class="review-meta">Local Guide · 239 reviews · 816 photos</div>
+        </div>
+        <div class="review-google-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-time">Jun 2025</div>
+      <p class="review-text">"Sabhi prakar ke electric items milte hai."</p>
+    </div>
+
+    <div class="review-card review-card-featured">
+      <div class="review-header">
+        <div class="review-avatar" style="background:#2E7D32">S</div>
+        <div>
+          <div class="review-name">Shrenik Modi</div>
+          <div class="review-meta">Local Guide · 5 reviews · 7 photos</div>
+        </div>
+        <div class="review-google-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        </div>
+      </div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-time">14 Sept 2024</div>
+      <p class="review-text">"Electric Emporium is a top-tier store for all your electrical needs. The knowledgeable staff and friendly owners ensure a great shopping experience. With a wide product range, competitive prices, and excellent customer service, it's highly recommended!"</p>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:2.5rem">
+    <a href="https://www.google.com/maps/place/Electric+emporium/@21.8314,80.1837,17z" target="_blank" class="btn-red" style="display:inline-block;text-decoration:none;padding:0.9rem 2.5rem">See All 56 Reviews on Google →</a>
   </div>
 </section>
 
