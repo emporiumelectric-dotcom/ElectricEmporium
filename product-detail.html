@@ -253,8 +253,7 @@ function renderProduct() {
 
   if (product.Spec) {
     var spec = makeEl("div", "pi-spec", "");
-    spec.innerHTML = (product.Spec || "").replace(/
-/g, "<br>");
+    spec.innerHTML = (product.Spec || "").split("\n").join("<br>");
     info.appendChild(spec);
   }
 
