@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin - Electric Emporium</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#E30613;--black:#111;--white:#fff;--off:#F7F7F7;--border:#E0E0E0;--gray:#777}
+body{font-family:Montserrat,sans-serif;background:var(--off);color:var(--black)}
+#login-screen{position:fixed;inset:0;background:var(--black);display:flex;align-items:center;justify-content:center;z-index:999}
+.login-box{background:#1a1a1a;border:1px solid #222;padding:3rem;width:360px;text-align:center}
+.login-box h2{color:#fff;font-size:1.4rem;font-weight:900;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.5rem}
+.login-box p{color:#666;font-size:0.78rem;margin-bottom:2rem}
+.login-box input{width:100%;padding:0.9rem 1rem;background:#111;border:1.5px solid #333;color:#fff;font-family:Montserrat,sans-serif;font-size:0.85rem;outline:none;margin-bottom:1rem}
+.login-box input:focus{border-color:var(--red)}
+.login-box button{width:100%;padding:0.9rem;background:var(--red);color:#fff;border:none;font-family:Montserrat,sans-serif;font-size:0.78rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer}
+.login-error{color:var(--red);font-size:0.72rem;margin-top:0.5rem;display:none}
+nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--red)}
+nav .logo{font-size:1rem;font-weight:900;color:#fff}.logo span{color:var(--red)}
+nav .nav-right{display:flex;align-items:center;gap:1rem}
+.badge{background:var(--red);color:#fff;font-size:0.6rem;font-weight:800;padding:3px 10px;letter-spacing:0.1em;text-transform:uppercase}
+.logout-btn{background:none;border:1px solid #444;color:#aaa;font-family:Montserrat,sans-serif;font-size:0.65rem;font-weight:700;padding:6px 14px;cursor:pointer;text-transform:uppercase;letter-spacing:0.1em}
+.logout-btn:hover{border-color:#fff;color:#fff}
+.wrap{max-width:1100px;margin:0 auto;padding:2rem}
+.page-title{font-size:1.3rem;font-weight:900;text-transform:uppercase;letter-spacing:-0.3px;margin-bottom:0.3rem}
+.page-title em{color:var(--red);font-style:normal}
+.page-sub{font-size:0.75rem;color:var(--gray);margin-bottom:2rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.card{background:var(--white);border:1px solid var(--border);padding:2rem}
+.card h3{font-size:0.85rem;font-weight:900;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.5rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border)}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:0.65rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;color:var(--gray);margin-bottom:0.4rem}
+.field input,.field select,.field textarea{width:100%;padding:0.75rem 0.9rem;border:1.5px solid var(--border);font-family:Montserrat,sans-serif;font-size:0.8rem;color:var(--black);background:var(--off);outline:none;transition:border-color 0.2s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red);background:#fff}
+.field textarea{height:80px;resize:none}
+.field select{cursor:pointer}
+.photo-upload{border:2px dashed var(--border);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color 0.2s;background:var(--off)}
+.photo-upload:hover{border-color:var(--red)}
+.photo-upload input{display:none}
+.photo-upload p{font-size:0.72rem;color:var(--gray);margin-top:0.5rem}
+.photo-preview{width:100%;height:160px;object-fit:contain;margin-bottom:0.5rem;display:none;background:#f0f0f0}
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 0.9rem;background:var(--off);border:1.5px solid var(--border)}
+.toggle-label{font-size:0.78rem;font-weight:600}
+.toggle{position:relative;width:44px;height:24px}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;cursor:pointer;transition:0.3s}
+.toggle-slider::before{content:"";position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s}
+.toggle input:checked + .toggle-slider{background:var(--red)}
+.toggle input:checked + .toggle-slider::before{transform:translateX(20px)}
+.btn-save{width:100%;padding:1rem;background:var(--black);color:#fff;border:none;font-family:Montserrat,sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;margin-top:0.5rem}
+.btn-save:hover{background:var(--red)}
+.btn-save:disabled{background:#aaa;cursor:not-allowed}
+.msg{font-size:0.72rem;font-weight:700;padding:0.7rem 1rem;margin-top:0.8rem;display:none}
+.msg.success{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+.msg.error{background:#ffebee;color:#c62828;border:1px solid #ef9a9a}
+.products-table{width:100%;border-collapse:collapse;font-size:0.72rem}
+.products-table th{background:var(--black);color:#fff;padding:0.7rem 0.9rem;text-align:left;font-size:0.6rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase}
+.products-table td{padding:0.7rem 0.9rem;border-bottom:1px solid var(--border);vertical-align:middle}
+.products-table tr:hover td{background:var(--off)}
+.prod-photo{width:40px;height:40px;object-fit:cover;border:1px solid var(--border)}
+.prod-photo-placeholder{width:40px;height:40px;background:var(--off);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.btn-del{background:none;border:1px solid #ffcdd2;color:#e53935;font-family:Montserrat,sans-serif;font-size:0.6rem;font-weight:700;padding:4px 10px;cursor:pointer;text-transform:uppercase;letter-spacing:0.08em}
+.btn-del:hover{background:#ffebee}
+.stock-badge{display:inline-block;font-size:0.58rem;font-weight:800;padding:2px 8px;letter-spacing:0.08em;text-transform:uppercase}
+.stock-yes{background:#e8f5e9;color:#2e7d32}
+.stock-no{background:#ffebee;color:#c62828}
+.empty-table{text-align:center;padding:3rem;color:var(--gray);font-size:0.8rem}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--white);border:1px solid var(--border);padding:1.2rem 1.5rem}
+.stat-num{font-size:1.8rem;font-weight:900;color:var(--red);line-height:1}
+.stat-label{font-size:0.62rem;color:var(--gray);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.3rem}
+.loading{text-align:center;padding:2rem;color:var(--gray);font-size:0.8rem;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <h2><span style="color:var(--red)">Electric</span> Emporium</h2>
+    <p>Admin Panel &mdash; Authorised access only</p>
+    <input type="password" id="pwd-input" placeholder="Enter admin password">
+    <button onclick="checkLogin()">Login</button>
+    <p class="login-error" id="login-err">Wrong password. Try again.</p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><span>Electric</span> Emporium <span class="badge">Admin</span></div>
+  <div class="nav-right">
+    <a href="index.html" style="color:#aaa;font-size:0.68rem;font-weight:700;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">&larr; View Site</a>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-title">Product <em>Manager</em></div>
+  <div class="page-sub">Add, manage and update your product catalogue</div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-num" id="stat-total">-</div><div class="stat-label">Total Products</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-instock">-</div><div class="stat-label">In Stock</div></div>
+    <div class="stat-card"><div class="stat-num" id="stat-cats">-</div><div class="stat-label">Categories</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- ADD PRODUCT FORM -->
+    <div class="card">
+      <h3>Add New Product</h3>
+
+      <div class="field">
+        <label>Product Name *</label>
+        <input type="text" id="f-name" placeholder="e.g. BLDC Ceiling Fan">
+      </div>
+      <div class="field">
+        <label>Brand *</label>
+        <select id="f-brand">
+          <option value="">Select brand...</option>
+          <option>Havells</option><option>Legrand</option><option>Atomberg</option>
+          <option>V-Guard</option><option>Nortek</option><option>Indoasian</option>
+          <option>Surya</option><option>Crompton</option><option>Polycab</option>
+          <option>KEI</option><option>Daikin</option><option>Mitsubishi</option>
+          <option>Lloyd</option><option>Samsung</option><option>Blue Star</option>
+          <option>Celfrost</option><option>Sujata</option><option>Cello</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Category *</label>
+        <select id="f-cat">
+          <option value="">Select category...</option>
+          <option>Fans</option><option>Lights and LEDs</option>
+          <option>Fancy and Outdoor Lamps</option><option>Wires and Cables</option>
+          <option>Switches and Sockets</option><option>Switchgear and Industrial</option>
+          <option>Modular and Pipes</option><option>ACs and Freezers</option>
+          <option>Geysers</option><option>Appliances</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Spec / Description</label>
+        <input type="text" id="f-spec" placeholder="e.g. 1200mm, 5 star rated, BLDC motor">
+      </div>
+      <div class="field">
+        <label>Price (optional)</label>
+        <input type="text" id="f-price" placeholder="e.g. &#x20B9;2,499 or Call for price">
+      </div>
+      <div class="field">
+        <label>Product Photo</label>
+        <div class="photo-upload" onclick="document.getElementById('f-photo').click()">
+          <img id="photo-preview" class="photo-preview" src="" alt="Preview">
+          <div id="upload-placeholder">
+            <div style="font-size:2rem">&#128247;</div>
+            <p>Click to upload photo</p>
+            <p style="font-size:0.65rem;margin-top:4px">JPG, PNG up to 5MB</p>
+          </div>
+          <input type="file" id="f-photo" accept="image/*" onchange="previewPhoto(this)">
+        </div>
+      </div>
+      <div class="field">
+        <div class="toggle-row">
+          <span class="toggle-label">In Stock</span>
+          <label class="toggle">
+            <input type="checkbox" id="f-stock" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <button class="btn-save" id="save-btn" onclick="saveProduct()">Save Product</button>
+      <div class="msg" id="save-msg"></div>
+    </div>
+
+    <!-- PRODUCT LIST -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--border)">
+        <h3 style="margin:0;border:none;padding:0">All Products</h3>
+      </div>
+      <div id="products-list" style="overflow-y:auto;max-height:600px">
+        <div class="loading">Loading products...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var SURL = "https://dnmzzckeuctnkqbphwdg.supabase.co";
+var SKEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
+var ADMIN_PASSWORD = "emporium2024";
+
+function checkLogin() {
+  var pwd = document.getElementById("pwd-input").value;
+  if (pwd === ADMIN_PASSWORD) {
+    document.getElementById("login-screen").style.display = "none";
+    loadProducts();
+  } else {
+    document.getElementById("login-err").style.display = "block";
+  }
+}
+document.getElementById("pwd-input").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") checkLogin();
+});
+function logout() {
+  document.getElementById("login-screen").style.display = "flex";
+  document.getElementById("pwd-input").value = "";
+}
+
+function previewPhoto(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = document.getElementById("photo-preview");
+      img.src = e.target.result;
+      img.style.display = "block";
+      document.getElementById("upload-placeholder").style.display = "none";
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+async function uploadPhoto(file) {
+  var ext = file.name.split(".").pop();
+  var filename = Date.now() + "." + ext;
+  var res = await fetch(SURL + "/storage/v1/object/product-photos/" + filename, {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + SKEY,
+      "Content-Type": file.type,
+      "x-upsert": "true"
+    },
+    body: file
+  });
+  if (!res.ok) throw new Error("Photo upload failed");
+  return SURL + "/storage/v1/object/public/product-photos/" + filename;
+}
+
+async function saveProduct() {
+  var name   = document.getElementById("f-name").value.trim();
+  var brand  = document.getElementById("f-brand").value;
+  var cat    = document.getElementById("f-cat").value;
+  var spec   = document.getElementById("f-spec").value.trim();
+  var price  = document.getElementById("f-price").value.trim();
+  var stock  = document.getElementById("f-stock").checked;
+  var photoFile = document.getElementById("f-photo").files[0];
+
+  if (!name || !brand || !cat) {
+    showMsg("save-msg", "error", "Please fill in Name, Brand and Category.");
+    return;
+  }
+
+  var btn = document.getElementById("save-btn");
+  btn.disabled = true;
+  btn.textContent = "Saving...";
+
+  try {
+    var photoUrl = "";
+    if (photoFile) {
+      showMsg("save-msg", "success", "Uploading photo...");
+      photoUrl = await uploadPhoto(photoFile);
+    }
+
+    var payload = {
+      Name: name, Brand: brand, Category: cat,
+      Spec: spec, Price: price,
+      Photo_url: photoUrl,
+      in_stock: stock
+    };
+
+    var res = await fetch(SURL + "/rest/v1/products", {
+      method: "POST",
+      headers: {
+        "apikey": SKEY,
+        "Authorization": "Bearer " + SKEY,
+        "Content-Type": "application/json",
+        "Prefer": "return=minimal"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      var err = await res.text();
+      throw new Error(err);
+    }
+
+    showMsg("save-msg", "success", "Product saved successfully!");
+    resetForm();
+    loadProducts();
+  } catch(e) {
+    showMsg("save-msg", "error", "Error: " + e.message);
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Save Product";
+}
+
+function resetForm() {
+  document.getElementById("f-name").value = "";
+  document.getElementById("f-brand").value = "";
+  document.getElementById("f-cat").value = "";
+  document.getElementById("f-spec").value = "";
+  document.getElementById("f-price").value = "";
+  document.getElementById("f-photo").value = "";
+  document.getElementById("f-stock").checked = true;
+  document.getElementById("photo-preview").style.display = "none";
+  document.getElementById("upload-placeholder").style.display = "block";
+}
+
+async function loadProducts() {
+  var res = await fetch(SURL + "/rest/v1/products?select=*&order=id.desc", {
+    headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY }
+  });
+  var data = await res.json();
+
+  document.getElementById("stat-total").textContent = data.length;
+  document.getElementById("stat-instock").textContent = data.filter(function(p){return p.in_stock;}).length;
+  var cats = {};
+  data.forEach(function(p){cats[p.Category]=1;});
+  document.getElementById("stat-cats").textContent = Object.keys(cats).length;
+
+  var list = document.getElementById("products-list");
+  if (data.length === 0) {
+    list.innerHTML = "<div class='empty-table'>No products yet. Add your first product!</div>";
+    return;
+  }
+
+  var html = "<table class='products-table'><thead><tr><th>Photo</th><th>Name</th><th>Brand</th><th>Category</th><th>Stock</th><th></th></tr></thead><tbody>";
+  data.forEach(function(p) {
+    var photo = p.Photo_url
+      ? "<img class='prod-photo' src='" + p.Photo_url + "' alt='" + p.Name + "'>"
+      : "<div class='prod-photo-placeholder'>&#128247;</div>";
+    var stock = p.in_stock
+      ? "<span class='stock-badge stock-yes'>In Stock</span>"
+      : "<span class='stock-badge stock-no'>Out</span>";
+    html += "<tr>" +
+      "<td>" + photo + "</td>" +
+      "<td><strong>" + (p.Name||"") + "</strong><br><span style='color:#999;font-size:0.65rem'>" + (p.Spec||"") + "</span></td>" +
+      "<td>" + (p.Brand||"") + "</td>" +
+      "<td style='font-size:0.65rem'>" + (p.Category||"") + "</td>" +
+      "<td>" + stock + "</td>" +
+      "<td><button class='btn-del' onclick='deleteProduct(" + p.id + ")'>Delete</button></td>" +
+    "</tr>";
+  });
+  html += "</tbody></table>";
+  list.innerHTML = html;
+}
+
+async function deleteProduct(id) {
+  if (!confirm("Delete this product?")) return;
+  await fetch(SURL + "/rest/v1/products?id=eq." + id, {
+    method: "DELETE",
+    headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY }
+  });
+  loadProducts();
+}
+
+function showMsg(id, type, text) {
+  var el = document.getElementById(id);
+  el.className = "msg " + type;
+  el.textContent = text;
+  el.style.display = "block";
+  if (type === "success") setTimeout(function(){el.style.display="none";}, 4000);
+}
+</script>
+</body>
+</html>

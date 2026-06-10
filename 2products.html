@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
+<title>Products - Electric Emporium Balaghat</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#E30613;--red2:#FF1F2D;--black:#1C1C1C;--black2:#111;--white:#fff;--off:#F7F7F7;--gray:#777;--border:#E0E0E0}
+html,body{overflow-x:hidden}
+body{font-family:Montserrat,sans-serif;background:var(--white);color:var(--black)}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:70px;background:var(--white);border-bottom:3px solid var(--red);box-shadow:0 2px 14px rgba(0,0,0,0.07)}
+.nav-logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
+.nav-logo img{height:40px;width:auto;object-fit:contain}
+.logo-text{font-size:1.15rem;font-weight:800;line-height:1}
+.logo-text .e{color:var(--red)}.logo-text .em{color:var(--black)}
+.nav-back{font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--gray);text-decoration:none}
+.nav-back:hover{color:var(--red)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-phone{font-size:0.78rem;font-weight:600;color:var(--black);cursor:pointer;text-decoration:none}
+.nav-cta{background:var(--red);color:var(--white);border:none;padding:0.58rem 1.3rem;font-family:Montserrat,sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer}
+.page-wrap{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 70px)}
+.sidebar{background:var(--black2);padding:1.5rem 0;position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto}
+.sb-label{font-size:0.58rem;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,255,255,0.25);padding:0 1.2rem;margin-bottom:0.6rem;display:block;margin-top:0.5rem}
+.sb-btn{display:block;width:100%;padding:0.65rem 1.2rem;font-family:Montserrat,sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:rgba(255,255,255,0.5);background:none;border:none;border-left:3px solid transparent;cursor:pointer;text-align:left;transition:all 0.15s}
+.sb-btn:hover{color:#fff;background:rgba(255,255,255,0.05)}
+.sb-btn.active{color:#fff;background:rgba(227,6,19,0.18);border-left-color:var(--red)}
+.sb-div{height:1px;background:rgba(255,255,255,0.06);margin:0.8rem 1.2rem}
+.main{display:flex;flex-direction:column}
+.main-top{padding:1.4rem 2rem 1rem;border-bottom:1px solid var(--border);background:var(--white);position:sticky;top:70px;z-index:9}
+.main-title{font-size:1.1rem;font-weight:900;text-transform:uppercase;letter-spacing:-0.3px;color:var(--black)}
+.main-title em{color:var(--red);font-style:normal}
+.main-count{font-size:0.68rem;color:var(--gray);font-weight:600;margin-top:2px}
+.brand-bar{padding:0.7rem 2rem;display:flex;gap:6px;flex-wrap:wrap;background:var(--white);border-bottom:1px solid var(--off)}
+.bpill{padding:4px 12px;font-size:0.6rem;font-weight:700;font-family:Montserrat,sans-serif;border:1.5px solid var(--border);cursor:pointer;background:var(--white);color:var(--gray);letter-spacing:0.08em;text-transform:uppercase;transition:all 0.15s}
+.bpill.active{background:var(--black);color:var(--white);border-color:var(--black)}
+.bpill:hover{border-color:#888;color:var(--black)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1px;background:var(--border)}
+.pcard{background:var(--white);display:flex;flex-direction:column}
+.pimg{height:140px;background:var(--off);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);overflow:hidden}
+.pimg img{width:100%;height:100%;object-fit:cover}
+.pimg-placeholder{font-size:3rem;opacity:0.3}
+.pbody{padding:12px 14px;flex:1;display:flex;flex-direction:column}
+.pbrand{font-size:0.56rem;color:var(--red);font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px}
+.pname{font-size:0.8rem;font-weight:800;color:var(--black);line-height:1.25;margin-bottom:3px;flex:1;text-transform:uppercase;letter-spacing:0.02em}
+.pspec{font-size:0.62rem;color:#bbb;margin-bottom:4px}
+.pprice{font-size:0.72rem;font-weight:800;color:var(--black);margin-bottom:10px}
+.pwa{width:100%;background:var(--black);color:var(--white);font-family:Montserrat,sans-serif;font-size:0.6rem;font-weight:800;padding:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:0.1em;text-transform:uppercase;transition:background 0.2s}
+.pwa:hover{background:var(--red)}
+.out-of-stock{position:relative}
+.out-of-stock::after{content:"Out of Stock";position:absolute;inset:0;background:rgba(0,0,0,0.5);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase}
+.loading-state{padding:4rem 2rem;text-align:center;grid-column:1/-1;background:var(--white)}
+.loading-state p{font-size:0.9rem;color:var(--gray);font-weight:600}
+.empty-state{padding:4rem 2rem;text-align:center;grid-column:1/-1;background:var(--white)}
+.empty-state p{font-size:0.9rem;color:var(--gray);font-weight:600}
+#waFloat{position:fixed;bottom:2rem;right:2rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);text-decoration:none;animation:wp 2.5s infinite}
+@keyframes wp{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.45)}50%{box-shadow:0 4px 32px rgba(37,211,102,0.75),0 0 0 8px rgba(37,211,102,0.1)}}
+footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:3px solid var(--red)}
+.fw{font-size:0.95rem;font-weight:900}.fw .e{color:var(--red)}.fw .em{color:var(--white)}
+.fc{font-size:0.68rem;color:rgba(255,255,255,0.28);text-align:center}.fc span{color:var(--red)}
+.fl a{font-size:0.64rem;font-weight:700;color:rgba(255,255,255,0.32);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase}
+.fl a:hover{color:var(--red)}
+@media(max-width:800px){
+  nav{padding:0 1.2rem}.nav-phone{display:none}
+  .page-wrap{grid-template-columns:1fr}
+  .sidebar{display:flex;overflow-x:auto;overflow-y:visible;height:auto;position:static;padding:0.6rem;gap:4px;border-bottom:2px solid var(--red)}
+  .sb-label{display:none}
+  .sb-btn{white-space:nowrap;padding:5px 12px;border:1.5px solid rgba(255,255,255,0.15);border-left:1.5px solid rgba(255,255,255,0.15);font-size:0.6rem}
+  .sb-btn.active{border-color:var(--red)}
+  .sb-div{display:none}
+  .main-top{position:static}
+  footer{flex-direction:column;text-align:center;padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="eng_HD_jpeg.jpg" alt="Electric Emporium Logo">
+    <div>
+      <div class="logo-text"><span class="e">Electric</span><span class="em"> Emporium</span><sup style="font-size:0.5rem;color:var(--gray);font-weight:600">&reg;</sup></div>
+      <div style="font-size:0.56rem;font-weight:700;letter-spacing:0.18em;color:var(--gray);text-transform:uppercase;margin-top:1px">Est. 1989 &middot; Balaghat</div>
+    </div>
+  </a>
+  <a class="nav-back" href="index.html">&larr; Back to Home</a>
+  <div class="nav-right">
+    <a class="nav-phone" href="tel:+919425831035">&#128222; +91 94258 31035</a>
+    <button class="nav-cta" id="enquireBtn">Enquire Now</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <aside class="sidebar" id="sidebar"></aside>
+  <main class="main">
+    <div class="main-top">
+      <div class="main-title" id="main-title">All Products</div>
+      <div class="main-count" id="main-count"></div>
+    </div>
+    <div class="brand-bar" id="brand-bar"></div>
+    <div class="pgrid" id="pgrid">
+      <div class="loading-state"><p>Loading products...</p></div>
+    </div>
+  </main>
+</div>
+
+<a href="https://wa.me/919425831035" target="_blank" id="waFloat">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<footer>
+  <div class="fw"><span class="e">Electric </span><span class="em">Emporium</span></div>
+  <div class="fc">&copy; 2026 <span>Electric Emporium</span> &middot; Gujri Chowk, Balaghat &middot; Est. 1989</div>
+  <div class="fl"><a href="index.html">&larr; Back to Home</a></div>
+</footer>
+
+<script>
+var SURL = "https://dnmzzckeuctnkqbphwdg.supabase.co";
+var SKEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
+var PHONE = "919425831035";
+
+function openWA(msg) {
+  window.open("https://wa.me/" + PHONE + "?text=" + encodeURIComponent(msg), "_blank");
+}
+
+document.getElementById("enquireBtn").addEventListener("click", function() {
+  openWA("Hello Electric Emporium! I would like to enquire about your products.");
+});
+
+var allProducts = [];
+var activeCat   = "All";
+var activeBrand = "All";
+
+function makeEl(tag, cls, text) {
+  var el = document.createElement(tag);
+  if (cls) el.className = cls;
+  if (text !== undefined) el.textContent = text;
+  return el;
+}
+
+async function fetchProducts() {
+  try {
+    var res = await fetch(SURL + "/rest/v1/products?select=*&order=id.asc", {
+      headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY }
+    });
+    if (!res.ok) throw new Error("Failed to fetch");
+    allProducts = await res.json();
+    render();
+  } catch(e) {
+    document.getElementById("pgrid").innerHTML = "<div class='empty-state'><p>Could not load products. Please try again later.</p></div>";
+  }
+}
+
+function getCategories() {
+  var seen = {}, result = [];
+  allProducts.forEach(function(p) {
+    if (p.Category && !seen[p.Category]) { seen[p.Category] = true; result.push(p.Category); }
+  });
+  return result.sort();
+}
+
+function getBrands() {
+  var seen = {}, result = [];
+  var filtered = activeCat === "All" ? allProducts : allProducts.filter(function(p){return p.Category===activeCat;});
+  filtered.forEach(function(p) {
+    if (p.Brand && !seen[p.Brand]) { seen[p.Brand] = true; result.push(p.Brand); }
+  });
+  return result.sort();
+}
+
+function buildSidebar() {
+  var sb = document.getElementById("sidebar");
+  sb.innerHTML = "";
+
+  sb.appendChild(makeEl("span", "sb-label", "Categories"));
+  var allBtn = makeEl("button", "sb-btn" + (activeCat==="All" ? " active" : ""), "All Categories");
+  allBtn.addEventListener("click", function() { setCat("All"); });
+  sb.appendChild(allBtn);
+
+  getCategories().forEach(function(cat) {
+    var btn = makeEl("button", "sb-btn" + (activeCat===cat ? " active" : ""), cat);
+    btn.addEventListener("click", function() { setCat(cat); });
+    sb.appendChild(btn);
+  });
+
+  sb.appendChild(makeEl("div", "sb-div"));
+  sb.appendChild(makeEl("span", "sb-label", "Brands"));
+
+  var allBrandBtn = makeEl("button", "sb-btn" + (activeBrand==="All" ? " active" : ""), "All Brands");
+  allBrandBtn.addEventListener("click", function() { setBrand("All"); });
+  sb.appendChild(allBrandBtn);
+
+  getBrands().forEach(function(brand) {
+    var btn = makeEl("button", "sb-btn" + (activeBrand===brand ? " active" : ""), brand);
+    btn.addEventListener("click", function() { setBrand(brand); });
+    sb.appendChild(btn);
+  });
+}
+
+function buildBrandBar() {
+  var bar = document.getElementById("brand-bar");
+  bar.innerHTML = "";
+  var allBtn = makeEl("button", "bpill" + (activeBrand==="All" ? " active" : ""), "All");
+  allBtn.addEventListener("click", function() { setBrand("All"); });
+  bar.appendChild(allBtn);
+  getBrands().forEach(function(brand) {
+    var btn = makeEl("button", "bpill" + (activeBrand===brand ? " active" : ""), brand);
+    btn.addEventListener("click", function() { setBrand(brand); });
+    bar.appendChild(btn);
+  });
+}
+
+function buildGrid() {
+  var grid = document.getElementById("pgrid");
+  grid.innerHTML = "";
+
+  var filtered = allProducts.filter(function(p) {
+    var catOk  = activeCat   === "All" || p.Category === activeCat;
+    var brandOk = activeBrand === "All" || p.Brand    === activeBrand;
+    return catOk && brandOk;
+  });
+
+  var titleEl = document.getElementById("main-title");
+  titleEl.textContent = activeCat === "All" ? "All Products" : activeCat;
+  if (activeBrand !== "All") {
+    var em = document.createElement("em");
+    em.textContent = " / " + activeBrand;
+    titleEl.appendChild(em);
+  }
+  document.getElementById("main-count").textContent = filtered.length + " product" + (filtered.length!==1?"s":"");
+
+  if (filtered.length === 0) {
+    var empty = makeEl("div", "empty-state");
+    empty.appendChild(makeEl("p", "", "No products found for this filter."));
+    grid.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach(function(p) {
+    var card = makeEl("div", "pcard" + (!p.in_stock ? " out-of-stock" : ""));
+
+    var imgDiv = makeEl("div", "pimg");
+    if (p.Photo_url) {
+      var img = document.createElement("img");
+      img.src = p.Photo_url;
+      img.alt = p.Name || "";
+      img.loading = "lazy";
+      imgDiv.appendChild(img);
+    } else {
+      imgDiv.appendChild(makeEl("div", "pimg-placeholder", "💡"));
+    }
+
+    var body = makeEl("div", "pbody");
+    body.appendChild(makeEl("div", "pbrand", p.Brand || ""));
+    body.appendChild(makeEl("div", "pname", p.Name || ""));
+    if (p.Spec)  body.appendChild(makeEl("div", "pspec", p.Spec));
+    if (p.Price) body.appendChild(makeEl("div", "pprice", p.Price));
+
+    var btn = makeEl("button", "pwa", "");
+    var svgNS = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("width","12"); svg.setAttribute("height","12");
+    svg.setAttribute("viewBox","0 0 24 24"); svg.setAttribute("fill","white");
+    var path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d","M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z");
+    svg.appendChild(path);
+    btn.appendChild(svg);
+    btn.appendChild(document.createTextNode(" Enquire"));
+    (function(prod) {
+      btn.addEventListener("click", function() {
+        openWA("Hello Electric Emporium! I am interested in " + prod.Name + " by " + prod.Brand + ". Please share availability and price.");
+      });
+    })(p);
+
+    body.appendChild(btn);
+    card.appendChild(imgDiv);
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+}
+
+function render() {
+  buildSidebar();
+  buildBrandBar();
+  buildGrid();
+}
+
+function setCat(k) {
+  activeCat = k; activeBrand = "All";
+  render(); window.scrollTo(0,0);
+}
+function setBrand(b) {
+  activeBrand = b; render();
+}
+
+function getParam(name) {
+  var href = window.location.href;
+  var idx = href.indexOf("?");
+  if (idx === -1) return "";
+  var pairs = href.substring(idx+1).split("&");
+  for (var i=0; i<pairs.length; i++) {
+    var eq = pairs[i].indexOf("=");
+    if (eq === -1) continue;
+    if (decodeURIComponent(pairs[i].substring(0,eq)) === name)
+      return decodeURIComponent(pairs[i].substring(eq+1));
+  }
+  return "";
+}
+
+var paramCat   = getParam("cat");
+var paramBrand = getParam("brand");
+if (paramBrand) activeBrand = paramBrand;
+else if (paramCat) activeCat = paramCat;
+
+fetchProducts();
+</script>
+</body>
+</html>
