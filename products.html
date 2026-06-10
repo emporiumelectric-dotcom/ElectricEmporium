@@ -38,17 +38,22 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .bpill:hover{border-color:#888;color:var(--black)}
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:1px;background:var(--border)}
 .pcard{background:var(--white);display:flex;flex-direction:column}
-.picon{height:110px;background:var(--off);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border)}
-.picon svg{width:42px;height:42px;stroke:var(--red);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:0.3}
+.pimg{height:140px;background:var(--off);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);overflow:hidden}
+.pimg img{width:100%;height:100%;object-fit:cover}
+.pimg-placeholder{font-size:3rem;opacity:0.3}
 .pbody{padding:12px 14px;flex:1;display:flex;flex-direction:column}
 .pbrand{font-size:0.56rem;color:var(--red);font-weight:800;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:4px}
 .pname{font-size:0.8rem;font-weight:800;color:var(--black);line-height:1.25;margin-bottom:3px;flex:1;text-transform:uppercase;letter-spacing:0.02em}
-.pspec{font-size:0.62rem;color:#bbb;margin-bottom:10px}
+.pspec{font-size:0.62rem;color:#bbb;margin-bottom:4px}
+.pprice{font-size:0.72rem;font-weight:800;color:var(--black);margin-bottom:10px}
 .pwa{width:100%;background:var(--black);color:var(--white);font-family:Montserrat,sans-serif;font-size:0.6rem;font-weight:800;padding:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:0.1em;text-transform:uppercase;transition:background 0.2s}
 .pwa:hover{background:var(--red)}
-.empty-state{padding:4rem 2rem;text-align:center;background:var(--white)}
-.empty-state p{font-size:0.9rem;color:var(--gray);font-weight:600;margin-bottom:1rem}
-.empty-state button{background:var(--red);color:#fff;border:none;padding:8px 18px;cursor:pointer;font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em}
+.out-of-stock{position:relative}
+.out-of-stock::after{content:"Out of Stock";position:absolute;inset:0;background:rgba(0,0,0,0.5);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase}
+.loading-state{padding:4rem 2rem;text-align:center;grid-column:1/-1;background:var(--white)}
+.loading-state p{font-size:0.9rem;color:var(--gray);font-weight:600}
+.empty-state{padding:4rem 2rem;text-align:center;grid-column:1/-1;background:var(--white)}
+.empty-state p{font-size:0.9rem;color:var(--gray);font-weight:600}
 #waFloat{position:fixed;bottom:2rem;right:2rem;z-index:999;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);text-decoration:none;animation:wp 2.5s infinite}
 @keyframes wp{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.45)}50%{box-shadow:0 4px 32px rgba(37,211,102,0.75),0 0 0 8px rgba(37,211,102,0.1)}}
 footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:3px solid var(--red)}
@@ -94,7 +99,9 @@ footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:cen
       <div class="main-count" id="main-count"></div>
     </div>
     <div class="brand-bar" id="brand-bar"></div>
-    <div class="pgrid" id="pgrid"></div>
+    <div class="pgrid" id="pgrid">
+      <div class="loading-state"><p>Loading products...</p></div>
+    </div>
   </main>
 </div>
 
@@ -109,8 +116,8 @@ footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:cen
 </footer>
 
 <script>
-/* NO INLINE ONCLICK ANYWHERE - all events via addEventListener */
-
+var SURL = "https://dnmzzckeuctnkqbphwdg.supabase.co";
+var SKEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
 var PHONE = "919425831035";
 
 function openWA(msg) {
@@ -121,94 +128,7 @@ document.getElementById("enquireBtn").addEventListener("click", function() {
   openWA("Hello Electric Emporium! I would like to enquire about your products.");
 });
 
-/* ICONS */
-var IC = {
-  fans:   "M12 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 0c-4.97 0-9 1.567-9 3.5S7.03 17 12 17s9-1.567 9-3.5S16.97 10 12 10zm0 0c-2.485-4.315-1.042-8.5 1.5-9.526C16.042.448 18.485 2.315 18 6.5 17.515 10.685 12 10 12 10zm0 0c2.485-4.315 1.042-8.5-1.5-9.526C8.042.448 5.515 2.315 6 6.5 6.485 10.685 12 10 12 10z",
-  bulb:   "M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z",
-  lamp:   "M12 17v3M9 20h6M12 3l1.5 4.5h4.5l-3.5 2.5 1.5 4.5L12 12l-4 2.5 1.5-4.5L6 7.5h4.5z",
-  wire:   "M13 2 3 14h9l-1 8 10-12h-9l1-8z",
-  sw:     "M2 3h20v14H2zM6 7h4v6H6zM14 7h4v6h-4z",
-  gear:   "M2 2h20v20H2zM12 6v6M12 16v2",
-  pipe:   "M2 7h20v10H2zM6 7V5M18 7V5M6 17v2M18 17v2",
-  ac:     "M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07",
-  geyser: "M12 22V12M5 12a7 7 0 1 1 14 0M9 12a3 3 0 1 1 6 0M12 6V3",
-  app:    "M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM9 9h6M9 13h4"
-};
-
-/* CATALOGUE */
-var CAT = [
-  { cat: "Fans", key: "Fans", ic: "fans", prods: [
-    { n: "Ceiling Fan", s: "600mm / 1200mm", b: "Crompton" },
-    { n: "BLDC Ceiling Fan", s: "Energy saving 5 star", b: "Atomberg" },
-    { n: "Table Fan", s: "400mm high speed", b: "Havells" },
-    { n: "Pedestal Fan", s: "450mm 3-speed", b: "V-Guard" },
-    { n: "Exhaust Fan", s: "Kitchen and bathroom", b: "Crompton" },
-    { n: "Ceiling Fan", s: "Decorative series", b: "Havells" }
-  ]},
-  { cat: "Lights and LEDs", key: "Lights", ic: "bulb", prods: [
-    { n: "LED Bulb", s: "9W 12W 18W", b: "Surya" },
-    { n: "LED Batten", s: "18W 2ft 4ft", b: "Havells" },
-    { n: "LED Panel Light", s: "12W recessed round", b: "Crompton" },
-    { n: "LED Downlight", s: "7W 12W", b: "Surya" },
-    { n: "Tube Light", s: "36W fluorescent", b: "Indoasian" },
-    { n: "LED Street Light", s: "30W 50W", b: "Surya" }
-  ]},
-  { cat: "Fancy and Outdoor Lamps", key: "FancyLamps", ic: "lamp", prods: [
-    { n: "Fancy Lamp", s: "Decorative interior", b: "Surya" },
-    { n: "Outdoor Wall Light", s: "Weatherproof IP55", b: "Crompton" },
-    { n: "Garden Spike Light", s: "Outdoor landscape", b: "Havells" },
-    { n: "Chandelier", s: "Decorative ceiling", b: "Surya" },
-    { n: "Wall Sconce", s: "Corridor and porch", b: "Crompton" }
-  ]},
-  { cat: "Wires and Cables", key: "Wires", ic: "wire", prods: [
-    { n: "FR House Wire", s: "1.5 2.5 4 sq mm", b: "Havells" },
-    { n: "Flexible Wire", s: "Multi-strand copper", b: "Polycab" },
-    { n: "Armoured Cable", s: "Industrial grade", b: "Havells" },
-    { n: "FRLS Wire", s: "Fire retardant low smoke", b: "Polycab" },
-    { n: "Co-axial Cable", s: "RG6 RG11", b: "KEI" }
-  ]},
-  { cat: "Switches and Sockets", key: "Switches", ic: "sw", prods: [
-    { n: "Modular Switch", s: "6A 16A", b: "Legrand" },
-    { n: "Switch Board", s: "3 6 8 module", b: "Havells" },
-    { n: "MCB", s: "6A to 63A range", b: "Legrand" },
-    { n: "Socket Outlet", s: "5A 15A", b: "Nortek" },
-    { n: "RCCB", s: "25A 40A 63A", b: "Legrand" }
-  ]},
-  { cat: "Switchgear and Industrial", key: "Switchgear", ic: "gear", prods: [
-    { n: "Changeover Switch", s: "3 phase manual", b: "Indoasian" },
-    { n: "Main Switch", s: "DP TPN", b: "Havells" },
-    { n: "Bus Bar", s: "Copper Aluminium", b: "Indoasian" },
-    { n: "Distribution Board", s: "4 8 12 way", b: "Legrand" },
-    { n: "Contactor", s: "9A to 40A", b: "Legrand" },
-    { n: "Switchgear Accessories", s: "Terminals and Din rail", b: "Legrand" }
-  ]},
-  { cat: "Modular and Pipes", key: "Pipes", ic: "pipe", prods: [
-    { n: "PVC Conduit Pipe", s: "20mm 25mm", b: "Havells" },
-    { n: "Modular Box", s: "3 6 module flush", b: "Nortek" },
-    { n: "Junction Box", s: "IP55 waterproof", b: "Legrand" },
-    { n: "Casing Capping", s: "PVC white", b: "Havells" },
-    { n: "Flexible Conduit", s: "20mm corrugated", b: "Nortek" }
-  ]},
-  { cat: "ACs and Freezers", key: "ACs", ic: "ac", prods: [
-    { n: "Split AC 1 Ton", s: "5 star inverter", b: "Daikin" },
-    { n: "Split AC 1.5 Ton", s: "5 star inverter", b: "Mitsubishi" },
-    { n: "Split AC 1.5 Ton", s: "Inverter plus", b: "Lloyd" },
-    { n: "Split AC 2 Ton", s: "Heavy duty", b: "Samsung" },
-    { n: "Window AC", s: "1 ton fixed speed", b: "Blue Star" }
-  ]},
-  { cat: "Geysers", key: "Geysers", ic: "geyser", prods: [
-    { n: "Instant Geyser", s: "3L 6L", b: "Havells" },
-    { n: "Storage Geyser", s: "15L 25L", b: "Crompton" },
-    { n: "Water Heater", s: "Storage 15L", b: "V-Guard" }
-  ]},
-  { cat: "Appliances", key: "Appliances", ic: "app", prods: [
-    { n: "Mixer Grinder", s: "750W 3 jars", b: "Sujata" },
-    { n: "Mixer Grinder", s: "500W compact", b: "Cello" },
-    { n: "Iron", s: "1000W dry iron", b: "Havells" },
-    { n: "Induction Cooktop", s: "1800W touch panel", b: "Cello" }
-  ]}
-];
-
+var allProducts = [];
 var activeCat   = "All";
 var activeBrand = "All";
 
@@ -219,157 +139,145 @@ function makeEl(tag, cls, text) {
   return el;
 }
 
+async function fetchProducts() {
+  try {
+    var res = await fetch(SURL + "/rest/v1/products?select=*&order=id.asc", {
+      headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY }
+    });
+    if (!res.ok) throw new Error("Failed to fetch");
+    allProducts = await res.json();
+    render();
+  } catch(e) {
+    document.getElementById("pgrid").innerHTML = "<div class='empty-state'><p>Could not load products. Please try again later.</p></div>";
+  }
+}
+
+function getCategories() {
+  var seen = {}, result = [];
+  allProducts.forEach(function(p) {
+    if (p.Category && !seen[p.Category]) { seen[p.Category] = true; result.push(p.Category); }
+  });
+  return result.sort();
+}
+
+function getBrands() {
+  var seen = {}, result = [];
+  var filtered = activeCat === "All" ? allProducts : allProducts.filter(function(p){return p.Category===activeCat;});
+  filtered.forEach(function(p) {
+    if (p.Brand && !seen[p.Brand]) { seen[p.Brand] = true; result.push(p.Brand); }
+  });
+  return result.sort();
+}
+
 function buildSidebar() {
   var sb = document.getElementById("sidebar");
   sb.innerHTML = "";
 
   sb.appendChild(makeEl("span", "sb-label", "Categories"));
+  var allBtn = makeEl("button", "sb-btn" + (activeCat==="All" ? " active" : ""), "All Categories");
+  allBtn.addEventListener("click", function() { setCat("All"); });
+  sb.appendChild(allBtn);
 
-  var allCatBtn = makeEl("button", "sb-btn" + (activeCat === "All" ? " active" : ""), "All Categories");
-  allCatBtn.addEventListener("click", function() { setCat("All"); });
-  sb.appendChild(allCatBtn);
-
-  for (var i = 0; i < CAT.length; i++) {
-    (function(c) {
-      var btn = makeEl("button", "sb-btn" + (activeCat === c.key ? " active" : ""), c.cat);
-      btn.addEventListener("click", function() { setCat(c.key); });
-      sb.appendChild(btn);
-    })(CAT[i]);
-  }
+  getCategories().forEach(function(cat) {
+    var btn = makeEl("button", "sb-btn" + (activeCat===cat ? " active" : ""), cat);
+    btn.addEventListener("click", function() { setCat(cat); });
+    sb.appendChild(btn);
+  });
 
   sb.appendChild(makeEl("div", "sb-div"));
   sb.appendChild(makeEl("span", "sb-label", "Brands"));
 
-  var allBrandBtn = makeEl("button", "sb-btn" + (activeBrand === "All" ? " active" : ""), "All Brands");
+  var allBrandBtn = makeEl("button", "sb-btn" + (activeBrand==="All" ? " active" : ""), "All Brands");
   allBrandBtn.addEventListener("click", function() { setBrand("All"); });
   sb.appendChild(allBrandBtn);
 
-  var seen = {};
-  var brands = [];
-  for (var j = 0; j < CAT.length; j++) {
-    for (var k = 0; k < CAT[j].prods.length; k++) {
-      var br = CAT[j].prods[k].b;
-      if (!seen[br]) { seen[br] = true; brands.push(br); }
-    }
-  }
-  brands.sort();
-  for (var m = 0; m < brands.length; m++) {
-    (function(b) {
-      var btn = makeEl("button", "sb-btn" + (activeBrand === b ? " active" : ""), b);
-      btn.addEventListener("click", function() { setBrand(b); });
-      sb.appendChild(btn);
-    })(brands[m]);
-  }
+  getBrands().forEach(function(brand) {
+    var btn = makeEl("button", "sb-btn" + (activeBrand===brand ? " active" : ""), brand);
+    btn.addEventListener("click", function() { setBrand(brand); });
+    sb.appendChild(btn);
+  });
 }
 
 function buildBrandBar() {
   var bar = document.getElementById("brand-bar");
   bar.innerHTML = "";
-
-  var allBtn = makeEl("button", "bpill" + (activeBrand === "All" ? " active" : ""), "All");
+  var allBtn = makeEl("button", "bpill" + (activeBrand==="All" ? " active" : ""), "All");
   allBtn.addEventListener("click", function() { setBrand("All"); });
   bar.appendChild(allBtn);
-
-  var seen = {};
-  for (var i = 0; i < CAT.length; i++) {
-    if (activeCat !== "All" && CAT[i].key !== activeCat) continue;
-    for (var j = 0; j < CAT[i].prods.length; j++) {
-      var br = CAT[i].prods[j].b;
-      if (!seen[br]) {
-        seen[br] = true;
-        (function(b) {
-          var btn = makeEl("button", "bpill" + (activeBrand === b ? " active" : ""), b);
-          btn.addEventListener("click", function() { setBrand(b); });
-          bar.appendChild(btn);
-        })(br);
-      }
-    }
-  }
+  getBrands().forEach(function(brand) {
+    var btn = makeEl("button", "bpill" + (activeBrand===brand ? " active" : ""), brand);
+    btn.addEventListener("click", function() { setBrand(brand); });
+    bar.appendChild(btn);
+  });
 }
 
 function buildGrid() {
   var grid = document.getElementById("pgrid");
   grid.innerHTML = "";
 
-  var titleEl = document.getElementById("main-title");
-  var countEl = document.getElementById("main-count");
+  var filtered = allProducts.filter(function(p) {
+    var catOk  = activeCat   === "All" || p.Category === activeCat;
+    var brandOk = activeBrand === "All" || p.Brand    === activeBrand;
+    return catOk && brandOk;
+  });
 
-  var titleText = "All Products";
-  if (activeCat !== "All") {
-    for (var x = 0; x < CAT.length; x++) {
-      if (CAT[x].key === activeCat) { titleText = CAT[x].cat; break; }
-    }
-  }
-  titleEl.textContent = titleText;
+  var titleEl = document.getElementById("main-title");
+  titleEl.textContent = activeCat === "All" ? "All Products" : activeCat;
   if (activeBrand !== "All") {
     var em = document.createElement("em");
     em.textContent = " / " + activeBrand;
     titleEl.appendChild(em);
   }
+  document.getElementById("main-count").textContent = filtered.length + " product" + (filtered.length!==1?"s":"");
 
-  var count = 0;
-
-  for (var i = 0; i < CAT.length; i++) {
-    var c = CAT[i];
-    if (activeCat !== "All" && c.key !== activeCat) continue;
-
-    for (var j = 0; j < c.prods.length; j++) {
-      var p = c.prods[j];
-      if (activeBrand !== "All" && p.b !== activeBrand) continue;
-
-      count++;
-
-      var card = makeEl("div", "pcard");
-
-      var iconDiv = makeEl("div", "picon");
-      var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.setAttribute("viewBox", "0 0 24 24");
-      var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      path.setAttribute("d", IC[c.ic] || IC.app);
-      svg.appendChild(path);
-      iconDiv.appendChild(svg);
-
-      var body = makeEl("div", "pbody");
-      body.appendChild(makeEl("div", "pbrand", p.b));
-      body.appendChild(makeEl("div", "pname", p.n));
-      body.appendChild(makeEl("div", "pspec", p.s));
-
-      var btn = makeEl("button", "pwa", "");
-      var waIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      waIcon.setAttribute("width", "12");
-      waIcon.setAttribute("height", "12");
-      waIcon.setAttribute("viewBox", "0 0 24 24");
-      waIcon.setAttribute("fill", "white");
-      var waPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      waPath.setAttribute("d", "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z");
-      waIcon.appendChild(waPath);
-      btn.appendChild(waIcon);
-      btn.appendChild(document.createTextNode(" Enquire"));
-
-      (function(prod) {
-        btn.addEventListener("click", function() {
-          openWA("Hello Electric Emporium! I am interested in " + prod.n + " by " + prod.b + " - " + prod.s + ". Please share availability and price.");
-        });
-      })(p);
-
-      body.appendChild(btn);
-      card.appendChild(iconDiv);
-      card.appendChild(body);
-      grid.appendChild(card);
-    }
-  }
-
-  countEl.textContent = count + " product" + (count !== 1 ? "s" : "");
-
-  if (count === 0) {
+  if (filtered.length === 0) {
     var empty = makeEl("div", "empty-state");
-    var ep = makeEl("p", "", "No products found.");
-    var eb = makeEl("button", "", "View all products");
-    eb.addEventListener("click", function() { setCat("All"); setBrand("All"); });
-    empty.appendChild(ep);
-    empty.appendChild(eb);
+    empty.appendChild(makeEl("p", "", "No products found for this filter."));
     grid.appendChild(empty);
+    return;
   }
+
+  filtered.forEach(function(p) {
+    var card = makeEl("div", "pcard" + (!p.in_stock ? " out-of-stock" : ""));
+
+    var imgDiv = makeEl("div", "pimg");
+    if (p.Photo_url) {
+      var img = document.createElement("img");
+      img.src = p.Photo_url;
+      img.alt = p.Name || "";
+      img.loading = "lazy";
+      imgDiv.appendChild(img);
+    } else {
+      imgDiv.appendChild(makeEl("div", "pimg-placeholder", "💡"));
+    }
+
+    var body = makeEl("div", "pbody");
+    body.appendChild(makeEl("div", "pbrand", p.Brand || ""));
+    body.appendChild(makeEl("div", "pname", p.Name || ""));
+    if (p.Spec)  body.appendChild(makeEl("div", "pspec", p.Spec));
+    if (p.Price) body.appendChild(makeEl("div", "pprice", p.Price));
+
+    var btn = makeEl("button", "pwa", "");
+    var svgNS = "http://www.w3.org/2000/svg";
+    var svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("width","12"); svg.setAttribute("height","12");
+    svg.setAttribute("viewBox","0 0 24 24"); svg.setAttribute("fill","white");
+    var path = document.createElementNS(svgNS, "path");
+    path.setAttribute("d","M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z");
+    svg.appendChild(path);
+    btn.appendChild(svg);
+    btn.appendChild(document.createTextNode(" Enquire"));
+    (function(prod) {
+      btn.addEventListener("click", function() {
+        openWA("Hello Electric Emporium! I am interested in " + prod.Name + " by " + prod.Brand + ". Please share availability and price.");
+      });
+    })(p);
+
+    body.appendChild(btn);
+    card.appendChild(imgDiv);
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
 }
 
 function render() {
@@ -379,37 +287,33 @@ function render() {
 }
 
 function setCat(k) {
-  activeCat = k;
-  activeBrand = "All";
-  render();
-  window.scrollTo(0, 0);
+  activeCat = k; activeBrand = "All";
+  render(); window.scrollTo(0,0);
 }
-
 function setBrand(b) {
-  activeBrand = b;
-  render();
+  activeBrand = b; render();
 }
 
 function getParam(name) {
   var href = window.location.href;
   var idx = href.indexOf("?");
   if (idx === -1) return "";
-  var qs = href.substring(idx + 1).split("&");
-  for (var i = 0; i < qs.length; i++) {
-    var eq = qs[i].indexOf("=");
+  var pairs = href.substring(idx+1).split("&");
+  for (var i=0; i<pairs.length; i++) {
+    var eq = pairs[i].indexOf("=");
     if (eq === -1) continue;
-    if (decodeURIComponent(qs[i].substring(0, eq)) === name) {
-      return decodeURIComponent(qs[i].substring(eq + 1));
-    }
+    if (decodeURIComponent(pairs[i].substring(0,eq)) === name)
+      return decodeURIComponent(pairs[i].substring(eq+1));
   }
   return "";
 }
 
 var paramCat   = getParam("cat");
 var paramBrand = getParam("brand");
-if (paramBrand) { activeBrand = paramBrand; }
-else if (paramCat) { activeCat = paramCat; }
-render();
+if (paramBrand) activeBrand = paramBrand;
+else if (paramCat) activeCat = paramCat;
+
+fetchProducts();
 </script>
 </body>
 </html>
