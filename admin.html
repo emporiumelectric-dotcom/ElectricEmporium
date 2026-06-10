@@ -223,17 +223,22 @@ function previewPhoto(input) {
 
 async function uploadPhoto(file) {
   var ext = file.name.split(".").pop();
-  var filename = Date.now() + "." + ext;
+  var filename = Date.now() + "_" + Math.random().toString(36).substr(2,6) + "." + ext;
   var res = await fetch(SURL + "/storage/v1/object/product-photos/" + filename, {
     method: "POST",
     headers: {
       "Authorization": "Bearer " + SKEY,
+      "apikey": SKEY,
       "Content-Type": file.type,
       "x-upsert": "true"
     },
     body: file
   });
-  if (!res.ok) throw new Error("Photo upload failed");
+  if (!res.ok) {
+    var errText = await res.text();
+    console.error("Storage error:", res.status, errText);
+    throw new Error("Photo upload failed: " + res.status);
+  }
   return SURL + "/storage/v1/object/public/product-photos/" + filename;
 }
 
@@ -256,16 +261,14 @@ async function saveProduct() {
   btn.textContent = "Saving...";
 
   try {
-    var photoUrl = "";
-    if (photoFile) {
-      showMsg("save-msg", "success", "Uploading photo...");
-      photoUrl = await uploadPhoto(photoFile);
-    }
-
+    // Step 1: Save product without photo first
     var payload = {
-      Name: name, Brand: brand, Category: cat,
-      Spec: spec, Price: price,
-      Photo_url: photoUrl,
+      Name: name,
+      Brand: brand,
+      Category: cat,
+      Spec: spec,
+      Price: price,
+      Photo_url: "",
       in_stock: stock
     };
 
@@ -275,14 +278,44 @@ async function saveProduct() {
         "apikey": SKEY,
         "Authorization": "Bearer " + SKEY,
         "Content-Type": "application/json",
-        "Prefer": "return=minimal"
+        "Prefer": "return=representation"
       },
       body: JSON.stringify(payload)
     });
 
     if (!res.ok) {
       var err = await res.text();
-      throw new Error(err);
+      console.error("Save error:", res.status, err);
+      throw new Error(res.status + ": " + err);
+    }
+
+    var saved = await res.json();
+    var newId = saved[0].id;
+
+    // Step 2: Upload photo if provided and update the record
+    if (photoFile && newId) {
+      try {
+        showMsg("save-msg", "success", "Product saved! Uploading photo...");
+        var photoUrl = await uploadPhoto(photoFile);
+        // Update photo_url
+        await fetch(SURL + "/rest/v1/products?id=eq." + newId, {
+          method: "PATCH",
+          headers: {
+            "apikey": SKEY,
+            "Authorization": "Bearer " + SKEY,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ Photo_url: photoUrl })
+        });
+      } catch(photoErr) {
+        console.warn("Photo upload failed:", photoErr);
+        showMsg("save-msg", "success", "Product saved! (Photo upload failed - you can re-add it later)");
+        resetForm();
+        loadProducts();
+        btn.disabled = false;
+        btn.textContent = "Save Product";
+        return;
+      }
     }
 
     showMsg("save-msg", "success", "Product saved successfully!");
