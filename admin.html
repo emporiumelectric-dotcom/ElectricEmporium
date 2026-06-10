@@ -117,8 +117,8 @@ nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:
   </div>
 
   <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('add')">Add Product</button>
-    <button class="tab-btn" onclick="switchTab('list')">All Products</button>
+    <button class="tab-btn active" id="tab-btn-add">Add Product</button>
+    <button class="tab-btn" id="tab-btn-list">All Products</button>
   </div>
 
   <!-- ADD TAB -->
@@ -163,7 +163,7 @@ nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:
         <div class="card">
           <h3>Product Photos</h3>
           <div class="photos-grid" id="photos-grid"></div>
-          <div class="photo-upload-btn" onclick="document.getElementById('photo-input').click()">
+          <div class="photo-upload-btn" id="photo-upload-area">
             + Click to add photos
             <input type="file" id="photo-input" accept="image/*" multiple style="display:none" onchange="handlePhotoSelect(this)">
           </div>
@@ -175,14 +175,14 @@ nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:
         <div class="card">
           <h3>Size &amp; Colour Variants</h3>
           <p class="hint" style="margin-bottom:1rem">Add different sizes, colours or models with individual prices.</p>
-          <button class="btn-add-variant" onclick="addVariantRow()">+ Add Variant</button>
+          <button class="btn-add-variant" id="add-variant-btn">+ Add Variant</button>
           <div class="variants-list" id="variants-list"></div>
         </div>
       </div>
     </div>
 
     <div style="max-width:580px;margin-top:1.5rem">
-      <button class="btn-save" id="save-btn" onclick="saveProduct()">Save Product</button>
+      <button class="btn-save" id="save-btn" id="save-product-btn">Save Product</button>
       <div class="msg" id="save-msg"></div>
     </div>
   </div>
@@ -218,7 +218,7 @@ function logout() { document.getElementById("login-screen").style.display = "fle
 function switchTab(tab) {
   document.querySelectorAll(".tab-btn").forEach(function(b) { b.classList.remove("active"); });
   document.querySelectorAll(".tab-panel").forEach(function(p) { p.classList.remove("active"); });
-  document.querySelector("[onclick="switchTab('" + tab + "')"]").classList.add("active");
+  document.getElementById("tab-btn-" + tab).classList.add("active");
   document.getElementById("tab-" + tab).classList.add("active");
   if (tab === "list") loadProducts();
 }
@@ -270,19 +270,36 @@ async function uploadPhoto(file) {
 /* ── VARIANTS ── */
 function addVariantRow() {
   variantCount++;
-  var id = "vr_" + variantCount;
+  var rowId = "vr_" + variantCount;
   var list = document.getElementById("variants-list");
   var row = document.createElement("div");
   row.className = "variant-row";
-  row.id = id;
-  row.innerHTML =
-    "<select class='vtype'><option value='size'>Size</option><option value='colour'>Colour</option><option value='model'>Model</option></select>" +
-    "<input class='vvalue' type='text' placeholder='e.g. 1200mm'>" +
-    "<input class='vprice' type='text' placeholder='e.g. &#x20B9;6,999'>" +
-    "<label class='toggle' style='flex-shrink:0'><input type='checkbox' class='vstock' checked><span class='toggle-slider'></span></label>" +
-    "<button class='btn-del-variant' onclick="removeVariant('" + id + "')">&times;</button>";
+  row.id = rowId;
+  var sel = document.createElement("select");
+  sel.className = "vtype";
+  ["size","colour","model"].forEach(function(v){
+    var opt = document.createElement("option");
+    opt.value = v; opt.textContent = v.charAt(0).toUpperCase()+v.slice(1);
+    sel.appendChild(opt);
+  });
+  var valI = document.createElement("input");
+  valI.className="vvalue"; valI.type="text"; valI.placeholder="e.g. 1200mm";
+  var prI = document.createElement("input");
+  prI.className="vprice"; prI.type="text"; prI.placeholder="e.g. Price";
+  var lbl = document.createElement("label");
+  lbl.className="toggle"; lbl.style.flexShrink="0";
+  var chk = document.createElement("input");
+  chk.type="checkbox"; chk.className="vstock"; chk.checked=true;
+  var slider=document.createElement("span"); slider.className="toggle-slider";
+  lbl.appendChild(chk); lbl.appendChild(slider);
+  var delBtn=document.createElement("button");
+  delBtn.className="btn-del-variant"; delBtn.textContent="x";
+  (function(id){ delBtn.addEventListener("click",function(){ removeVariant(id); }); })(rowId);
+  row.appendChild(sel); row.appendChild(valI); row.appendChild(prI);
+  row.appendChild(lbl); row.appendChild(delBtn);
   list.appendChild(row);
 }
+
 function removeVariant(id) { var el = document.getElementById(id); if(el) el.remove(); }
 
 function getVariants() {
@@ -430,6 +447,19 @@ function showMsg(id, type, text) {
   el.className = "msg " + type; el.textContent = text; el.style.display = "block";
   if (type==="success") setTimeout(function(){el.style.display="none";}, 5000);
 }
+
+// Attach all button events safely
+var tabAddBtn = document.getElementById("tab-btn-add");
+var tabListBtn = document.getElementById("tab-btn-list");
+var photoArea = document.getElementById("photo-upload-area");
+var addVarBtn = document.getElementById("add-variant-btn");
+var saveProdBtn = document.getElementById("save-product-btn");
+
+if(tabAddBtn) tabAddBtn.addEventListener("click", function(){ switchTab("add"); });
+if(tabListBtn) tabListBtn.addEventListener("click", function(){ switchTab("list"); });
+if(photoArea) photoArea.addEventListener("click", function(){ document.getElementById("photo-input").click(); });
+if(addVarBtn) addVarBtn.addEventListener("click", addVariantRow);
+if(saveProdBtn) saveProdBtn.addEventListener("click", saveProduct);
 </script>
 </body>
 </html>
