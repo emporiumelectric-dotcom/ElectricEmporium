@@ -1,446 +1,391 @@
-    <!DOCTYPE html>
-    <html lang="en">
-      <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ElectricalContractor",
-  "name": "Electric Emporium",
-  "alternateName": "Electric Emporium Balaghat",
-  "description": "Balaghat most trusted electrical shop since 1989. Authorised dealer of Havells, Legrand, Atomberg, Daikin, V-Guard and more.",
-  "url": "https://electricemporium.in",
-  "telephone": "+919425831035",
-  "priceRange": "₹₹",
-  "image": "https://electricemporium.in/shop1.png",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Main Rd, Gujri Chowk, Chitragupt Nagar",
-    "addressLocality": "Balaghat",
-    "addressRegion": "Madhya Pradesh",
-    "postalCode": "481001",
-    "addressCountry": "IN"
-  },
-  "openingHoursSpecification": [{
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "10:00",
-    "closes": "21:00"
-  }],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.9",
-    "reviewCount": "56",
-    "bestRating": "5"
-  }
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
+<title>Electric Emporium – Balaghat</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ElectricalContractor","name":"Electric Emporium","alternateName":"Electric Emporium Balaghat","description":"Balaghat most trusted electrical shop since 1989. Authorised dealer of Havells, Legrand, Atomberg, Daikin, V-Guard and more.","url":"https://electricemporium.in","telephone":"+919425831035","priceRange":"₹₹","image":"https://electricemporium.in/shop1.png","address":{"@type":"PostalAddress","streetAddress":"Main Rd, Gujri Chowk, Chitragupt Nagar","addressLocality":"Balaghat","addressRegion":"Madhya Pradesh","postalCode":"481001","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":21.8314,"longitude":80.1837},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"10:00","closes":"21:00"}],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"56","bestRating":"5"}}
 </script>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
-    <title>Electric Emporium – Balaghat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
-    <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{--red:#E30613;--red2:#FF1F2D;--black:#1C1C1C;--black2:#111;--white:#fff;--off:#F7F7F7;--gray:#777;--border:#E0E0E0}
-    html,body{overflow-x:hidden;scroll-behavior:smooth}
-    body{font-family:"Montserrat",sans-serif;background:var(--white);color:var(--black)}
-    
-    /* NAV */
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:70px;background:var(--white);border-bottom:3px solid var(--red);box-shadow:0 2px 14px rgba(0,0,0,0.07)}
-    .nav-logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
-    .nav-logo img{height:40px;width:auto;object-fit:contain}
-    .logo-text{font-size:1.15rem;font-weight:800;letter-spacing:0.01em;line-height:1}
-    .logo-text .e{color:var(--red)}.logo-text .em{color:var(--black)}
-    .nav-links{display:flex;gap:2rem;list-style:none}
-    .nav-links a{font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--black);text-decoration:none;transition:color 0.2s;position:relative}
-    .nav-links a::after{content:"";position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform 0.25s;transform-origin:left}
-    .nav-links a:hover{color:var(--red)}.nav-links a:hover::after{transform:scaleX(1)}
-    .nav-right{display:flex;align-items:center;gap:1rem}
-    .nav-phone{font-size:0.78rem;font-weight:600;color:var(--black);cursor:pointer}
-    .nav-cta{background:var(--red);color:var(--white);border:none;padding:0.58rem 1.3rem;font-family:"Montserrat",sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
-    .nav-cta:hover{background:var(--red2)}
-    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
-    .hamburger span{display:block;width:26px;height:2.5px;background:var(--black);transition:all 0.3s;transform-origin:center}
-    .hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
-    .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-    .hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
-    .mob-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--white);border-bottom:3px solid var(--red);z-index:99;padding:1.5rem 2rem;box-shadow:0 8px 30px rgba(0,0,0,0.12);transform:translateY(-10px);opacity:0;transition:all 0.25s ease;pointer-events:none}
-    .mob-menu.open{transform:translateY(0);opacity:1;pointer-events:all;display:block}
-    .mob-menu ul{list-style:none}
-    .mob-menu ul li a{display:block;padding:0.9rem 0;font-size:0.82rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--black);text-decoration:none;border-bottom:1px solid var(--border)}
-    .mob-menu ul li:last-child a{border-bottom:none}
-    .mob-menu ul li a:hover{color:var(--red)}
-    .mob-btns{margin-top:1.2rem;display:flex;gap:0.8rem}
-    .mob-btns a{flex:1;text-align:center;padding:0.85rem;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none}
-    .mob-call{background:var(--off);color:var(--black);border:1.5px solid var(--border)}
-    .mob-wa{background:#25D366;color:var(--white)}
-    
-    /* HERO */
-    .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:70px;overflow:hidden}
-    .hero-slides{position:absolute;inset:0;z-index:0}
-    .hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease}
-    .hero-slide.active{opacity:1}
-    .hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.65) 50%,rgba(0,0,0,0.25) 100%)}
-    .hero-content{position:relative;z-index:2;max-width:700px;padding:4rem 5rem}
-    .eyebrow{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.8rem}
-    .eyebrow-line{width:36px;height:3px;background:var(--red);flex-shrink:0}
-    .eyebrow-text{font-size:0.68rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:var(--red)}
-    .hero-title{font-size:clamp(3rem,6vw,5.5rem);font-weight:900;line-height:0.95;letter-spacing:-0.01em;text-transform:uppercase;margin-bottom:1.5rem;color:var(--white)}
-    .hero-title .red{color:var(--red)}.hero-title .ital{font-style:italic}
-    .hero-desc{font-size:0.92rem;line-height:1.9;color:rgba(255,255,255,0.75);max-width:480px;margin-bottom:2.5rem;font-weight:300}
-    .hero-stats{display:flex;gap:2.5rem;margin-bottom:3rem;padding:1.5rem 0;border-top:1px solid rgba(255,255,255,0.2);border-bottom:1px solid rgba(255,255,255,0.2)}
-    .stat-num{font-size:2rem;font-weight:900;color:var(--red);line-height:1}
-    .stat-label{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:0.2rem}
-    .hero-tagline{font-size:1.1rem;font-weight:600;font-style:italic;color:var(--white);letter-spacing:0.08em;margin-bottom:1rem;opacity:0.9}
-    .hero-tagline::before{content:"4 "}.hero-tagline::after{content:" 4"}
-    .hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
-    .btn-red{background:var(--red);color:var(--white);border:none;padding:0.9rem 2.2rem;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s}
-    .btn-red:hover{background:var(--red2);transform:translateY(-1px)}
-    .btn-outline-w{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.5);padding:0.85rem 2.2rem;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s}
-    .btn-outline-w:hover{border-color:var(--white);background:rgba(255,255,255,0.12)}
-    .hero-dots{position:absolute;bottom:2rem;left:5rem;z-index:3;display:flex;gap:0.5rem}
-    .hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:all 0.3s;border:none;padding:0}
-    .hero-dot.active{background:var(--red);width:24px;border-radius:4px}
-    
-    /* TICKER */
-    .ticker{background:var(--red);padding:0.8rem 0;overflow:hidden;white-space:nowrap}
-    .ticker-track{display:inline-flex;animation:tick 32s linear infinite}
-    .t-item{font-size:0.72rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--white);padding:0 2rem}
-    .t-dot{color:rgba(255,255,255,0.4)}
-    @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-    
-    /* SECTION */
-    .section{padding:5.5rem 2rem}
-    .sec-header{text-align:center;margin-bottom:3rem}
-    .sec-kicker{font-size:0.65rem;font-weight:800;letter-spacing:0.35em;text-transform:uppercase;color:var(--red);margin-bottom:0.6rem;display:block}
-    .sec-title{font-size:clamp(1.8rem,3.5vw,2.7rem);font-weight:900;text-transform:uppercase;letter-spacing:0.01em;line-height:1;color:var(--black)}
-    .sec-title .red{color:var(--red)}
-    
-    /* CATEGORY GRID */
-    .cat-section{background:var(--off)}
-    .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:1100px;margin:0 auto;border:1px solid var(--border)}
-    .cat-card{background:var(--white);padding:2.5rem 1.2rem;text-align:center;cursor:pointer;transition:all 0.25s;border:1px solid var(--border);position:relative;overflow:hidden;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none}
-    .cat-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);transform:scaleX(0);transition:transform 0.3s}
-    .cat-card:hover{background:var(--black)}.cat-card:hover::after{transform:scaleX(1)}
-    .cat-icon{width:56px;height:56px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;color:var(--black)}
-    .cat-icon svg{width:44px;height:44px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-    .cat-card:hover .cat-icon{color:var(--white)}
-    .cat-name{font-size:0.8rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.35rem;color:var(--black);transition:color 0.25s;line-height:1.2}
-    .cat-card:hover .cat-name{color:var(--white)}
-    .cat-sub{font-size:0.63rem;color:var(--gray);letter-spacing:0.03em;line-height:1.5;transition:color 0.25s}
-    .cat-card:hover .cat-sub{color:rgba(255,255,255,0.45)}
-    
-    /* BRANDS */
-    .brands-section{background:var(--white);padding-top:0}
-    .auth-banner{background:var(--red);padding:2.2rem 2rem;text-align:center}
-    .auth-banner-sub{font-size:0.72rem;font-weight:700;letter-spacing:0.35em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:0.5rem;display:block}
-    .auth-banner-title{font-size:clamp(1.6rem,4vw,3rem);font-weight:900;text-transform:uppercase;color:var(--white);letter-spacing:0.05em;line-height:1}
-    .auth-banner-title .outline{-webkit-text-stroke:2px var(--white);color:transparent}
-    .brands-inner{padding:4rem 2rem}
-    .brands-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;max-width:1100px;margin:0 auto;background:var(--border)}
-    .brand-tile{background:var(--white);padding:2rem 1.2rem;text-align:center;transition:all 0.25s;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;text-decoration:none}
-    .brand-tile:hover{background:var(--red)}
-    .brand-logo-wrap{height:52px;display:flex;align-items:center;justify-content:center;width:100%;margin-bottom:0.6rem}
-    .brand-logo-wrap img{max-height:44px;max-width:100px;object-fit:contain;transition:filter 0.25s}
-    .brand-logo-wrap img.dark-bg{mix-blend-mode:multiply}
-    .brand-tile:hover .brand-logo-wrap img{filter:brightness(0) invert(1)}
-    .brand-tile:hover .brand-logo-wrap img.dark-bg{filter:brightness(1.1);mix-blend-mode:normal}
-    .brand-name{font-size:0.85rem;font-weight:900;letter-spacing:0.1em;color:var(--black);transition:color 0.25s;text-transform:uppercase}
-    .brand-tile:hover .brand-name{color:var(--white)}
-    .brand-type{font-size:0.6rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--gray);transition:color 0.25s;line-height:1.5;text-align:center}
-    .brand-tile:hover .brand-type{color:rgba(255,255,255,0.75)}
-    
-    /* WHY */
-    .why{background:var(--black2)}
-    .why .sec-title{color:var(--white)}
-    .why .sec-kicker{color:rgba(255,255,255,0.35)}
-    .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;max-width:1100px;margin:0 auto;background:rgba(255,255,255,0.06)}
-    .why-card{background:var(--black2);padding:2.5rem 2rem;transition:all 0.25s}
-    .why-card:hover{background:var(--red)}
-    .why-num{font-size:2.8rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:0.6rem;transition:color 0.25s}
-    .why-card:hover .why-num{color:var(--white)}
-    .why-title{font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.5rem}
-    .why-text{font-size:0.78rem;color:rgba(255,255,255,0.42);line-height:1.8;transition:color 0.25s}
-    .why-card:hover .why-text{color:rgba(255,255,255,0.88)}
-    
-    /* ABOUT STRIP */
-    .about-strip{background:var(--white);padding:5.5rem 2rem}
-    .about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
-    .about-text{font-size:0.9rem;line-height:1.9;color:#444;margin-bottom:1.2rem;font-weight:300}
-    .about-text strong{color:var(--black);font-weight:700}
-    .about-values{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
-    .about-value{display:flex;gap:1rem;align-items:flex-start}
-    .about-value-icon{color:var(--red);font-size:1rem;flex-shrink:0;margin-top:0.1rem}
-    .about-value-title{font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--black);margin-bottom:0.2rem}
-    .about-value-text{font-size:0.78rem;color:var(--gray);line-height:1.6}
-    .about-right{display:flex;flex-direction:column;gap:1.5rem}
-    .about-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-    .about-stat{background:var(--off);padding:1.8rem 1rem;text-align:center}
-    .about-stat-num{font-size:1.8rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:0.3rem}
-    .about-stat-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);line-height:1.4}
-    .about-legacy-card{border:1px solid var(--border);overflow:hidden}
-    .about-legacy-label{background:var(--black);color:var(--white);font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1rem}
-    .about-legacy-img{width:100%;height:280px;object-fit:cover;object-position:top;display:block;filter:sepia(20%)}
-    .about-legacy-caption{padding:0.8rem 1rem;font-size:0.75rem;color:var(--gray);line-height:1.6;border-top:1px solid var(--border);font-style:italic}
-    .about-legacy-caption strong{color:var(--black);font-style:normal}
-    @media(max-width:900px){.about-inner{grid-template-columns:1fr;gap:2.5rem}.about-legacy-img{height:220px}}
-    
-    /* CONTACT */
-    .contact{background:var(--off);padding:5.5rem 2rem}
-    .contact-wrap{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);overflow:hidden;background:var(--white)}
-    .contact-left{background:var(--red);padding:3.5rem}
-    .contact-left h3{font-size:1.7rem;font-weight:900;text-transform:uppercase;color:var(--white);line-height:1.1;margin-bottom:1.2rem}
-    .contact-left p{font-size:0.82rem;color:rgba(255,255,255,0.8);line-height:1.8;margin-bottom:2rem;font-weight:300}
-    .c-rows{display:flex;flex-direction:column;gap:1.3rem}
-    .c-row{display:flex;gap:1rem;align-items:flex-start}
-    .c-icon{width:36px;height:36px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
-    .c-label{font-size:0.62rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:0.2rem}
-    .c-val{font-size:0.88rem;color:var(--white);line-height:1.6}
-    .contact-right{padding:3rem}
-    .contact-right h3{font-size:1.5rem;font-weight:900;text-transform:uppercase;color:var(--black);line-height:1.1;margin-bottom:0.5rem}
-    .contact-right p{font-size:0.8rem;color:var(--gray);margin-bottom:1.5rem}
-    .fg{margin-bottom:1rem}
-    .fg input,.fg textarea{width:100%;padding:0.8rem 1rem;border:1.5px solid var(--border);font-family:"Montserrat",sans-serif;font-size:0.8rem;color:var(--black);background:var(--off);outline:none;transition:border-color 0.2s;resize:none}
-    .fg input:focus,.fg textarea:focus{border-color:var(--red)}
-    .fg textarea{height:90px}
-    .submit-btn{width:100%;padding:1rem;background:var(--red);color:var(--white);border:none;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
-    .submit-btn:hover{background:var(--red2)}
-    
-    /* FOOTER */
-    footer{background:var(--black2);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:3px solid var(--red)}
-    .footer-brand{display:flex;align-items:center;gap:0.7rem}
-    .footer-brand img{height:40px;object-fit:contain}
-    .footer-wm{font-size:1rem;font-weight:900;letter-spacing:0.01em}
-    .footer-wm .e{color:var(--red)}.footer-wm .em{color:var(--white)}
-    .footer-center{font-size:0.7rem;color:rgba(255,255,255,0.28);letter-spacing:0.06em;line-height:1.9;text-align:center}
-    .footer-center span{color:var(--red);opacity:0.8}
-    .footer-links{display:flex;gap:1.5rem}
-    .footer-links a{font-size:0.66rem;font-weight:700;color:rgba(255,255,255,0.32);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s}
-    .footer-links a:hover{color:var(--red)}
-    #waFloat{position:fixed;bottom:2rem;right:2rem;z-index:999;width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform 0.25s;animation:waPulse 2.5s infinite;text-decoration:none}
-    #waFloat:hover{transform:scale(1.1)}
-    @keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.45)}50%{box-shadow:0 4px 32px rgba(37,211,102,0.75),0 0 0 8px rgba(37,211,102,0.1)}}
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
-    .reveal.visible{opacity:1;transform:translateY(0)}
-    @media(max-width:900px){
-      nav{padding:0 1.2rem}.nav-links,.nav-phone,.nav-cta{display:none}.hamburger{display:flex}
-      .hero-content{padding:3rem 1.5rem}.hero-title{font-size:clamp(2.4rem,10vw,3.5rem)}.hero-dots{left:1.5rem}.hero-stats{gap:1.5rem}
-      .cat-grid{grid-template-columns:repeat(2,1fr)}.brands-grid{grid-template-columns:repeat(3,1fr)}
-      .contact-wrap{grid-template-columns:1fr}
-      footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.footer-links{justify-content:center}
-    }
-    @media(max-width:600px){.brands-grid{grid-template-columns:repeat(2,1fr)}}
-    </style>
-    </head>
-    <body>
-    
-    <nav>
-      <a class="nav-logo" href="index.html">
-        <img src="eng_HD_jpeg.jpg" alt="Electric Emporium Logo">
-        <div>
-          <div class="logo-text"><span class="e">Electric</span><span class="em"> Emporium</span><sup style="font-size:0.55rem;color:var(--gray);font-weight:600">&reg;</sup></div>
-          <div style="font-size:0.58rem;font-weight:700;letter-spacing:0.18em;color:var(--gray);text-transform:uppercase;margin-top:1px">Est. 1989 &middot; Balaghat</div>
-        </div>
-      </a>
-      <ul class="nav-links">
-        <li><a href="#categories">Products</a></li>
-        <li><a href="#brands">Brands</a></li>
-        <li><a href="#why">Why Us</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <div class="nav-right">
-        <span class="nav-phone">&#128222; +91 94258 31035</span>
-        <button class="nav-cta" onclick="window.location.href='#contact'">Visit Store</button>
-        <button class="hamburger" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
-      </div>
-    </nav>
-    
-    <div class="mob-menu" id="mm">
-      <ul>
-        <li><a href="#categories" onclick="cM()">Products</a></li>
-        <li><a href="#brands" onclick="cM()">Brands</a></li>
-        <li><a href="#why" onclick="cM()">Why Us</a></li>
-        <li><a href="#about" onclick="cM()">About</a></li>
-        <li><a href="#contact" onclick="cM()">Contact</a></li>
-      </ul>
-      <div class="mob-btns">
-        <a href="tel:+919425831035" class="mob-call">&#128222; Call Now</a>
-        <a href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" class="mob-wa">&#128172; WhatsApp</a>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#E30613;--red2:#FF1F2D;--black:#1C1C1C;--black2:#111;--white:#fff;--off:#F7F7F7;--gray:#777;--border:#E0E0E0}
+html,body{overflow-x:hidden;scroll-behavior:smooth}
+body{font-family:"Montserrat",sans-serif;background:var(--white);color:var(--black)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:70px;background:var(--white);border-bottom:3px solid var(--red);box-shadow:0 2px 14px rgba(0,0,0,0.07)}
+.nav-logo{display:flex;align-items:center;gap:0.6rem;text-decoration:none}
+.nav-logo img{height:40px;width:auto;object-fit:contain}
+.logo-text{font-size:1.15rem;font-weight:800;letter-spacing:0.01em;line-height:1}
+.logo-text .e{color:var(--red)}.logo-text .em{color:var(--black)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--black);text-decoration:none;transition:color 0.2s;position:relative}
+.nav-links a::after{content:"";position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transition:transform 0.25s;transform-origin:left}
+.nav-links a:hover{color:var(--red)}.nav-links a:hover::after{transform:scaleX(1)}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.nav-phone{font-size:0.78rem;font-weight:600;color:var(--black);cursor:pointer}
+.nav-cta{background:var(--red);color:var(--white);border:none;padding:0.58rem 1.3rem;font-family:"Montserrat",sans-serif;font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
+.nav-cta:hover{background:var(--red2)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.hamburger span{display:block;width:26px;height:2.5px;background:var(--black);transition:all 0.3s;transform-origin:center}
+.hamburger.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.mob-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--white);border-bottom:3px solid var(--red);z-index:99;padding:1.5rem 2rem;box-shadow:0 8px 30px rgba(0,0,0,0.12);transform:translateY(-10px);opacity:0;transition:all 0.25s ease;pointer-events:none}
+.mob-menu.open{transform:translateY(0);opacity:1;pointer-events:all;display:block}
+.mob-menu ul{list-style:none}
+.mob-menu ul li a{display:block;padding:0.9rem 0;font-size:0.82rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--black);text-decoration:none;border-bottom:1px solid var(--border)}
+.mob-menu ul li:last-child a{border-bottom:none}
+.mob-menu ul li a:hover{color:var(--red)}
+.mob-btns{margin-top:1.2rem;display:flex;gap:0.8rem}
+.mob-btns a{flex:1;text-align:center;padding:0.85rem;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none}
+.mob-call{background:var(--off);color:var(--black);border:1.5px solid var(--border)}
+.mob-wa{background:#25D366;color:var(--white)}
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding-top:70px;overflow:hidden}
+.hero-slides{position:absolute;inset:0;z-index:0}
+.hero-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease}
+.hero-slide.active{opacity:1}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to right,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.65) 50%,rgba(0,0,0,0.25) 100%)}
+.hero-content{position:relative;z-index:2;max-width:700px;padding:4rem 5rem}
+.eyebrow{display:flex;align-items:center;gap:0.8rem;margin-bottom:1.8rem}
+.eyebrow-line{width:36px;height:3px;background:var(--red);flex-shrink:0}
+.eyebrow-text{font-size:0.68rem;font-weight:700;letter-spacing:0.3em;text-transform:uppercase;color:var(--red)}
+.hero-title{font-size:clamp(3rem,6vw,5.5rem);font-weight:900;line-height:0.95;letter-spacing:-0.01em;text-transform:uppercase;margin-bottom:1.5rem;color:var(--white)}
+.hero-title .red{color:var(--red)}.hero-title .ital{font-style:italic}
+.hero-desc{font-size:0.92rem;line-height:1.9;color:rgba(255,255,255,0.75);max-width:480px;margin-bottom:2.5rem;font-weight:300}
+.hero-stats{display:flex;gap:2.5rem;margin-bottom:3rem;padding:1.5rem 0;border-top:1px solid rgba(255,255,255,0.2);border-bottom:1px solid rgba(255,255,255,0.2)}
+.stat-num{font-size:2rem;font-weight:900;color:var(--red);line-height:1}
+.stat-label{font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-top:0.2rem}
+.hero-tagline{font-size:1.1rem;font-weight:600;font-style:italic;color:var(--white);letter-spacing:0.08em;margin-bottom:1rem;opacity:0.9}
+.hero-tagline::before{content:"\2014 "}.hero-tagline::after{content:" \2014"}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-red{background:var(--red);color:var(--white);border:none;padding:0.9rem 2.2rem;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s}
+.btn-red:hover{background:var(--red2);transform:translateY(-1px)}
+.btn-outline-w{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.5);padding:0.85rem 2.2rem;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.25s}
+.btn-outline-w:hover{border-color:var(--white);background:rgba(255,255,255,0.12)}
+.hero-dots{position:absolute;bottom:2rem;left:5rem;z-index:3;display:flex;gap:0.5rem}
+.hero-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:all 0.3s;border:none;padding:0}
+.hero-dot.active{background:var(--red);width:24px;border-radius:4px}
+.ticker{background:var(--red);padding:0.8rem 0;overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;animation:tick 32s linear infinite}
+.t-item{font-size:0.72rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--white);padding:0 2rem}
+.t-dot{color:rgba(255,255,255,0.4)}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.section{padding:5.5rem 2rem}
+.sec-header{text-align:center;margin-bottom:3rem}
+.sec-kicker{font-size:0.65rem;font-weight:800;letter-spacing:0.35em;text-transform:uppercase;color:var(--red);margin-bottom:0.6rem;display:block}
+.sec-title{font-size:clamp(1.8rem,3.5vw,2.7rem);font-weight:900;text-transform:uppercase;letter-spacing:0.01em;line-height:1;color:var(--black)}
+.sec-title .red{color:var(--red)}
+.cat-section{background:var(--off)}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);max-width:1100px;margin:0 auto;border:1px solid var(--border)}
+.cat-card{background:var(--white);padding:2.5rem 1.2rem;text-align:center;cursor:pointer;transition:all 0.25s;border:1px solid var(--border);position:relative;overflow:hidden;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none}
+.cat-card::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--red);transform:scaleX(0);transition:transform 0.3s}
+.cat-card:hover{background:var(--black)}.cat-card:hover::after{transform:scaleX(1)}
+.cat-icon{width:56px;height:56px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;color:var(--black)}
+.cat-icon svg{width:44px;height:44px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cat-card:hover .cat-icon{color:var(--white)}
+.cat-name{font-size:0.8rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.35rem;color:var(--black);transition:color 0.25s;line-height:1.2}
+.cat-card:hover .cat-name{color:var(--white)}
+.cat-sub{font-size:0.63rem;color:var(--gray);letter-spacing:0.03em;line-height:1.5;transition:color 0.25s}
+.cat-card:hover .cat-sub{color:rgba(255,255,255,0.45)}
+.brands-section{background:var(--white);padding-top:0}
+.auth-banner{background:var(--red);padding:2.2rem 2rem;text-align:center}
+.auth-banner-sub{font-size:0.72rem;font-weight:700;letter-spacing:0.35em;text-transform:uppercase;color:rgba(255,255,255,0.65);margin-bottom:0.5rem;display:block}
+.auth-banner-title{font-size:clamp(1.6rem,4vw,3rem);font-weight:900;text-transform:uppercase;color:var(--white);letter-spacing:0.05em;line-height:1}
+.auth-banner-title .outline{-webkit-text-stroke:2px var(--white);color:transparent}
+.brands-inner{padding:4rem 2rem}
+.brands-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;max-width:1100px;margin:0 auto;background:var(--border)}
+.brand-tile{background:var(--white);padding:2rem 1.2rem;text-align:center;transition:all 0.25s;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.3rem;text-decoration:none}
+.brand-tile:hover{background:var(--red)}
+.brand-logo-wrap{height:52px;display:flex;align-items:center;justify-content:center;width:100%;margin-bottom:0.6rem}
+.brand-logo-wrap img{max-height:44px;max-width:100px;object-fit:contain;transition:filter 0.25s}
+.brand-logo-wrap img.dark-bg{mix-blend-mode:multiply}
+.brand-tile:hover .brand-logo-wrap img{filter:brightness(0) invert(1)}
+.brand-tile:hover .brand-logo-wrap img.dark-bg{filter:brightness(1.1);mix-blend-mode:normal}
+.brand-name{font-size:0.85rem;font-weight:900;letter-spacing:0.1em;color:var(--black);transition:color 0.25s;text-transform:uppercase}
+.brand-tile:hover .brand-name{color:var(--white)}
+.brand-type{font-size:0.6rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--gray);transition:color 0.25s;line-height:1.5;text-align:center}
+.brand-tile:hover .brand-type{color:rgba(255,255,255,0.75)}
+.why{background:var(--black2)}
+.why .sec-title{color:var(--white)}
+.why .sec-kicker{color:rgba(255,255,255,0.35)}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;max-width:1100px;margin:0 auto;background:rgba(255,255,255,0.06)}
+.why-card{background:var(--black2);padding:2.5rem 2rem;transition:all 0.25s}
+.why-card:hover{background:var(--red)}
+.why-num{font-size:2.8rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:0.6rem;transition:color 0.25s}
+.why-card:hover .why-num{color:var(--white)}
+.why-title{font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);margin-bottom:0.5rem}
+.why-text{font-size:0.78rem;color:rgba(255,255,255,0.42);line-height:1.8;transition:color 0.25s}
+.why-card:hover .why-text{color:rgba(255,255,255,0.88)}
+.about-strip{background:var(--white);padding:5.5rem 2rem}
+.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.about-text{font-size:0.9rem;line-height:1.9;color:#444;margin-bottom:1.2rem;font-weight:300}
+.about-text strong{color:var(--black);font-weight:700}
+.about-values{display:flex;flex-direction:column;gap:1rem;margin-top:2rem}
+.about-value{display:flex;gap:1rem;align-items:flex-start}
+.about-value-icon{color:var(--red);font-size:1rem;flex-shrink:0;margin-top:0.1rem}
+.about-value-title{font-size:0.82rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--black);margin-bottom:0.2rem}
+.about-value-text{font-size:0.78rem;color:var(--gray);line-height:1.6}
+.about-right{display:flex;flex-direction:column;gap:1.5rem}
+.about-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.about-stat{background:var(--off);padding:1.8rem 1rem;text-align:center}
+.about-stat-num{font-size:1.8rem;font-weight:900;color:var(--red);line-height:1;margin-bottom:0.3rem}
+.about-stat-label{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);line-height:1.4}
+.about-legacy-card{border:1px solid var(--border);overflow:hidden}
+.about-legacy-label{background:var(--black);color:var(--white);font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;padding:0.6rem 1rem}
+.about-legacy-img{width:100%;height:280px;object-fit:cover;object-position:top;display:block;filter:sepia(20%)}
+.about-legacy-caption{padding:0.8rem 1rem;font-size:0.75rem;color:var(--gray);line-height:1.6;border-top:1px solid var(--border);font-style:italic}
+.about-legacy-caption strong{color:var(--black);font-style:normal}
+@media(max-width:900px){.about-inner{grid-template-columns:1fr;gap:2.5rem}.about-legacy-img{height:220px}}
+.contact{background:var(--off);padding:5.5rem 2rem}
+.contact-wrap{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);overflow:hidden;background:var(--white)}
+.contact-left{background:var(--red);padding:3.5rem}
+.contact-left h3{font-size:1.7rem;font-weight:900;text-transform:uppercase;color:var(--white);line-height:1.1;margin-bottom:1.2rem}
+.contact-left p{font-size:0.82rem;color:rgba(255,255,255,0.8);line-height:1.8;margin-bottom:2rem;font-weight:300}
+.c-rows{display:flex;flex-direction:column;gap:1.3rem}
+.c-row{display:flex;gap:1rem;align-items:flex-start}
+.c-icon{width:36px;height:36px;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.c-label{font-size:0.62rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:0.2rem}
+.c-val{font-size:0.88rem;color:var(--white);line-height:1.6}
+.contact-right{padding:3rem}
+.contact-right h3{font-size:1.5rem;font-weight:900;text-transform:uppercase;color:var(--black);line-height:1.1;margin-bottom:0.5rem}
+.contact-right p{font-size:0.8rem;color:var(--gray);margin-bottom:1.5rem}
+.fg{margin-bottom:1rem}
+.fg input,.fg textarea{width:100%;padding:0.8rem 1rem;border:1.5px solid var(--border);font-family:"Montserrat",sans-serif;font-size:0.8rem;color:var(--black);background:var(--off);outline:none;transition:border-color 0.2s;resize:none}
+.fg input:focus,.fg textarea:focus{border-color:var(--red)}
+.fg textarea{height:90px}
+.submit-btn{width:100%;padding:1rem;background:var(--red);color:var(--white);border:none;font-family:"Montserrat",sans-serif;font-size:0.75rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:background 0.2s}
+.submit-btn:hover{background:var(--red2)}
+footer{background:var(--black2);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:3px solid var(--red)}
+.footer-brand{display:flex;align-items:center;gap:0.7rem}
+.footer-brand img{height:40px;object-fit:contain}
+.footer-wm{font-size:1rem;font-weight:900;letter-spacing:0.01em}
+.footer-wm .e{color:var(--red)}.footer-wm .em{color:var(--white)}
+.footer-center{font-size:0.7rem;color:rgba(255,255,255,0.28);letter-spacing:0.06em;line-height:1.9;text-align:center}
+.footer-center span{color:var(--red);opacity:0.8}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:0.66rem;font-weight:700;color:rgba(255,255,255,0.32);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.2s}
+.footer-links a:hover{color:var(--red)}
+#waFloat{position:fixed;bottom:2rem;right:2rem;z-index:999;width:58px;height:58px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:transform 0.25s;animation:waPulse 2.5s infinite;text-decoration:none}
+#waFloat:hover{transform:scale(1.1)}
+@keyframes waPulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.45)}50%{box-shadow:0 4px 32px rgba(37,211,102,0.75),0 0 0 8px rgba(37,211,102,0.1)}}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){
+  nav{padding:0 1.2rem}.nav-links,.nav-phone,.nav-cta{display:none}.hamburger{display:flex}
+  .hero-content{padding:3rem 1.5rem}.hero-title{font-size:clamp(2.4rem,10vw,3.5rem)}.hero-dots{left:1.5rem}.hero-stats{gap:1.5rem}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}.brands-grid{grid-template-columns:repeat(3,1fr)}
+  .contact-wrap{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.footer-links{justify-content:center}
+}
+@media(max-width:600px){.brands-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="eng_HD_jpeg.jpg" alt="Electric Emporium Logo">
+    <div>
+      <div class="logo-text"><span class="e">Electric</span><span class="em"> Emporium</span><sup style="font-size:0.55rem;color:var(--gray);font-weight:600">&reg;</sup></div>
+      <div style="font-size:0.58rem;font-weight:700;letter-spacing:0.18em;color:var(--gray);text-transform:uppercase;margin-top:1px">Est. 1989 &middot; Balaghat</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#categories">Products</a></li>
+    <li><a href="#brands">Brands</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-phone">&#128222; +91 94258 31035</span>
+    <button class="nav-cta" onclick="window.location.href='#contact'">Visit Store</button>
+    <button class="hamburger" id="hb" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mob-menu" id="mm">
+  <ul>
+    <li><a href="#categories" onclick="cM()">Products</a></li>
+    <li><a href="#brands" onclick="cM()">Brands</a></li>
+    <li><a href="#why" onclick="cM()">Why Us</a></li>
+    <li><a href="#about" onclick="cM()">About</a></li>
+    <li><a href="#contact" onclick="cM()">Contact</a></li>
+  </ul>
+  <div class="mob-btns">
+    <a href="tel:+919425831035" class="mob-call">&#128222; Call Now</a>
+    <a href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" class="mob-wa">&#128172; WhatsApp</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url(shop1.png)"></div>
+    <div class="hero-slide" style="background-image:url(shop4.png)"></div>
+    <div class="hero-slide" style="background-image:url(shop6.png)"></div>
+    <div class="hero-slide" style="background-image:url(shop8.png)"></div>
+    <div class="hero-slide" style="background-image:url(shop2.png)"></div>
+    <div class="hero-slide" style="background-image:url(shop3.png)"></div>
+    <div class="hero-slide" style="background-image:url(shop5.png)"></div>
+    <div class="hero-slide" style="background-image:url(shop7.png)"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Gujri Chowk, Balaghat &middot; Est. 1989</div></div>
+    <h1 class="hero-title"><div class="red">Balaghat's</div><div>Most Trusted</div><div class="red ital">Electric Shop</div></h1>
+    <p class="hero-tagline">Where Quality Meets Value</p>
+    <p class="hero-desc">Top brands in lights, fans, wires, switches, ACs &amp; more &mdash; all under one roof. Serving Balaghat families and businesses for over 35 years.</p>
+    <div class="hero-stats">
+      <div><div class="stat-num">4.8&#9733;</div><div class="stat-label">JustDial Rating</div></div>
+      <div><div class="stat-num">57+</div><div class="stat-label">Reviews</div></div>
+      <div><div class="stat-num">35+</div><div class="stat-label">Yrs of Trust</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-red" onclick="window.location.href='#categories'">Shop Products</button>
+      <button class="btn-outline-w" onclick="window.open('https://maps.google.com/?q=Electric+Emporium+Gujri+Chowk+Balaghat','_blank')">&#128205; Get Directions</button>
+    </div>
+  </div>
+  <div class="hero-dots" id="heroDots"></div>
+</div>
+
+<div class="ticker"><div class="ticker-track">
+  <span class="t-item">Lights &amp; LEDs</span><span class="t-dot"> &#9889; </span><span class="t-item">Fancy Lights &amp; Chandeliers</span><span class="t-dot"> &#9889; </span><span class="t-item">BLDC Fans</span><span class="t-dot"> &#9889; </span><span class="t-item">Wires &amp; Cables</span><span class="t-dot"> &#9889; </span><span class="t-item">Switches &amp; Switchgear</span><span class="t-dot"> &#9889; </span><span class="t-item">Geysers</span><span class="t-dot"> &#9889; </span><span class="t-item">Air Conditioners</span><span class="t-dot"> &#9889; </span><span class="t-item">Deep Freezers</span><span class="t-dot"> &#9889; </span><span class="t-item">Havells &middot; Legrand &middot; Atomberg &middot; V-Guard &middot; Surya &middot; Indoasian &middot; Daikin &middot; Mitsubishi &middot; Lloyd &middot; Samsung &middot; Blue Star</span><span class="t-dot"> &#9889; </span><span class="t-item">Lights &amp; LEDs</span><span class="t-dot"> &#9889; </span><span class="t-item">Fancy Lights &amp; Chandeliers</span><span class="t-dot"> &#9889; </span><span class="t-item">BLDC Fans</span><span class="t-dot"> &#9889; </span><span class="t-item">Wires &amp; Cables</span><span class="t-dot"> &#9889; </span><span class="t-item">Switches &amp; Switchgear</span><span class="t-dot"> &#9889; </span><span class="t-item">Geysers</span><span class="t-dot"> &#9889; </span><span class="t-item">Air Conditioners</span><span class="t-dot"> &#9889; </span><span class="t-item">Deep Freezers</span><span class="t-dot"> &#9889; </span><span class="t-item">Havells &middot; Legrand &middot; Atomberg &middot; V-Guard &middot; Surya &middot; Indoasian &middot; Daikin &middot; Mitsubishi &middot; Lloyd &middot; Samsung &middot; Blue Star</span><span class="t-dot"> &#9889; </span>
+</div></div>
+
+<section class="section cat-section reveal" id="categories">
+  <div class="sec-header">
+    <span class="sec-kicker">What We Carry</span>
+    <h2 class="sec-title">Our <span class="red">Product</span> Range</h2>
+    <p style="font-size:0.85rem;color:var(--gray);margin-top:0.8rem">Click any category to browse products &amp; enquire</p>
+  </div>
+  <div class="cat-grid">
+    <a class="cat-card" href="products.html?cat=Fans"><span class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/></svg></span><div class="cat-name">Fans</div><div class="cat-sub">Ceiling &middot; BLDC &middot; Table &middot; Exhaust</div></a>
+    <a class="cat-card" href="products.html?cat=Lights"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2" fill="currentColor" stroke="none"/></svg></span><div class="cat-name">Lights &amp; LEDs</div><div class="cat-sub">Bulbs &middot; Panels &middot; Battens &middot; Street</div></a>
+    <a class="cat-card" href="products.html?cat=FancyLamps"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 17v3M9 20h6M12 3l1.5 4.5h4.5l-3.5 2.5 1.5 4.5L12 12l-4 2.5 1.5-4.5L6 7.5h4.5z"/></svg></span><div class="cat-name">Fancy &amp; Outdoor Lamps</div><div class="cat-sub">Chandeliers &middot; Pendants &middot; Garden</div></a>
+    <a class="cat-card" href="products.html?cat=Wires"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" stroke="currentColor" stroke-width="1"/></svg></span><div class="cat-name">Wires &amp; Cables</div><div class="cat-sub">FR &middot; FRLS &middot; Armoured &middot; Flexible</div></a>
+    <a class="cat-card" href="products.html?cat=Switches"><span class="cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="6" y="7" width="4" height="6" rx="1"/><rect x="14" y="7" width="4" height="6" rx="1"/><path d="M8 21h8M12 17v4"/></svg></span><div class="cat-name">Switches &amp; Sockets</div><div class="cat-sub">Modular &middot; MCB &middot; RCCB &middot; Outlets</div></a>
+    <a class="cat-card" href="products.html?cat=Switchgear"><span class="cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M12 6v6M12 16v2"/><circle cx="12" cy="14" r="1" fill="currentColor" stroke="none"/></svg></span><div class="cat-name">Switchgear &amp; Industrial</div><div class="cat-sub">Changeover &middot; Bus Bar &middot; DB &middot; Contactor</div></a>
+    <a class="cat-card" href="products.html?cat=Pipes"><span class="cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7V5M18 7V5M6 17v2M18 17v2"/></svg></span><div class="cat-name">Modular &amp; Pipes</div><div class="cat-sub">Conduit &middot; Modular Box &middot; Junction Box</div></a>
+    <a class="cat-card" href="products.html?cat=ACs"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/></svg></span><div class="cat-name">ACs &amp; Freezers</div><div class="cat-sub">Split &middot; Window &middot; Inverter &middot; Commercial</div></a>
+    <a class="cat-card" href="products.html?cat=Appliances"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M9 9h6M9 13h4"/></svg></span><div class="cat-name">Appliances</div><div class="cat-sub">Mixers &middot; Irons &middot; Geysers &middot; Induction</div></a>
+    <a class="cat-card" href="products.html?cat=Geysers"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 22V12M5 12a7 7 0 1 1 14 0M9 12a3 3 0 1 1 6 0M12 6V3M6.3 6.3 4.2 4.2M17.7 6.3l2.1-2.1"/></svg></span><div class="cat-name">Geysers</div><div class="cat-sub">Instant &middot; Storage</div></a>
+    <a class="cat-card" href="products.html"><span class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></span><div class="cat-name">View All Products</div><div class="cat-sub">Browse complete catalogue</div></a>
+    <a class="cat-card" href="products.html?cat=All" style="background:var(--red)" onmouseout="this.style.background='var(--red)'"><span class="cat-icon" style="color:#fff"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span><div class="cat-name" style="color:#fff">All Categories</div><div class="cat-sub" style="color:rgba(255,255,255,0.7)">See everything we carry</div></a>
+  </div>
+</section>
+
+<div class="auth-banner reveal"><span class="auth-banner-sub">We are proud to be</span><div class="auth-banner-title">Authorised <span class="outline">Distributors</span> &amp; Dealers</div></div>
+<section class="section brands-section reveal" id="brands">
+  <div class="brands-inner">
+    <div class="sec-header"><span class="sec-kicker">Our Partners</span><h2 class="sec-title">Brand <span class="red">Partners</span></h2><p style="font-size:0.85rem;color:var(--gray);margin-top:0.8rem">Click any brand to browse their products</p></div>
+    <div class="brands-grid">
+      <a class="brand-tile" href="products.html?brand=Havells"><div class="brand-logo-wrap"><img src="logo_havells.png" alt="Havells"></div><div class="brand-name">Havells</div><div class="brand-type">Lights &middot; Fans &middot; Wires &middot; Switches</div></a>
+      <a class="brand-tile" href="products.html?brand=Legrand"><div class="brand-logo-wrap"><img src="logo_legrand.jpg" alt="Legrand"></div><div class="brand-name">Legrand</div><div class="brand-type">Switches &middot; Switchgear</div></a>
+      <a class="brand-tile" href="products.html?brand=Atomberg"><div class="brand-logo-wrap"><img src="logo_atomberg.png" alt="Atomberg"></div><div class="brand-name">Atomberg</div><div class="brand-type">BLDC Fans</div></a>
+      <a class="brand-tile" href="products.html?brand=V-Guard"><div class="brand-logo-wrap"><img src="logo_vguard.jpg" alt="V-Guard" class="dark-bg"></div><div class="brand-name">V-Guard</div><div class="brand-type">MCBs &middot; Wires &middot; Fans</div></a>
+      <a class="brand-tile" href="products.html?brand=Nortek"><div class="brand-logo-wrap"><img src="logo_nortek.png" alt="Nortek" class="dark-bg"></div><div class="brand-name">Nortek</div><div class="brand-type">Architectural Lighting</div></a>
+      <a class="brand-tile" href="products.html?brand=Indoasian"><div class="brand-logo-wrap"><img src="logo_indoasian.png" alt="Indoasian" class="dark-bg"></div><div class="brand-name">Indoasian</div><div class="brand-type">Switches &middot; Switchgear</div></a>
+      <a class="brand-tile" href="products.html?brand=Surya"><div class="brand-logo-wrap"><img src="logo_surya.jpg" alt="Surya"></div><div class="brand-name">Surya</div><div class="brand-type">Lights &middot; LEDs</div></a>
+      <a class="brand-tile" href="products.html?brand=Crompton"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:var(--red)">CROMPTON</span></div><div class="brand-name">Crompton</div><div class="brand-type">Fans &middot; Lights &middot; Pumps</div></a>
+      <a class="brand-tile" href="products.html?brand=Polycab"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:#003087">POLYCAB</span></div><div class="brand-name">Polycab</div><div class="brand-type">Wires &middot; Cables</div></a>
+      <a class="brand-tile" href="products.html?brand=KEI"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1.4rem;font-weight:900;color:var(--red)">KEI</span></div><div class="brand-name">KEI</div><div class="brand-type">Wires &middot; Cables</div></a>
+      <a class="brand-tile" href="products.html?brand=Daikin"><div class="brand-logo-wrap"><img src="logo_daikin.png" alt="Daikin" class="dark-bg"></div><div class="brand-name">Daikin</div><div class="brand-type">Inverter ACs</div></a>
+      <a class="brand-tile" href="products.html?brand=Mitsubishi"><div class="brand-logo-wrap"><img src="logo_mitsubishi.png" alt="Mitsubishi"></div><div class="brand-name">Mitsubishi</div><div class="brand-type">Premium ACs</div></a>
+      <a class="brand-tile" href="products.html?brand=Lloyd"><div class="brand-logo-wrap"><img src="logo_lloyd.png" alt="Lloyd" class="dark-bg"></div><div class="brand-name">Lloyd</div><div class="brand-type">Split Inverter ACs</div></a>
+      <a class="brand-tile" href="products.html?brand=Samsung"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:#1428A0">SAMSUNG</span></div><div class="brand-name">Samsung</div><div class="brand-type">WindFree ACs</div></a>
+      <a class="brand-tile" href="products.html?brand=BlueStarCelfrost"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:0.85rem;font-weight:900;color:#005BAC;text-align:center;line-height:1.3">BLUE STAR &amp;<br>CELFROST</span></div><div class="brand-name">Blue Star / Celfrost</div><div class="brand-type">Deep Freezers</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="section why reveal" id="why">
+  <div class="sec-header"><span class="sec-kicker">Why Choose Us</span><h2 class="sec-title" style="color:var(--white)">The <span class="red">Emporium</span> Difference</h2></div>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-num">4.8&#9733;</div><div class="why-title">Top Rated Shop</div><div class="why-text">57 verified reviews on JustDial &mdash; Balaghat's highest-rated electrical store</div></div>
+    <div class="why-card"><div class="why-num">35+</div><div class="why-title">Years of Trust</div><div class="why-text">Serving Balaghat since 1989 &mdash; generations of families rely on us</div></div>
+    <div class="why-card"><div class="why-num">ISI</div><div class="why-title">Genuine Products</div><div class="why-text">Only ISI marked &amp; certified brands &mdash; zero compromise on quality</div></div>
+    <div class="why-card"><div class="why-num">&#8377;</div><div class="why-title">Best Prices</div><div class="why-text">Competitive pricing with special bulk deals for contractors &amp; builders</div></div>
+  </div>
+</section>
+
+<section class="about-strip reveal" id="about">
+  <div class="about-inner">
+    <div>
+      <span class="sec-kicker">Our Story</span>
+      <h2 class="sec-title" style="margin-bottom:1.5rem">35 Years of <span class="red">Lighting</span> Balaghat</h2>
+      <p class="about-text">Electric Emporium was founded in <strong>1989</strong> by <strong>Manoj Katariya</strong> on Main Road, Gujri Chowk &mdash; Balaghat's first dedicated electrical shop, built on one belief: every home deserves genuine quality at a fair price.</p>
+      <p class="about-text">Brothers <strong>Sanjay Katariya</strong> and <strong>Vikesh Katariya</strong> joined, and today the next generation &mdash; <strong>Yash Katariya</strong> &mdash; carries the same values forward.</p>
+      <p class="about-text">We stock only <strong>authentic, ISI-certified products</strong> from verified brands. No duplicates, no shortcuts &mdash; ever.</p>
+      <div class="about-values">
+        <div class="about-value"><div class="about-value-icon">&#10022;</div><div><div class="about-value-title">Authenticity First</div><div class="about-value-text">Genuine products only &mdash; no duplicates, no shortcuts</div></div></div>
+        <div class="about-value"><div class="about-value-icon">&#10022;</div><div><div class="about-value-title">Value for Money</div><div class="about-value-text">Products that last &mdash; not cheap ones that don't</div></div></div>
+        <div class="about-value"><div class="about-value-icon">&#10022;</div><div><div class="about-value-title">Family Legacy</div><div class="about-value-text">Three generations, one address, same commitment</div></div></div>
       </div>
     </div>
-    
-    <div class="hero">
-      <div class="hero-slides" id="heroSlides">
-        <div class="hero-slide active" style="background-image:url(shop1.png)"></div>
-        <div class="hero-slide" style="background-image:url(shop4.png)"></div>
-        <div class="hero-slide" style="background-image:url(shop6.png)"></div>
-        <div class="hero-slide" style="background-image:url(shop8.png)"></div>
-        <div class="hero-slide" style="background-image:url(shop2.png)"></div>
-        <div class="hero-slide" style="background-image:url(shop3.png)"></div>
-        <div class="hero-slide" style="background-image:url(shop5.png)"></div>
-        <div class="hero-slide" style="background-image:url(shop7.png)"></div>
+    <div class="about-right">
+      <div class="about-legacy-card">
+        <div class="about-legacy-label">&#128240; From Our Archives &mdash; Year 2000</div>
+        <img src="legacy_ad.jpg" alt="Electric Emporium 11th Year Ad" class="about-legacy-img">
+        <p class="about-legacy-caption">Our newspaper ad from the 11th year of operations &mdash; inspired by the late <strong>Shri Chandanmalji Modi</strong></p>
       </div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <div class="eyebrow"><div class="eyebrow-line"></div><div class="eyebrow-text">Gujri Chowk, Balaghat &middot; Est. 1989</div></div>
-        <h1 class="hero-title"><div class="red">Balaghat's</div><div>Most Trusted</div><div class="red ital">Electric Shop</div></h1>
-        <p class="hero-tagline">Where Quality Meets Value</p>
-        <p class="hero-desc">Top brands in lights, fans, wires, switches, ACs &amp; more &mdash; all under one roof. Serving Balaghat families and businesses for over 35 years.</p>
-        <div class="hero-stats">
-          <div><div class="stat-num">4.8&#9733;</div><div class="stat-label">JustDial Rating</div></div>
-          <div><div class="stat-num">57+</div><div class="stat-label">Reviews</div></div>
-          <div><div class="stat-num">35+</div><div class="stat-label">Yrs of Trust</div></div>
-        </div>
-        <div class="hero-btns">
-          <button class="btn-red" onclick="window.location.href='#categories'">Shop Products</button>
-          <button class="btn-outline-w" onclick="window.open('https://maps.google.com/?q=Electric+Emporium+Gujri+Chowk+Balaghat','_blank')">&#128205; Get Directions</button>
-        </div>
+      <div class="about-stats-row">
+        <div class="about-stat"><div class="about-stat-num">1989</div><div class="about-stat-label">Established</div></div>
+        <div class="about-stat"><div class="about-stat-num">3</div><div class="about-stat-label">Generations</div></div>
+        <div class="about-stat"><div class="about-stat-num">#1</div><div class="about-stat-label">First Elec. Shop in Balaghat</div></div>
       </div>
-      <div class="hero-dots" id="heroDots"></div>
     </div>
-    
-    <div class="ticker"><div class="ticker-track">
-      <span class="t-item">Lights &amp; LEDs</span><span class="t-dot"> &#9889; </span><span class="t-item">Fancy Lights &amp; Chandeliers</span><span class="t-dot"> &#9889; </span><span class="t-item">BLDC Fans</span><span class="t-dot"> &#9889; </span><span class="t-item">Wires &amp; Cables</span><span class="t-dot"> &#9889; </span><span class="t-item">Switches &amp; Switchgear</span><span class="t-dot"> &#9889; </span><span class="t-item">Geysers</span><span class="t-dot"> &#9889; </span><span class="t-item">Air Conditioners</span><span class="t-dot"> &#9889; </span><span class="t-item">Deep Freezers</span><span class="t-dot"> &#9889; </span><span class="t-item">Havells &middot; Legrand &middot; Atomberg &middot; V-Guard &middot; Surya &middot; Indoasian &middot; Daikin &middot; Mitsubishi &middot; Lloyd &middot; Samsung &middot; Blue Star</span><span class="t-dot"> &#9889; </span><span class="t-item">Lights &amp; LEDs</span><span class="t-dot"> &#9889; </span><span class="t-item">Fancy Lights &amp; Chandeliers</span><span class="t-dot"> &#9889; </span><span class="t-item">BLDC Fans</span><span class="t-dot"> &#9889; </span><span class="t-item">Wires &amp; Cables</span><span class="t-dot"> &#9889; </span><span class="t-item">Switches &amp; Switchgear</span><span class="t-dot"> &#9889; </span><span class="t-item">Geysers</span><span class="t-dot"> &#9889; </span><span class="t-item">Air Conditioners</span><span class="t-dot"> &#9889; </span><span class="t-item">Deep Freezers</span><span class="t-dot"> &#9889; </span><span class="t-item">Havells &middot; Legrand &middot; Atomberg &middot; V-Guard &middot; Surya &middot; Indoasian &middot; Daikin &middot; Mitsubishi &middot; Lloyd &middot; Samsung &middot; Blue Star</span><span class="t-dot"> &#9889; </span>
-    </div></div>
-    
-    <!-- PRODUCT CATEGORIES -->
-    <section class="section cat-section reveal" id="categories">
-      <div class="sec-header">
-        <span class="sec-kicker">What We Carry</span>
-        <h2 class="sec-title">Our <span class="red">Product</span> Range</h2>
-        <p style="font-size:0.85rem;color:var(--gray);margin-top:0.8rem">Click any category to browse products &amp; enquire</p>
+  </div>
+</section>
+
+<section class="contact reveal" id="contact">
+  <div class="sec-header"><span class="sec-kicker">Get In Touch</span><h2 class="sec-title">Visit <span class="red">Our Store</span></h2></div>
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <h3>Find Us at<br>Gujri Chowk</h3>
+      <p>Walk in anytime &mdash; our team will help you find exactly what you need.</p>
+      <div class="c-rows">
+        <div class="c-row"><div class="c-icon">&#128222;</div><div><div class="c-label">Phone</div><div class="c-val"><a href="tel:+919425831035" style="color:#fff;text-decoration:none;font-weight:700">+91 94258 31035</a></div></div></div>
+        <div class="c-row"><div class="c-icon">&#128205;</div><div><div class="c-label">Address</div><div class="c-val">Main Rd, Gujri Chowk, Chitragupt Nagar<br>Balaghat, MP &ndash; 481001</div></div></div>
+        <div class="c-row"><div class="c-icon">&#128336;</div><div><div class="c-label">Hours</div><div class="c-val">Every Day: 10:00 AM &ndash; 9:00 PM</div></div></div>
       </div>
-      <div class="cat-grid">
-        <a class="cat-card" href="products.html?cat=Fans"><span class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="9" ry="3.5"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)"/></svg></span><div class="cat-name">Fans</div><div class="cat-sub">Ceiling &middot; BLDC &middot; Table &middot; Exhaust</div></a>
-        <a class="cat-card" href="products.html?cat=Lights"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2" fill="currentColor" stroke="none"/></svg></span><div class="cat-name">Lights &amp; LEDs</div><div class="cat-sub">Bulbs &middot; Panels &middot; Battens &middot; Street</div></a>
-        <a class="cat-card" href="products.html?cat=FancyLamps"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 17v3M9 20h6M12 3l1.5 4.5h4.5l-3.5 2.5 1.5 4.5L12 12l-4 2.5 1.5-4.5L6 7.5h4.5z"/></svg></span><div class="cat-name">Fancy &amp; Outdoor Lamps</div><div class="cat-sub">Chandeliers &middot; Pendants &middot; Garden</div></a>
-        <a class="cat-card" href="products.html?cat=Wires"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" stroke="currentColor" stroke-width="1"/></svg></span><div class="cat-name">Wires &amp; Cables</div><div class="cat-sub">FR &middot; FRLS &middot; Armoured &middot; Flexible</div></a>
-        <a class="cat-card" href="products.html?cat=Switches"><span class="cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><rect x="6" y="7" width="4" height="6" rx="1"/><rect x="14" y="7" width="4" height="6" rx="1"/><path d="M8 21h8M12 17v4"/></svg></span><div class="cat-name">Switches &amp; Sockets</div><div class="cat-sub">Modular &middot; MCB &middot; RCCB &middot; Outlets</div></a>
-        <a class="cat-card" href="products.html?cat=Switchgear"><span class="cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2"/><path d="M12 6v6M12 16v2"/><circle cx="12" cy="14" r="1" fill="currentColor" stroke="none"/></svg></span><div class="cat-name">Switchgear &amp; Industrial</div><div class="cat-sub">Changeover &middot; Bus Bar &middot; DB &middot; Contactor</div></a>
-        <a class="cat-card" href="products.html?cat=Pipes"><span class="cat-icon"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 7V5M18 7V5M6 17v2M18 17v2"/></svg></span><div class="cat-name">Modular &amp; Pipes</div><div class="cat-sub">Conduit &middot; Modular Box &middot; Junction Box</div></a>
-        <a class="cat-card" href="products.html?cat=ACs"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M2 12h20M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07"/></svg></span><div class="cat-name">ACs &amp; Freezers</div><div class="cat-sub">Split &middot; Window &middot; Inverter &middot; Commercial</div></a>
-        <a class="cat-card" href="products.html?cat=Appliances"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M9 9h6M9 13h4"/></svg></span><div class="cat-name">Appliances</div><div class="cat-sub">Mixers &middot; Irons &middot; Geysers &middot; Induction</div></a>
-        <a class="cat-card" href="products.html?cat=Geysers"><span class="cat-icon"><svg viewBox="0 0 24 24"><path d="M12 22V12M5 12a7 7 0 1 1 14 0M9 12a3 3 0 1 1 6 0M12 6V3M6.3 6.3 4.2 4.2M17.7 6.3l2.1-2.1"/></svg></span><div class="cat-name">Geysers</div><div class="cat-sub">Instant &middot; Storage</div></a>
-        <a class="cat-card" href="products.html"><span class="cat-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></span><div class="cat-name">View All Products</div><div class="cat-sub">Browse complete catalogue</div></a>
-        <a class="cat-card" href="products.html?cat=All" style="background:var(--red)" onmouseout="this.style.background='var(--red)'"><span class="cat-icon" style="color:#fff"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span><div class="cat-name" style="color:#fff">All Categories</div><div class="cat-sub" style="color:rgba(255,255,255,0.7)">See everything we carry</div></a>
+      <div style="display:flex;gap:0.8rem;margin-top:2rem;flex-wrap:wrap">
+        <a href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.8rem 1.4rem;text-decoration:none;font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp Us</a>
+        <a href="https://maps.google.com/?q=Electric+Emporium+Gujri+Chowk+Balaghat+MP" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.15);color:#fff;padding:0.8rem 1.4rem;text-decoration:none;font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.3)">&#128205; Get Directions</a>
       </div>
-    </section>
-    
-    <!-- BRANDS -->
-    <div class="auth-banner reveal"><span class="auth-banner-sub">We are proud to be</span><div class="auth-banner-title">Authorised <span class="outline">Distributors</span> &amp; Dealers</div></div>
-    <section class="section brands-section reveal" id="brands">
-      <div class="brands-inner">
-        <div class="sec-header"><span class="sec-kicker">Our Partners</span><h2 class="sec-title">Brand <span class="red">Partners</span></h2><p style="font-size:0.85rem;color:var(--gray);margin-top:0.8rem">Click any brand to browse their products</p></div>
-        <div class="brands-grid">
-          <a class="brand-tile" href="products.html?brand=Havells"><div class="brand-logo-wrap"><img src="logo_havells.png" alt="Havells"></div><div class="brand-name">Havells</div><div class="brand-type">Lights &middot; Fans &middot; Wires &middot; Switches</div></a>
-          <a class="brand-tile" href="products.html?brand=Legrand"><div class="brand-logo-wrap"><img src="logo_legrand.jpg" alt="Legrand"></div><div class="brand-name">Legrand</div><div class="brand-type">Switches &middot; Switchgear</div></a>
-          <a class="brand-tile" href="products.html?brand=Atomberg"><div class="brand-logo-wrap"><img src="logo_atomberg.png" alt="Atomberg"></div><div class="brand-name">Atomberg</div><div class="brand-type">BLDC Fans</div></a>
-          <a class="brand-tile" href="products.html?brand=V-Guard"><div class="brand-logo-wrap"><img src="logo_vguard.jpg" alt="V-Guard" class="dark-bg"></div><div class="brand-name">V-Guard</div><div class="brand-type">MCBs &middot; Wires &middot; Fans</div></a>
-          <a class="brand-tile" href="products.html?brand=Nortek"><div class="brand-logo-wrap"><img src="logo_nortek.png" alt="Nortek" class="dark-bg"></div><div class="brand-name">Nortek</div><div class="brand-type">Architectural Lighting</div></a>
-          <a class="brand-tile" href="products.html?brand=Indoasian"><div class="brand-logo-wrap"><img src="logo_indoasian.png" alt="Indoasian" class="dark-bg"></div><div class="brand-name">Indoasian</div><div class="brand-type">Switches &middot; Switchgear</div></a>
-          <a class="brand-tile" href="products.html?brand=Surya"><div class="brand-logo-wrap"><img src="logo_surya.jpg" alt="Surya"></div><div class="brand-name">Surya</div><div class="brand-type">Lights &middot; LEDs</div></a>
-          <a class="brand-tile" href="products.html?brand=Crompton"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:var(--red)">CROMPTON</span></div><div class="brand-name">Crompton</div><div class="brand-type">Fans &middot; Lights &middot; Pumps</div></a>
-          <a class="brand-tile" href="products.html?brand=Polycab"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:#003087">POLYCAB</span></div><div class="brand-name">Polycab</div><div class="brand-type">Wires &middot; Cables</div></a>
-          <a class="brand-tile" href="products.html?brand=KEI"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1.4rem;font-weight:900;color:var(--red)">KEI</span></div><div class="brand-name">KEI</div><div class="brand-type">Wires &middot; Cables</div></a>
-          <a class="brand-tile" href="products.html?brand=Daikin"><div class="brand-logo-wrap"><img src="logo_daikin.png" alt="Daikin" class="dark-bg"></div><div class="brand-name">Daikin</div><div class="brand-type">Inverter ACs</div></a>
-          <a class="brand-tile" href="products.html?brand=Mitsubishi"><div class="brand-logo-wrap"><img src="logo_mitsubishi.png" alt="Mitsubishi"></div><div class="brand-name">Mitsubishi</div><div class="brand-type">Premium ACs</div></a>
-          <a class="brand-tile" href="products.html?brand=Lloyd"><div class="brand-logo-wrap"><img src="logo_lloyd.png" alt="Lloyd" class="dark-bg"></div><div class="brand-name">Lloyd</div><div class="brand-type">Split Inverter ACs</div></a>
-          <a class="brand-tile" href="products.html?brand=Samsung"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:#1428A0">SAMSUNG</span></div><div class="brand-name">Samsung</div><div class="brand-type">WindFree ACs</div></a>
-          <a class="brand-tile" href="products.html?brand=BlueStarCelfrost"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:0.85rem;font-weight:900;color:#005BAC;text-align:center;line-height:1.3">BLUE STAR &amp;<br>CELFROST</span></div><div class="brand-name">Blue Star / Celfrost</div><div class="brand-type">Deep Freezers</div></a>
-        </div>
-      </div>
-    </section>
-    
-    <!-- WHY US -->
-    <section class="section why reveal" id="why">
-      <div class="sec-header"><span class="sec-kicker">Why Choose Us</span><h2 class="sec-title" style="color:var(--white)">The <span class="red">Emporium</span> Difference</h2></div>
-      <div class="why-grid">
-        <div class="why-card"><div class="why-num">4.8&#9733;</div><div class="why-title">Top Rated Shop</div><div class="why-text">57 verified reviews on JustDial &mdash; Balaghat's highest-rated electrical store</div></div>
-        <div class="why-card"><div class="why-num">35+</div><div class="why-title">Years of Trust</div><div class="why-text">Serving Balaghat since 1989 &mdash; generations of families rely on us</div></div>
-        <div class="why-card"><div class="why-num">ISI</div><div class="why-title">Genuine Products</div><div class="why-text">Only ISI marked &amp; certified brands &mdash; zero compromise on quality</div></div>
-        <div class="why-card"><div class="why-num">&#8377;</div><div class="why-title">Best Prices</div><div class="why-text">Competitive pricing with special bulk deals for contractors &amp; builders</div></div>
-      </div>
-    </section>
-    
-    <!-- ABOUT -->
-    <section class="about-strip reveal" id="about">
-      <div class="about-inner">
-        <div>
-          <span class="sec-kicker">Our Story</span>
-          <h2 class="sec-title" style="margin-bottom:1.5rem">35 Years of <span class="red">Lighting</span> Balaghat</h2>
-          <p class="about-text">Electric Emporium was founded in <strong>1989</strong> by <strong>Manoj Katariya</strong> on Main Road, Gujri Chowk &mdash; Balaghat's first dedicated electrical shop, built on one belief: every home deserves genuine quality at a fair price.</p>
-          <p class="about-text">Brothers <strong>Sanjay Katariya</strong> and <strong>Vikesh Katariya</strong> joined, and today the next generation &mdash; <strong>Yash Katariya</strong> &mdash; carries the same values forward.</p>
-          <p class="about-text">We stock only <strong>authentic, ISI-certified products</strong> from verified brands. No duplicates, no shortcuts &mdash; ever.</p>
-          <div class="about-values">
-            <div class="about-value"><div class="about-value-icon">&#10022;</div><div><div class="about-value-title">Authenticity First</div><div class="about-value-text">Genuine products only &mdash; no duplicates, no shortcuts</div></div></div>
-            <div class="about-value"><div class="about-value-icon">&#10022;</div><div><div class="about-value-title">Value for Money</div><div class="about-value-text">Products that last &mdash; not cheap ones that don't</div></div></div>
-            <div class="about-value"><div class="about-value-icon">&#10022;</div><div><div class="about-value-title">Family Legacy</div><div class="about-value-text">Three generations, one address, same commitment</div></div></div>
-          </div>
-        </div>
-        <div class="about-right">
-          <div class="about-legacy-card">
-            <div class="about-legacy-label">&#128240; From Our Archives &mdash; Year 2000</div>
-            <img src="legacy_ad.jpg" alt="Electric Emporium 11th Year Ad" class="about-legacy-img">
-            <p class="about-legacy-caption">Our newspaper ad from the 11th year of operations &mdash; inspired by the late <strong>Shri Chandanmalji Modi</strong></p>
-          </div>
-          <div class="about-stats-row">
-            <div class="about-stat"><div class="about-stat-num">1989</div><div class="about-stat-label">Established</div></div>
-            <div class="about-stat"><div class="about-stat-num">3</div><div class="about-stat-label">Generations</div></div>
-            <div class="about-stat"><div class="about-stat-num">#1</div><div class="about-stat-label">First Elec. Shop in Balaghat</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <!-- CONTACT -->
-    <section class="contact reveal" id="contact">
-      <div class="sec-header"><span class="sec-kicker">Get In Touch</span><h2 class="sec-title">Visit <span class="red">Our Store</span></h2></div>
-      <div class="contact-wrap">
-        <div class="contact-left">
-          <h3>Find Us at<br>Gujri Chowk</h3>
-          <p>Walk in anytime &mdash; our team will help you find exactly what you need.</p>
-          <div class="c-rows">
-            <div class="c-row"><div class="c-icon">&#128222;</div><div><div class="c-label">Phone</div><div class="c-val"><a href="tel:+919425831035" style="color:#fff;text-decoration:none;font-weight:700">+91 94258 31035</a></div></div></div>
-            <div class="c-row"><div class="c-icon">&#128205;</div><div><div class="c-label">Address</div><div class="c-val">Main Rd, Gujri Chowk, Chitragupt Nagar<br>Balaghat, MP &ndash; 481001</div></div></div>
-            <div class="c-row"><div class="c-icon">&#128336;</div><div><div class="c-label">Hours</div><div class="c-val">Every Day: 10:00 AM &ndash; 9:00 PM</div></div></div>
-          </div>
-          <div style="display:flex;gap:0.8rem;margin-top:2rem;flex-wrap:wrap">
-            <a href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background:#25D366;color:#fff;padding:0.8rem 1.4rem;text-decoration:none;font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp Us</a>
-            <a href="https://maps.google.com/?q=Electric+Emporium+Gujri+Chowk+Balaghat+MP" target="_blank" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,255,255,0.15);color:#fff;padding:0.8rem 1.4rem;text-decoration:none;font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.3)">&#128205; Get Directions</a>
-          </div>
-        </div>
-        <div class="contact-right">
-          <h3>Send a<br>Message</h3>
-          <p>We'll reply on WhatsApp directly</p>
-          <div class="fg"><input type="text" id="fname" placeholder="Your Name"></div>
-          <div class="fg"><input type="tel" id="fphone" placeholder="Your Phone Number"></div>
-          <div class="fg"><textarea id="freq" placeholder="Your requirement..."></textarea></div>
-          <button class="submit-btn" onclick="sendWA()">Send via WhatsApp &rarr;</button>
-        </div>
-      </div>
-    </section>
-    
-    <a href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" id="waFloat" title="Chat on WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-    
-    <footer>
-      <div class="footer-brand"><img src="eng_HD_jpeg.jpg" alt="logo"><div class="footer-wm"><span class="e">Electric </span><span class="em">Emporium</span></div></div>
-      <div class="footer-center">&copy; 2026 <span>Electric Emporium</span> &middot; Gujri Chowk, Balaghat, MP &middot; ISI Certified &middot; 4.8&#9733; JustDial &middot; Est. 1989</div>
-      <div class="footer-links"><a href="#categories">Products</a><a href="#brands">Brands</a><a href="#about">About</a><a href="#contact">Contact</a></div>
-    </footer>
-    
-    <script>
-    function sendWA(){var n=document.getElementById("fname").value.trim(),p=document.getElementById("fphone").value.trim(),r=document.getElementById("freq").value.trim();if(!n||!r){alert("Please fill name and requirement.");return;}window.open("https://wa.me/919425831035?text="+encodeURIComponent("Hello Electric Emporium!\n\nName: "+n+"\nPhone: "+(p||"Not provided")+"\nRequirement: "+r),"_blank");}
-    var hb=document.getElementById("hb"),mm=document.getElementById("mm");
-    hb.addEventListener("click",function(e){e.stopPropagation();hb.classList.toggle("open");mm.classList.toggle("open");});
-    function cM(){hb.classList.remove("open");mm.classList.remove("open");}
-    document.addEventListener("click",function(e){if(!hb.contains(e.target)&&!mm.contains(e.target))cM();});
-    var sl=document.querySelectorAll(".hero-slide"),dc=document.getElementById("heroDots"),cur=0;
-    sl.forEach(function(_,i){var d=document.createElement("button");d.className="hero-dot"+(i===0?" active":"");d.onclick=function(){goTo(i);};dc.appendChild(d);});
-    function goTo(n){sl[cur].classList.remove("active");dc.children[cur].classList.remove("active");cur=n;sl[cur].classList.add("active");dc.children[cur].classList.add("active");}
-    setInterval(function(){goTo((cur+1)%sl.length);},3000);
-    document.querySelector(".nav-phone").addEventListener("click",function(){window.location.href="tel:+919425831035";});
-    var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0.08});
-    document.querySelectorAll(".reveal").forEach(function(r){io.observe(r);});
-    </script>
-    </body>
-    </html>
+    </div>
+    <div class="contact-right">
+      <h3>Send a<br>Message</h3>
+      <p>We'll reply on WhatsApp directly</p>
+      <div class="fg"><input type="text" id="fname" placeholder="Your Name"></div>
+      <div class="fg"><input type="tel" id="fphone" placeholder="Your Phone Number"></div>
+      <div class="fg"><textarea id="freq" placeholder="Your requirement..."></textarea></div>
+      <button class="submit-btn" onclick="sendWA()">Send via WhatsApp &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<a href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" id="waFloat" title="Chat on WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+
+<footer>
+  <div class="footer-brand"><img src="eng_HD_jpeg.jpg" alt="logo"><div class="footer-wm"><span class="e">Electric </span><span class="em">Emporium</span></div></div>
+  <div class="footer-center">&copy; 2026 <span>Electric Emporium</span> &middot; Gujri Chowk, Balaghat, MP &middot; ISI Certified &middot; 4.8&#9733; JustDial &middot; Est. 1989</div>
+  <div class="footer-links"><a href="#categories">Products</a><a href="#brands">Brands</a><a href="#about">About</a><a href="#contact">Contact</a></div>
+</footer>
+
+<script>
+function sendWA(){var n=document.getElementById("fname").value.trim(),p=document.getElementById("fphone").value.trim(),r=document.getElementById("freq").value.trim();if(!n||!r){alert("Please fill name and requirement.");return;}window.open("https://wa.me/919425831035?text="+encodeURIComponent("Hello Electric Emporium!\n\nName: "+n+"\nPhone: "+(p||"Not provided")+"\nRequirement: "+r),"_blank");}
+var hb=document.getElementById("hb"),mm=document.getElementById("mm");
+hb.addEventListener("click",function(e){e.stopPropagation();hb.classList.toggle("open");mm.classList.toggle("open");});
+function cM(){hb.classList.remove("open");mm.classList.remove("open");}
+document.addEventListener("click",function(e){if(!hb.contains(e.target)&&!mm.contains(e.target))cM();});
+var sl=document.querySelectorAll(".hero-slide"),dc=document.getElementById("heroDots"),cur=0;
+sl.forEach(function(_,i){var d=document.createElement("button");d.className="hero-dot"+(i===0?" active":"");d.onclick=function(){goTo(i);};dc.appendChild(d);});
+function goTo(n){sl[cur].classList.remove("active");dc.children[cur].classList.remove("active");cur=n;sl[cur].classList.add("active");dc.children[cur].classList.add("active");}
+setInterval(function(){goTo((cur+1)%sl.length);},3000);
+document.querySelector(".nav-phone").addEventListener("click",function(){window.location.href="tel:+919425831035";});
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0.08});
+document.querySelectorAll(".reveal").forEach(function(r){io.observe(r);});
+</script>
+</body>
+</html>
