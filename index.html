@@ -103,13 +103,12 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 /* PHOTO GALLERY — mosaic */
 .gallery{max-width:1400px;margin:0 auto;padding:1.5rem 1.5rem 0}
 .gallery-mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
-.gallery-frame{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3}
-.g-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease}
+.gallery-frame{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:1/1;background:var(--off)}
+.g-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1.4s ease}
 .g-slide.active{opacity:1}
-.g-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.4) 0%,rgba(0,0,0,0) 55%)}
-.g-caption{position:absolute;bottom:1rem;left:1.2rem;z-index:2;color:var(--white)}
-.g-caption-title{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);opacity:0.9}
-.g-caption-sub{font-size:0.65rem;color:rgba(255,255,255,0.6);margin-top:2px}
+.g-caption{position:absolute;bottom:0;left:0;right:0;z-index:2;color:var(--black);background:rgba(255,255,255,0.85);backdrop-filter:blur(4px);padding:0.6rem 1rem}
+.g-caption-title{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--black);opacity:0.85}
+.g-caption-sub{font-size:0.65rem;color:var(--gray);margin-top:2px}
 
 @media(max-width:900px){.gallery-mosaic{grid-template-columns:repeat(2,1fr)}.gallery-frame:nth-child(3){display:none}}
 
@@ -388,29 +387,28 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
 <div class="gallery reveal">
   <div class="gallery-mosaic">
     <div class="gallery-frame">
-      <div class="g-slide active" style="background-image:url(shop10.png)"></div>
-      <div class="g-slide" style="background-image:url(shop13.png)"></div>
-      <div class="g-slide" style="background-image:url(shop11.png)"></div>
-      <div class="g-slide" style="background-image:url(shop14.png)"></div>
-      <div class="g-overlay"></div>
+      <img class="g-slide active" src="shop1.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop2.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop3.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop4.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop5.png" alt="Electric Emporium">
       <div class="g-caption">
         <div class="g-caption-title">Our Store</div>
         <div class="g-caption-sub">Gujri Chowk, Balaghat &mdash; Est. 1989</div>
       </div>
     </div>
     <div class="gallery-frame">
-      <div class="g-slide active" style="background-image:url(shop12.png)"></div>
-      <div class="g-slide" style="background-image:url(shop15.png)"></div>
-      <div class="g-slide" style="background-image:url(shop13.png)"></div>
-      <div class="g-slide" style="background-image:url(shop11.png)"></div>
-      <div class="g-overlay"></div>
+      <img class="g-slide active" src="shop6.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop7.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop8.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop10.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop11.png" alt="Electric Emporium">
     </div>
     <div class="gallery-frame">
-      <div class="g-slide active" style="background-image:url(shop11.png)"></div>
-      <div class="g-slide" style="background-image:url(shop14.png)"></div>
-      <div class="g-slide" style="background-image:url(shop15.png)"></div>
-      <div class="g-slide" style="background-image:url(shop12.png)"></div>
-      <div class="g-overlay"></div>
+      <img class="g-slide active" src="shop12.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop13.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop14.png" alt="Electric Emporium">
+      <img class="g-slide" src="shop15.png" alt="Electric Emporium">
     </div>
   </div>
 </div>
