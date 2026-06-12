@@ -16,7 +16,7 @@ html{scroll-behavior:smooth}
 body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;cursor:none}
 
 /* CURSOR */
-#cursor-dot{position:fixed;width:16px;height:16px;border:2px solid var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.18s,height 0.18s,background 0.18s}
+#cursor-dot{position:fixed;top:0;left:0;width:16px;height:16px;border:2px solid var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate3d(-50%,-50%,0);transition:width 0.18s,height 0.18s,background 0.18s;will-change:transform}
 body.hovering #cursor-dot{width:38px;height:38px;background:rgba(230,57,70,0.1)}
 body.clicking #cursor-dot{width:10px;height:10px;background:var(--red)}
 #spark-canvas{position:fixed;inset:0;pointer-events:none;z-index:9997}
@@ -196,12 +196,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .brands-title{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-0.02em}
 .brands-title .accent{color:var(--red)}
 .brands-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;border:1px solid var(--border)}
-.brand-tile{background:var(--white);padding:1.6rem 1rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.6rem;text-decoration:none;transition:background 0.25s;cursor:none}
+.brand-tile{background:var(--white);padding:1.8rem 1.2rem;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.7rem;text-decoration:none;transition:background 0.25s;cursor:none}
 .brand-tile:hover{background:var(--off)}
-.brand-logo-wrap{height:40px;display:flex;align-items:center;justify-content:center;width:100%}
-.brand-logo-wrap img{max-height:36px;max-width:90px;object-fit:contain}
-.brand-name{font-size:0.78rem;font-weight:700}
-.brand-type{font-size:0.62rem;color:var(--gray);line-height:1.4}
+.brand-logo-wrap{height:46px;display:flex;align-items:center;justify-content:center;width:100%}
+.brand-logo-wrap img{max-height:46px;max-width:120px;width:auto;object-fit:contain}
+.brand-type{font-size:0.68rem;font-weight:700;color:var(--black);line-height:1.4}
 @media(max-width:900px){.brands-grid{grid-template-columns:repeat(2,1fr);border-radius:16px}}
 
 /* WHY CHOOSE US */
@@ -525,21 +524,21 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
     <h2 class="brands-title">Genuine Brands <span class="accent">You Trust</span></h2>
   </div>
   <div class="brands-grid">
-    <a class="brand-tile" href="products.html?brand=Havells"><div class="brand-logo-wrap"><img src="logo_havells.png" alt="Havells"></div><div class="brand-name">Havells</div><div class="brand-type">Lights &middot; Fans &middot; Wires &middot; Switches</div></a>
-    <a class="brand-tile" href="products.html?brand=Legrand"><div class="brand-logo-wrap"><img src="logo_legrand.jpg" alt="Legrand"></div><div class="brand-name">Legrand</div><div class="brand-type">Switches &middot; Switchgear</div></a>
-    <a class="brand-tile" href="products.html?brand=Atomberg"><div class="brand-logo-wrap"><img src="logo_atomberg.png" alt="Atomberg"></div><div class="brand-name">Atomberg</div><div class="brand-type">BLDC Fans</div></a>
-    <a class="brand-tile" href="products.html?brand=V-Guard"><div class="brand-logo-wrap"><img src="logo_vguard.jpg" alt="V-Guard"></div><div class="brand-name">V-Guard</div><div class="brand-type">MCBs &middot; Wires &middot; Fans</div></a>
-    <a class="brand-tile" href="products.html?brand=Nortek"><div class="brand-logo-wrap"><img src="logo_nortek.png" alt="Nortek"></div><div class="brand-name">Nortek</div><div class="brand-type">Architectural Lighting</div></a>
-    <a class="brand-tile" href="products.html?brand=Indoasian"><div class="brand-logo-wrap"><img src="logo_indoasian.png" alt="Indoasian"></div><div class="brand-name">Indoasian</div><div class="brand-type">Switches &middot; Switchgear</div></a>
-    <a class="brand-tile" href="products.html?brand=Surya"><div class="brand-logo-wrap"><img src="logo_surya.jpg" alt="Surya"></div><div class="brand-name">Surya</div><div class="brand-type">Lights &middot; LEDs</div></a>
-    <a class="brand-tile" href="products.html?brand=Crompton"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:var(--red)">CROMPTON</span></div><div class="brand-name">Crompton</div><div class="brand-type">Fans &middot; Lights &middot; Pumps</div></a>
-    <a class="brand-tile" href="products.html?brand=Polycab"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:#003087">POLYCAB</span></div><div class="brand-name">Polycab</div><div class="brand-type">Wires &middot; Cables</div></a>
-    <a class="brand-tile" href="products.html?brand=KEI"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1.4rem;font-weight:900;color:var(--red)">KEI</span></div><div class="brand-name">KEI</div><div class="brand-type">Wires &middot; Cables</div></a>
-    <a class="brand-tile" href="products.html?brand=Daikin"><div class="brand-logo-wrap"><img src="logo_daikin.png" alt="Daikin"></div><div class="brand-name">Daikin</div><div class="brand-type">Inverter ACs</div></a>
-    <a class="brand-tile" href="products.html?brand=Mitsubishi"><div class="brand-logo-wrap"><img src="logo_mitsubishi.png" alt="Mitsubishi"></div><div class="brand-name">Mitsubishi</div><div class="brand-type">Premium ACs</div></a>
-    <a class="brand-tile" href="products.html?brand=Lloyd"><div class="brand-logo-wrap"><img src="logo_lloyd.png" alt="Lloyd"></div><div class="brand-name">Lloyd</div><div class="brand-type">Split Inverter ACs</div></a>
-    <a class="brand-tile" href="products.html?brand=Samsung"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1rem;font-weight:900;color:#1428A0">SAMSUNG</span></div><div class="brand-name">Samsung</div><div class="brand-type">WindFree ACs</div></a>
-    <a class="brand-tile" href="products.html?brand=BlueStarCelfrost"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:0.8rem;font-weight:900;color:#005BAC;text-align:center;line-height:1.3">BLUE STAR &amp;<br>CELFROST</span></div><div class="brand-name">Blue Star / Celfrost</div><div class="brand-type">Deep Freezers</div></a>
+    <a class="brand-tile" href="products.html?brand=Havells"><div class="brand-logo-wrap"><img src="logo_havells.png" alt="Havells"></div><div class="brand-type">Lights &middot; Fans &middot; Wires &middot; Switches</div></a>
+    <a class="brand-tile" href="products.html?brand=Legrand"><div class="brand-logo-wrap"><img src="logo_legrand.jpg" alt="Legrand"></div><div class="brand-type">Switches &middot; Switchgear</div></a>
+    <a class="brand-tile" href="products.html?brand=Atomberg"><div class="brand-logo-wrap"><img src="logo_atomberg.png" alt="Atomberg"></div><div class="brand-type">BLDC Fans</div></a>
+    <a class="brand-tile" href="products.html?brand=V-Guard"><div class="brand-logo-wrap"><img src="logo_vguard.png" alt="V-Guard"></div><div class="brand-type">MCBs &middot; Wires &middot; Fans</div></a>
+    <a class="brand-tile" href="products.html?brand=Nortek"><div class="brand-logo-wrap"><img src="logo_nortek.png" alt="Nortek"></div><div class="brand-type">Architectural Lighting</div></a>
+    <a class="brand-tile" href="products.html?brand=Indoasian"><div class="brand-logo-wrap"><img src="logo_indoasian.png" alt="Indoasian"></div><div class="brand-type">Switches &middot; Switchgear</div></a>
+    <a class="brand-tile" href="products.html?brand=Surya"><div class="brand-logo-wrap"><img src="logo_surya.jpg" alt="Surya"></div><div class="brand-type">Lights &middot; LEDs</div></a>
+    <a class="brand-tile" href="products.html?brand=Crompton"><div class="brand-logo-wrap"><img src="logo_crompton.png" alt="Crompton"></div><div class="brand-type">Fans &middot; Lights &middot; Pumps</div></a>
+    <a class="brand-tile" href="products.html?brand=Polycab"><div class="brand-logo-wrap"><img src="logo_polycab.png" alt="Polycab"></div><div class="brand-type">Wires &middot; Cables</div></a>
+    <a class="brand-tile" href="products.html?brand=KEI"><div class="brand-logo-wrap"><img src="logo_kei.png" alt="KEI"></div><div class="brand-type">Wires &middot; Cables</div></a>
+    <a class="brand-tile" href="products.html?brand=Daikin"><div class="brand-logo-wrap"><img src="logo_daikin.png" alt="Daikin"></div><div class="brand-type">Inverter ACs</div></a>
+    <a class="brand-tile" href="products.html?brand=Mitsubishi"><div class="brand-logo-wrap"><img src="logo_mitsubishi.png" alt="Mitsubishi"></div><div class="brand-type">Premium ACs</div></a>
+    <a class="brand-tile" href="products.html?brand=Lloyd"><div class="brand-logo-wrap"><img src="logo_lloyd.png" alt="Lloyd"></div><div class="brand-type">Split Inverter ACs</div></a>
+    <a class="brand-tile" href="products.html?brand=Samsung"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:1.1rem;font-weight:900;color:#1428A0">SAMSUNG</span></div><div class="brand-type">WindFree ACs</div></a>
+    <a class="brand-tile" href="products.html?brand=BlueStarCelfrost"><div class="brand-logo-wrap"><span style="font-family:Montserrat,sans-serif;font-size:0.85rem;font-weight:900;color:#005BAC;text-align:center;line-height:1.3">BLUE STAR &amp;<br>CELFROST</span></div><div class="brand-type">Deep Freezers</div></a>
   </div>
 </div>
 
@@ -549,7 +548,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
     <h2 class="why-title">The <span class="accent">Emporium</span> Difference</h2>
   </div>
   <div class="why-grid">
-    <div class="why-card"><div class="why-num">4.9&#9733;</div><div class="why-card-title">Top Rated Shop</div><div class="why-card-text">72+ verified Google reviews &mdash; one of Balaghat's highest-rated electrical stores</div></div>
+    <div class="why-card"><div class="why-num">4.9&#9733;</div><div class="why-card-title">Top Rated Shop</div><div class="why-card-text">72+ verified Google reviews &mdash; Balaghat's highest-rated electrical store</div></div>
     <div class="why-card"><div class="why-num">35+</div><div class="why-card-title">Years of Trust</div><div class="why-card-text">Serving Balaghat and the surrounding region since 1989</div></div>
     <div class="why-card"><div class="why-num">ISI</div><div class="why-card-title">Genuine Products</div><div class="why-card-text">Only ISI marked &amp; certified brands &mdash; zero compromise on quality</div></div>
     <div class="why-card"><div class="why-num">&#8377;</div><div class="why-card-title">Best Prices</div><div class="why-card-text">Competitive pricing with special bulk deals for contractors &amp; builders</div></div>
@@ -567,6 +566,8 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
         <div class="pillar"><div class="pillar-num">01</div><div><div class="pillar-name">Authenticity First</div><div class="pillar-text">Genuine products only &mdash; no duplicates, no shortcuts, ever</div></div></div>
         <div class="pillar"><div class="pillar-num">02</div><div><div class="pillar-name">Value for Money</div><div class="pillar-text">Products that last &mdash; not cheap ones that don't</div></div></div>
         <div class="pillar"><div class="pillar-num">03</div><div><div class="pillar-name">Widest Range</div><div class="pillar-text">Lights to ACs to wires &mdash; everything under one roof</div></div></div>
+        <div class="pillar"><div class="pillar-num">04</div><div><div class="pillar-name">Expert Buying Advice</div><div class="pillar-text">Our team helps you pick the right product &mdash; not just any product</div></div></div>
+        <div class="pillar"><div class="pillar-num">05</div><div><div class="pillar-name">Lowest Price Guaranteed</div><div class="pillar-text">Competitive pricing with special deals for bulk &amp; contractor orders</div></div></div>
       </div>
     </div>
     <div class="about-right">
@@ -643,7 +644,7 @@ document.querySelectorAll('.gallery-frame').forEach(function(frame,fi){
 });
 
 var dot=document.getElementById('cursor-dot');
-document.addEventListener('mousemove',function(e){dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';});
+document.addEventListener('mousemove',function(e){dot.style.transform='translate3d('+(e.clientX)+'px,'+(e.clientY)+'px,0) translate(-50%,-50%)';},{passive:true});
 document.querySelectorAll('a,button').forEach(function(el){
   el.addEventListener('mouseenter',function(){document.body.classList.add('hovering');});
   el.addEventListener('mouseleave',function(){document.body.classList.remove('hovering');});
