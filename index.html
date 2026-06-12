@@ -26,7 +26,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:70px;max-width:1400px;margin:0 auto}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:none}
 .nav-logo img{height:34px;object-fit:contain}
-.nav-word{font-size:1.05rem;font-weight:800;letter-spacing:-0.01em}
+.nav-word{font-size:1.05rem;font-weight:800;letter-spacing:-0.01em;color:var(--black)}
 .nav-word .e{color:var(--red)}
 .nav-links{display:flex;gap:2.5rem;list-style:none}
 .nav-links a{font-size:0.85rem;font-weight:500;color:var(--gray);text-decoration:none;transition:color 0.2s;cursor:none}
@@ -85,26 +85,33 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .orbit-center .hero-stat-label{font-size:0.78rem;max-width:150px;margin:0.4rem auto 0;line-height:1.5;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:rgba(255,255,255,0.85)}
 .bubble{position:absolute;background:rgba(255,255,255,0.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.18);border-radius:14px;padding:0.65rem 1rem;display:flex;align-items:center;gap:7px;font-size:0.68rem;font-weight:700;color:var(--white);letter-spacing:0.01em;white-space:nowrap;animation:floatBubble 6s ease-in-out infinite}
 .bubble svg{width:15px;height:15px;flex-shrink:0;stroke:var(--white);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.bubble-1{top:0;left:2%;animation-delay:0s}
-.bubble-2{top:6%;right:0;animation-delay:1.5s}
-.bubble-3{bottom:6%;left:0;animation-delay:3s}
-.bubble-4{bottom:0;right:2%;animation-delay:4.5s}
-@keyframes floatBubble{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.bubble-1{top:0;left:2%;animation:floatBubbleA 6s ease-in-out infinite;animation-delay:0s}
+.bubble-2{top:8%;right:0;animation:floatBubbleB 7s ease-in-out infinite;animation-delay:1.5s}
+.bubble-3{bottom:6%;left:0;animation:floatBubbleA 6.5s ease-in-out infinite;animation-delay:3s}
+.bubble-4{bottom:0;right:2%;animation:floatBubbleB 7.5s ease-in-out infinite;animation-delay:0.8s}
+.bubble-5{top:42%;left:0;animation:floatBubbleA 8s ease-in-out infinite;animation-delay:2s}
+.bubble-6{top:40%;right:0;animation:floatBubbleB 6.8s ease-in-out infinite;animation-delay:4s}
+@keyframes floatBubbleA{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(4px,-12px) rotate(-1.5deg)}}
+@keyframes floatBubbleB{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-4px,-12px) rotate(1.5deg)}}
 
-/* PHOTO GALLERY */
+/* radar ring behind center stat */
+.orbit-center{position:relative;z-index:2}
+.orbit-center::before,.orbit-center::after{content:'';position:absolute;top:50%;left:50%;border:1px solid rgba(255,255,255,0.15);border-radius:50%;transform:translate(-50%,-50%);width:140px;height:140px;animation:radarPing 3.5s ease-out infinite;pointer-events:none}
+.orbit-center::after{animation-delay:1.75s}
+@keyframes radarPing{0%{width:120px;height:120px;opacity:0.5}100%{width:260px;height:260px;opacity:0}}
+
+/* PHOTO GALLERY — mosaic */
 .gallery{max-width:1400px;margin:0 auto;padding:1.5rem 1.5rem 0}
-.gallery-frame{position:relative;border-radius:20px;overflow:hidden;height:340px}
+.gallery-mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+.gallery-frame{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3}
 .g-slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.4s ease}
 .g-slide.active{opacity:1}
-.g-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.45) 0%,rgba(0,0,0,0) 50%)}
-.g-caption{position:absolute;bottom:1.5rem;left:2rem;z-index:2;color:var(--white)}
-.g-caption-title{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);opacity:0.9}
-.g-caption-sub{font-size:0.7rem;color:rgba(255,255,255,0.6);margin-top:2px}
-.g-dots{position:absolute;bottom:1.6rem;right:2rem;z-index:3;display:flex;gap:6px}
-.g-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:none;border:none;padding:0;transition:all 0.3s}
-.g-dot.active{width:22px;border-radius:3px;background:var(--red)}
+.g-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.4) 0%,rgba(0,0,0,0) 55%)}
+.g-caption{position:absolute;bottom:1rem;left:1.2rem;z-index:2;color:var(--white)}
+.g-caption-title{font-size:0.65rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);opacity:0.9}
+.g-caption-sub{font-size:0.65rem;color:rgba(255,255,255,0.6);margin-top:2px}
 
-@media(max-width:900px){.gallery-frame{height:220px}}
+@media(max-width:900px){.gallery-mosaic{grid-template-columns:repeat(2,1fr)}.gallery-frame:nth-child(3){display:none}}
 
 /* FEATURE STRIP */
 .features{max-width:1400px;margin:0 auto;padding:0 3rem 4rem}
@@ -370,23 +377,31 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
         </div>
         <div class="bubble bubble-3"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Widest Range</div>
         <div class="bubble bubble-4"><svg viewBox="0 0 24 24"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h7a4 4 0 0 0 0-8"/></svg> Lowest Price Guaranteed</div>
+        <div class="bubble bubble-5"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 3 5-5"/></svg> 100km+ Reach</div>
+        <div class="bubble bubble-6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Expert Advice</div>
       </div>
     </div>
   </div>
 </div>
 
 <div class="gallery reveal">
-  <div class="gallery-frame">
-    <div class="g-slide active" style="background-image:url(shop1.png)" id="gs0"></div>
-    <div class="g-slide" style="background-image:url(shop4.png)" id="gs1"></div>
-    <div class="g-slide" style="background-image:url(shop6.png)" id="gs2"></div>
-    <div class="g-slide" style="background-image:url(shop2.png)" id="gs3"></div>
-    <div class="g-overlay"></div>
-    <div class="g-caption">
-      <div class="g-caption-title">Our Store</div>
-      <div class="g-caption-sub">Gujri Chowk, Balaghat &mdash; Est. 1989</div>
+  <div class="gallery-mosaic">
+    <div class="gallery-frame" data-photos="shop1.png,shop4.png,shop6.png,shop2.png" data-start="0">
+      <div class="g-slide active" style="background-image:url(shop1.png)"></div>
+      <div class="g-overlay"></div>
+      <div class="g-caption">
+        <div class="g-caption-title">Our Store</div>
+        <div class="g-caption-sub">Gujri Chowk, Balaghat &mdash; Est. 1989</div>
+      </div>
     </div>
-    <div class="g-dots" id="gDots"></div>
+    <div class="gallery-frame" data-photos="shop4.png,shop6.png,shop2.png,shop1.png" data-start="1">
+      <div class="g-slide active" style="background-image:url(shop4.png)"></div>
+      <div class="g-overlay"></div>
+    </div>
+    <div class="gallery-frame" data-photos="shop6.png,shop2.png,shop1.png,shop4.png" data-start="2">
+      <div class="g-slide active" style="background-image:url(shop6.png)"></div>
+      <div class="g-overlay"></div>
+    </div>
   </div>
 </div>
 
@@ -609,10 +624,19 @@ document.getElementById("navPhone").addEventListener("click",function(){window.l
 var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0.08});
 document.querySelectorAll(".reveal").forEach(function(r){io.observe(r);});
 
-var gSlides=['gs0','gs1','gs2','gs3'],gCur=0,gDc=document.getElementById('gDots');
-gSlides.forEach(function(_,i){var d=document.createElement('button');d.className='g-dot'+(i===0?' active':'');d.addEventListener('click',function(){goToGallery(i);});gDc.appendChild(d);});
-function goToGallery(n){document.getElementById(gSlides[gCur]).classList.remove('active');gDc.children[gCur].classList.remove('active');gCur=n;document.getElementById(gSlides[gCur]).classList.add('active');gDc.children[gCur].classList.add('active');}
-setInterval(function(){goToGallery((gCur+1)%gSlides.length);},3500);
+document.querySelectorAll('.gallery-frame').forEach(function(frame,fi){
+  var photos=frame.dataset.photos.split(','),cur=0;
+  var slide=frame.querySelector('.g-slide');
+  setInterval(function(){
+    cur=(cur+1)%photos.length;
+    var next=slide.cloneNode(true);
+    next.style.backgroundImage="url("+photos[cur]+")";
+    next.style.opacity="0";
+    frame.insertBefore(next, frame.querySelector('.g-overlay'));
+    requestAnimationFrame(function(){next.classList.add('active');next.style.opacity="1";});
+    setTimeout(function(){slide.remove();slide=next;},1500);
+  },3500+fi*400);
+});
 
 var dot=document.getElementById('cursor-dot');
 document.addEventListener('mousemove',function(e){dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';});
