@@ -236,7 +236,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .pillar-name{font-size:0.78rem;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem}
 .pillar-text{font-size:0.72rem;color:var(--gray);line-height:1.6}
 .about-right{display:flex;flex-direction:column}
-.about-photo{position:relative;flex:1;min-height:240px;background-size:cover;background-position:center}
+.about-photo{position:relative;flex:1;min-height:240px;background:var(--off);display:flex;align-items:center;justify-content:center}
+.about-photo img{width:100%;height:100%;object-fit:contain;display:block}
 .about-photo-tag{position:absolute;top:1rem;left:1rem;background:var(--white);padding:0.5rem 1rem;font-size:0.6rem;font-weight:800;letter-spacing:0.18em;text-transform:uppercase}
 .about-stats{display:grid;grid-template-columns:repeat(3,1fr);background:var(--off)}
 .about-stat{padding:1.6rem 1rem;text-align:center;border-right:1px solid var(--border)}
@@ -386,20 +387,29 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
 
 <div class="gallery reveal">
   <div class="gallery-mosaic">
-    <div class="gallery-frame" data-photos="shop10.png,shop13.png,shop11.png,shop14.png" data-start="0">
+    <div class="gallery-frame">
       <div class="g-slide active" style="background-image:url(shop10.png)"></div>
+      <div class="g-slide" style="background-image:url(shop13.png)"></div>
+      <div class="g-slide" style="background-image:url(shop11.png)"></div>
+      <div class="g-slide" style="background-image:url(shop14.png)"></div>
       <div class="g-overlay"></div>
       <div class="g-caption">
         <div class="g-caption-title">Our Store</div>
         <div class="g-caption-sub">Gujri Chowk, Balaghat &mdash; Est. 1989</div>
       </div>
     </div>
-    <div class="gallery-frame" data-photos="shop12.png,shop15.png,shop13.png,shop11.png" data-start="1">
+    <div class="gallery-frame">
       <div class="g-slide active" style="background-image:url(shop12.png)"></div>
+      <div class="g-slide" style="background-image:url(shop15.png)"></div>
+      <div class="g-slide" style="background-image:url(shop13.png)"></div>
+      <div class="g-slide" style="background-image:url(shop11.png)"></div>
       <div class="g-overlay"></div>
     </div>
-    <div class="gallery-frame" data-photos="shop11.png,shop14.png,shop15.png,shop12.png" data-start="2">
+    <div class="gallery-frame">
       <div class="g-slide active" style="background-image:url(shop11.png)"></div>
+      <div class="g-slide" style="background-image:url(shop14.png)"></div>
+      <div class="g-slide" style="background-image:url(shop15.png)"></div>
+      <div class="g-slide" style="background-image:url(shop12.png)"></div>
       <div class="g-overlay"></div>
     </div>
   </div>
@@ -562,7 +572,8 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
       </div>
     </div>
     <div class="about-right">
-      <div class="about-photo" style="background-image:url(legacy_ad.jpg)">
+      <div class="about-photo">
+        <img src="legacy_ad.jpg" alt="Electric Emporium archive ad from 2000">
         <div class="about-photo-tag">From Our Archives &mdash; 2000</div>
       </div>
       <div class="about-stats">
@@ -625,16 +636,11 @@ var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isInterse
 document.querySelectorAll(".reveal").forEach(function(r){io.observe(r);});
 
 document.querySelectorAll('.gallery-frame').forEach(function(frame,fi){
-  var photos=frame.dataset.photos.split(','),cur=0;
-  var slide=frame.querySelector('.g-slide');
+  var slides=frame.querySelectorAll('.g-slide'),cur=0;
   setInterval(function(){
-    cur=(cur+1)%photos.length;
-    var next=slide.cloneNode(true);
-    next.style.backgroundImage="url("+photos[cur]+")";
-    next.style.opacity="0";
-    frame.insertBefore(next, frame.querySelector('.g-overlay'));
-    requestAnimationFrame(function(){next.classList.add('active');next.style.opacity="1";});
-    setTimeout(function(){slide.remove();slide=next;},1500);
+    slides[cur].classList.remove('active');
+    cur=(cur+1)%slides.length;
+    slides[cur].classList.add('active');
   },3500+fi*400);
 });
 
