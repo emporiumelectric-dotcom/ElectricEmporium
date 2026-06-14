@@ -252,7 +252,8 @@ footer{border-top:1px solid var(--border);padding:2.5rem 1.5rem;max-width:1400px
 .footer-links a:hover{color:var(--black)}
 
 /* REVEAL */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal{opacity:1;transform:translateY(0);transition:opacity 0.7s ease,transform 0.7s ease}
+.js-reveal{opacity:0;transform:translateY(24px)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
 /* FOOTER */
@@ -468,7 +469,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
     <a class="marquee-item" href="products.html?brand=Nortek"><img src="logo_nortek.png" alt="Nortek"></a>
     <a class="marquee-item" href="products.html?brand=Indoasian"><img src="logo_indoasian.png" alt="Indoasian"></a>
     <a class="marquee-item" href="products.html?brand=Surya"><img src="logo_surya.jpg" alt="Surya"></a>
-    <a class="marquee-item" href="products.html?brand=Crompton"><img src="logo_crompton.png" alt="Crompton"></a>
+    <a class="marquee-item" href="products.html?brand=Crompton"><span class="marquee-item-text" style="color:#003087;font-size:1.1rem">Crompton</span></a>
     <a class="marquee-item" href="products.html?brand=Polycab"><img src="logo_polycab.png" alt="Polycab"></a>
     <a class="marquee-item" href="products.html?brand=KEI"><img src="logo_kei.png" alt="KEI"></a>
     <a class="marquee-item" href="products.html?brand=Daikin"><img src="logo_daikin.png" alt="Daikin"></a>
@@ -483,7 +484,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
     <a class="marquee-item" href="products.html?brand=Nortek"><img src="logo_nortek.png" alt="Nortek"></a>
     <a class="marquee-item" href="products.html?brand=Indoasian"><img src="logo_indoasian.png" alt="Indoasian"></a>
     <a class="marquee-item" href="products.html?brand=Surya"><img src="logo_surya.jpg" alt="Surya"></a>
-    <a class="marquee-item" href="products.html?brand=Crompton"><img src="logo_crompton.png" alt="Crompton"></a>
+    <a class="marquee-item" href="products.html?brand=Crompton"><span class="marquee-item-text" style="color:#003087;font-size:1.1rem">Crompton</span></a>
     <a class="marquee-item" href="products.html?brand=Polycab"><img src="logo_polycab.png" alt="Polycab"></a>
     <a class="marquee-item" href="products.html?brand=KEI"><img src="logo_kei.png" alt="KEI"></a>
     <a class="marquee-item" href="products.html?brand=Daikin"><img src="logo_daikin.png" alt="Daikin"></a>
@@ -557,8 +558,8 @@ document.addEventListener("click",function(e){if(!hb.contains(e.target)&&!mm.con
 
 document.getElementById("navPhone").addEventListener("click",function(){window.location.href="tel:+919425831035";});
 
-var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0.08});
-document.querySelectorAll(".reveal").forEach(function(r){io.observe(r);});
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0.05});
+document.querySelectorAll(".reveal").forEach(function(r){r.classList.add("js-reveal");io.observe(r);});
 
 
 var dot=document.getElementById('cursor-dot');
