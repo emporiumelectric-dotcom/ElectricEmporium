@@ -160,7 +160,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .bc-wrap::before{left:0;background:linear-gradient(to right,#fff 60%,transparent 100%)}
 .bc-wrap::after{right:0;background:linear-gradient(to left,#fff 60%,transparent 100%)}
 .bc-slide{position:absolute;top:0;width:300px;height:200px;display:flex;align-items:center;justify-content:center;transition:transform 0.65s cubic-bezier(0.4,0,0.2,1),opacity 0.65s ease,filter 0.65s ease;cursor:pointer}
-.bc-slide img{display:block;height:80px;width:240px;object-fit:contain}
+.bc-slide img{display:block;height:70px;width:auto;max-height:70px;max-width:220px;object-fit:contain}
 .bc-slide .bc-txt{font-size:1.6rem;font-weight:900;white-space:nowrap}
 .bc-active{opacity:1;filter:grayscale(0);z-index:2;transform:translateX(var(--tx)) scale(1.35)!important}
 .bc-adj{opacity:0.65;filter:grayscale(0.25);transform:translateX(var(--tx)) scale(0.78)!important}
@@ -453,7 +453,7 @@ drawSparks();
 (function(){
   var brands=[
     {img:'logo_havells.png',   alt:'Havells'},
-    {img:'logo_legrand.png',   alt:'Legrand'},
+    {img:'logo_legrand.jpg',   alt:'Legrand'},
     {img:'logo_atomberg.png',  alt:'Atomberg'},
     {img:'logo_vguard.png',    alt:'V-Guard'},
     {img:'logo_nortek.png',    alt:'Nortek'},
@@ -483,8 +483,9 @@ drawSparks();
       var img=document.createElement('img');
       /* Enforce size in every possible way */
       img.src=b.img; img.alt=b.alt;
-      img.setAttribute('width','260'); img.setAttribute('height','90');
-      img.style.cssText='width:260px!important;height:90px!important;max-width:260px!important;max-height:90px!important;min-width:0!important;min-height:0!important;object-fit:contain!important;display:block!important;';
+      img.removeAttribute('width');
+      img.setAttribute('height','70');
+      img.style.cssText='width:auto!important;height:70px!important;max-height:70px!important;max-width:220px!important;min-width:0!important;min-height:0!important;object-fit:contain!important;display:block!important;';
       s.appendChild(img);
     } else {
       var sp=document.createElement('span');
