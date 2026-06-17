@@ -8,74 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Electric Emporium","alternateName":"Electric Emporium Balaghat","description":"Balaghat's most trusted electrical shop since 1989. Authorised dealer of Havells, Legrand, Atomberg, Daikin, V-Guard and more.","url":"https://electricemporium.in","telephone":"+919425831035","priceRange":"₹₹","image":"https://electricemporium.in/shop10.png","address":{"@type":"PostalAddress","streetAddress":"Main Rd, Gujri Chowk, Chitragupt Nagar","addressLocality":"Balaghat","addressRegion":"Madhya Pradesh","postalCode":"481001","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":21.8314,"longitude":80.1837},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"10:00","closes":"21:00"}],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"72","bestRating":"5"}}
-
-// Brand spotlight carousel
-(function(){
-  var brands=[
-    {type:'img',src:'logo_havells.png',alt:'Havells'},
-    {type:'img',src:'logo_legrand.png',alt:'Legrand'},
-    {type:'img',src:'logo_atomberg.png',alt:'Atomberg'},
-    {type:'img',src:'logo_vguard.png',alt:'V-Guard'},
-    {type:'img',src:'logo_nortek.png',alt:'Nortek'},
-    {type:'img',src:'logo_indoasian.png',alt:'Indoasian'},
-    {type:'img',src:'logo_surya.png',alt:'Surya'},
-    {type:'img',src:'logo_crompton.png',alt:'Crompton'},
-    {type:'img',src:'logo_polycab.png',alt:'Polycab'},
-    {type:'img',src:'logo_kei.png',alt:'KEI'},
-    {type:'img',src:'logo_daikin.png',alt:'Daikin'},
-    {type:'img',src:'logo_mitsubishi.png',alt:'Mitsubishi'},
-    {type:'text',label:'SAMSUNG',color:'#1428A0'},
-    {type:'text',label:'BLUE STAR',color:'#005BAC'},
-  ];
-  var track=document.getElementById('bct');
-  var dotsEl=document.getElementById('bcdots');
-  var bc=document.getElementById('bc');
-  if(!track||!dotsEl||!bc)return;
-  var slideW=200,current=0,autoTimer;
-  brands.forEach(function(b,i){
-    var slide=document.createElement('div');
-    slide.className='bc-slide';
-    slide.dataset.index=i;
-    if(b.type==='img'){
-      var img=document.createElement('img');
-      img.src=b.src;img.alt=b.alt;
-      slide.appendChild(img);
-    } else {
-      var span=document.createElement('span');
-      span.className='bc-text';
-      span.style.color=b.color;
-      span.textContent=b.label;
-      slide.appendChild(span);
-    }
-    slide.addEventListener('click',function(){goTo(i);});
-    track.appendChild(slide);
-    var dot=document.createElement('button');
-    dot.className='bc-dot';
-    dot.addEventListener('click',function(){goTo(i);});
-    dotsEl.appendChild(dot);
-  });
-  var slides=track.querySelectorAll('.bc-slide');
-  var dots=dotsEl.querySelectorAll('.bc-dot');
-  function goTo(n){current=(n+brands.length)%brands.length;render();resetAuto();}
-  function render(){
-    var carW=bc.offsetWidth;
-    var centerOff=carW/2-slideW/2;
-    var offset=centerOff-current*slideW;
-    track.style.transform='translateX('+offset+'px)';
-    slides.forEach(function(s,i){
-      var dist=Math.abs(i-current);
-      var wDist=Math.min(dist,brands.length-dist);
-      s.classList.remove('bc-active','bc-adj','bc-far');
-      if(wDist===0)s.classList.add('bc-active');
-      else if(wDist===1)s.classList.add('bc-adj');
-      else s.classList.add('bc-far');
-    });
-    dots.forEach(function(d,i){d.classList.toggle('active',i===current);});
-  }
-  function resetAuto(){clearInterval(autoTimer);autoTimer=setInterval(function(){goTo(current+1);},2800);}
-  render();resetAuto();
-  window.addEventListener('resize',render);
-})();
 </script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -633,6 +565,78 @@ function drawSparks(){
   requestAnimationFrame(drawSparks);
 }
 drawSparks();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+// Brand spotlight carousel
+(function(){
+  var brands=[
+    {type:'img',src:'logo_havells.png',alt:'Havells'},
+    {type:'img',src:'logo_legrand.png',alt:'Legrand'},
+    {type:'img',src:'logo_atomberg.png',alt:'Atomberg'},
+    {type:'img',src:'logo_vguard.png',alt:'V-Guard'},
+    {type:'img',src:'logo_nortek.png',alt:'Nortek'},
+    {type:'img',src:'logo_indoasian.png',alt:'Indoasian'},
+    {type:'img',src:'logo_surya.png',alt:'Surya'},
+    {type:'img',src:'logo_crompton.png',alt:'Crompton'},
+    {type:'img',src:'logo_polycab.png',alt:'Polycab'},
+    {type:'img',src:'logo_kei.png',alt:'KEI'},
+    {type:'img',src:'logo_daikin.png',alt:'Daikin'},
+    {type:'img',src:'logo_mitsubishi.png',alt:'Mitsubishi'},
+    {type:'text',label:'SAMSUNG',color:'#1428A0'},
+    {type:'text',label:'BLUE STAR',color:'#005BAC'},
+  ];
+  var track=document.getElementById('bct');
+  var dotsEl=document.getElementById('bcdots');
+  var bc=document.getElementById('bc');
+  if(!track||!dotsEl||!bc)return;
+  var slideW=200,current=0,autoTimer;
+  brands.forEach(function(b,i){
+    var slide=document.createElement('div');
+    slide.className='bc-slide';
+    slide.dataset.index=i;
+    if(b.type==='img'){
+      var img=document.createElement('img');
+      img.src=b.src;img.alt=b.alt;
+      slide.appendChild(img);
+    } else {
+      var span=document.createElement('span');
+      span.className='bc-text';
+      span.style.color=b.color;
+      span.textContent=b.label;
+      slide.appendChild(span);
+    }
+    slide.addEventListener('click',function(){goTo(i);});
+    track.appendChild(slide);
+    var dot=document.createElement('button');
+    dot.className='bc-dot';
+    dot.addEventListener('click',function(){goTo(i);});
+    dotsEl.appendChild(dot);
+  });
+  var slides=track.querySelectorAll('.bc-slide');
+  var dots=dotsEl.querySelectorAll('.bc-dot');
+  function goTo(n){current=(n+brands.length)%brands.length;render();resetAuto();}
+  function render(){
+    var carW=bc.offsetWidth;
+    var centerOff=carW/2-slideW/2;
+    var offset=centerOff-current*slideW;
+    track.style.transform='translateX('+offset+'px)';
+    slides.forEach(function(s,i){
+      var dist=Math.abs(i-current);
+      var wDist=Math.min(dist,brands.length-dist);
+      s.classList.remove('bc-active','bc-adj','bc-far');
+      if(wDist===0)s.classList.add('bc-active');
+      else if(wDist===1)s.classList.add('bc-adj');
+      else s.classList.add('bc-far');
+    });
+    dots.forEach(function(d,i){d.classList.toggle('active',i===current);});
+  }
+  function resetAuto(){clearInterval(autoTimer);autoTimer=setInterval(function(){goTo(current+1);},2800);}
+  render();resetAuto();
+  window.addEventListener('resize',render);
+})();
+});
 </script>
 </body>
 </html>
