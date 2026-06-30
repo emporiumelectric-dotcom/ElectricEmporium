@@ -16,6 +16,7 @@ body{font-family:Montserrat,sans-serif;background:var(--off);color:var(--black)}
 .login-box input{width:100%;padding:0.9rem 1rem;background:#111;border:1.5px solid #333;color:#fff;font-family:Montserrat,sans-serif;font-size:0.85rem;outline:none;margin-bottom:1rem}
 .login-box input:focus{border-color:var(--red)}
 .login-box button{width:100%;padding:0.9rem;background:var(--red);color:#fff;border:none;font-family:Montserrat,sans-serif;font-size:0.78rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer}
+.login-box button:disabled{background:#555;cursor:not-allowed}
 .login-error{color:var(--red);font-size:0.72rem;margin-top:0.5rem;display:none}
 nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--red)}
 .nav-logo{font-size:1rem;font-weight:900;color:#fff}.nav-logo span{color:var(--red)}
@@ -91,9 +92,10 @@ nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:
   <div class="login-box">
     <h2><span style="color:var(--red)">Electric</span> Emporium</h2>
     <p>Admin Panel &mdash; Authorised access only</p>
-    <input type="password" id="pwd-input" placeholder="Enter admin password">
-    <button onclick="checkLogin()">Login</button>
-    <p class="login-error" id="login-err">Wrong password. Try again.</p>
+    <input type="email" id="email-input" placeholder="Admin email" autocomplete="username">
+    <input type="password" id="pwd-input" placeholder="Enter admin password" autocomplete="current-password">
+    <button id="login-btn">Login</button>
+    <p class="login-error" id="login-err">Wrong email or password. Try again.</p>
   </div>
 </div>
 
@@ -198,21 +200,56 @@ nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:
 <script>
 var SURL = "https://dnmzzckeuctnkqbphwdg.supabase.co";
 var SKEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
-var ADMIN_PASSWORD = "emporium2024";
 var pendingPhotos = []; // {file, previewUrl, uploaded_url}
 var variantCount = 0;
 
 /* ── AUTH ── */
-function checkLogin() {
-  if (document.getElementById("pwd-input").value === ADMIN_PASSWORD) {
-    document.getElementById("login-screen").style.display = "none";
-    loadStats(); loadProducts();
-  } else {
+var AUTH_TOKEN = sessionStorage.getItem("ee_admin_token");
+
+async function checkLogin() {
+  var email = document.getElementById("email-input").value.trim();
+  var password = document.getElementById("pwd-input").value;
+  var btn = document.getElementById("login-btn");
+  btn.disabled = true; btn.textContent = "Logging in...";
+  try {
+    var res = await fetch(SURL + "/auth/v1/token?grant_type=password", {
+      method: "POST",
+      headers: { "apikey": SKEY, "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    });
+    var data = await res.json();
+    if (res.ok && data.access_token) {
+      AUTH_TOKEN = data.access_token;
+      sessionStorage.setItem("ee_admin_token", AUTH_TOKEN);
+      document.getElementById("login-screen").style.display = "none";
+      document.getElementById("login-err").style.display = "none";
+      loadStats(); loadProducts();
+    } else {
+      document.getElementById("login-err").style.display = "block";
+    }
+  } catch (e) {
+    document.getElementById("login-err").textContent = "Login failed: " + e.message;
     document.getElementById("login-err").style.display = "block";
   }
+  btn.disabled = false; btn.textContent = "Login";
 }
+document.getElementById("login-btn").addEventListener("click", checkLogin);
 document.getElementById("pwd-input").addEventListener("keydown", function(e) { if(e.key==="Enter") checkLogin(); });
-function logout() { document.getElementById("login-screen").style.display = "flex"; document.getElementById("pwd-input").value = ""; }
+document.getElementById("email-input").addEventListener("keydown", function(e) { if(e.key==="Enter") checkLogin(); });
+
+function logout() {
+  AUTH_TOKEN = null;
+  sessionStorage.removeItem("ee_admin_token");
+  document.getElementById("login-screen").style.display = "flex";
+  document.getElementById("pwd-input").value = "";
+}
+
+// Auto-skip login screen if a token from earlier this session is still around.
+// (Token may have expired server-side — first failed write will catch that.)
+if (AUTH_TOKEN) {
+  document.getElementById("login-screen").style.display = "none";
+  loadStats(); loadProducts();
+}
 
 /* ── TABS ── */
 function switchTab(tab) {
@@ -260,7 +297,7 @@ async function uploadPhoto(file) {
   var filename = Date.now() + "_" + Math.random().toString(36).substr(2,6) + "." + ext;
   var res = await fetch(SURL + "/storage/v1/object/product-photos/" + filename, {
     method: "POST",
-    headers: { "Authorization": "Bearer " + SKEY, "apikey": SKEY, "Content-Type": file.type, "x-upsert": "true" },
+    headers: { "Authorization": "Bearer " + AUTH_TOKEN, "apikey": SKEY, "Content-Type": file.type, "x-upsert": "true" },
     body: file
   });
   if (!res.ok) throw new Error("Photo upload failed: " + res.status);
@@ -333,7 +370,7 @@ async function saveProduct() {
     // 1. Save product
     var res = await fetch(SURL + "/rest/v1/products", {
       method: "POST",
-      headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY, "Content-Type": "application/json", "Prefer": "return=representation" },
+      headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN, "Content-Type": "application/json", "Prefer": "return=representation" },
       body: JSON.stringify({ Name: name, Brand: brand, Category: cat, Spec: spec, Price: price, Photo_url: "", in_stock: stock })
     });
     if (!res.ok) throw new Error((await res.text()));
@@ -358,13 +395,13 @@ async function saveProduct() {
       });
       await fetch(SURL + "/rest/v1/product_images", {
         method: "POST",
-        headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY, "Content-Type": "application/json" },
+        headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN, "Content-Type": "application/json" },
         body: JSON.stringify(photoRecords)
       });
       // Set first photo as main
       await fetch(SURL + "/rest/v1/products?id=eq." + pid, {
         method: "PATCH",
-        headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY, "Content-Type": "application/json" },
+        headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN, "Content-Type": "application/json" },
         body: JSON.stringify({ Photo_url: uploadedUrls[0] })
       });
     }
@@ -377,7 +414,7 @@ async function saveProduct() {
       });
       await fetch(SURL + "/rest/v1/product_variants", {
         method: "POST",
-        headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY, "Content-Type": "application/json" },
+        headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN, "Content-Type": "application/json" },
         body: JSON.stringify(varRecords)
       });
     }
@@ -407,7 +444,7 @@ function resetForm() {
 /* ── LIST ── */
 async function loadProducts() {
   var res = await fetch(SURL + "/rest/v1/products?select=*&order=id.desc", {
-    headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY }
+    headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN }
   });
   var data = await res.json();
   var list = document.getElementById("products-list");
@@ -423,22 +460,22 @@ async function loadProducts() {
 }
 
 async function loadStats() {
-  var res = await fetch(SURL + "/rest/v1/products?select=*", { headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY } });
+  var res = await fetch(SURL + "/rest/v1/products?select=*", { headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN } });
   var data = await res.json();
   document.getElementById("s-total").textContent = data.length;
   document.getElementById("s-stock").textContent = data.filter(function(p){return p.in_stock;}).length;
   var cats = {}; data.forEach(function(p){if(p.Category)cats[p.Category]=1;});
   document.getElementById("s-cats").textContent = Object.keys(cats).length;
-  var pr = await fetch(SURL + "/rest/v1/product_images?select=id", { headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY } });
+  var pr = await fetch(SURL + "/rest/v1/product_images?select=id", { headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN } });
   var photos = await pr.json();
   document.getElementById("s-photos").textContent = Array.isArray(photos) ? photos.length : "-";
 }
 
 async function deleteProduct(id) {
   if (!confirm("Delete this product and all its photos and variants?")) return;
-  await fetch(SURL + "/rest/v1/product_images?product_id=eq." + id, { method: "DELETE", headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY } });
-  await fetch(SURL + "/rest/v1/product_variants?product_id=eq." + id, { method: "DELETE", headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY } });
-  await fetch(SURL + "/rest/v1/products?id=eq." + id, { method: "DELETE", headers: { "apikey": SKEY, "Authorization": "Bearer " + SKEY } });
+  await fetch(SURL + "/rest/v1/product_images?product_id=eq." + id, { method: "DELETE", headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN } });
+  await fetch(SURL + "/rest/v1/product_variants?product_id=eq." + id, { method: "DELETE", headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN } });
+  await fetch(SURL + "/rest/v1/products?id=eq." + id, { method: "DELETE", headers: { "apikey": SKEY, "Authorization": "Bearer " + AUTH_TOKEN } });
   loadProducts(); loadStats();
 }
 
