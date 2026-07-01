@@ -184,7 +184,7 @@ nav{background:var(--black);padding:0 2rem;height:60px;display:flex;align-items:
     </div>
 
     <div style="max-width:580px;margin-top:1.5rem">
-      <button class="btn-save" id="save-btn" id="save-product-btn">Save Product</button>
+      <button class="btn-save" id="save-product-btn">Save Product</button>
       <div class="msg" id="save-msg"></div>
     </div>
   </div>
@@ -363,7 +363,7 @@ async function saveProduct() {
 
   if (!name || !brand || !cat) { showMsg("save-msg","error","Please fill Name, Brand and Category."); return; }
 
-  var btn = document.getElementById("save-btn");
+  var btn = document.getElementById("save-product-btn");
   btn.disabled = true; btn.textContent = "Saving...";
 
   try {
