@@ -281,11 +281,24 @@ function renderProduct() {
       var lbl = makeEl("div", "variant-group-label", type.charAt(0).toUpperCase() + type.slice(1));
       var opts = makeEl("div", "variant-options");
       groups[type].forEach(function(v) {
-        var btn = makeEl("button", "variant-btn" + (!v.in_stock ? " out" : ""), v.variant_value);
+        /* A variant with linked_product_id points at a *different* product row
+           (own photos, own price) — this button becomes a link, not a local
+           price swap. It's marked active when it points back at the product
+           currently on screen. Variants without a link keep the old behaviour
+           (just bump the price shown on this same page — e.g. wattage). */
+        var isSelf = v.linked_product_id && String(v.linked_product_id) === String(product.id);
+        var btn = makeEl("button", "variant-btn" + (!v.in_stock ? " out" : "") + (isSelf ? " active" : ""), v.variant_value);
         btn.setAttribute("data-type", type);
         if (!v.in_stock) btn.title = "Out of stock";
         (function(vv) {
           btn.addEventListener("click", function() {
+            if (!vv.in_stock) return;
+            if (vv.linked_product_id) {
+              if (String(vv.linked_product_id) !== String(product.id)) {
+                window.location.href = "product-detail.html?id=" + encodeURIComponent(vv.linked_product_id);
+              }
+              return;
+            }
             selectVariant(btn, vv.variant_type, vv.variant_value, vv.price, vv.in_stock);
           });
         })(v);
