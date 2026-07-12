@@ -447,13 +447,25 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;m
 
 <script>
 /* ── WHATSAPP FORM ── */
-function sendWA(){var n=document.getElementById("fname").value.trim(),p=document.getElementById("fphone").value.trim(),r=document.getElementById("freq").value.trim();if(!n||!r){alert("Please fill name and requirement.");return;}window.open("https://wa.me/919425831035?text="+encodeURIComponent("Hello Electric Emporium!\n\nName: "+n+"\nPhone: "+(p||"Not provided")+"\nRequirement: "+r),"_blank");}
+function sendWA(){var n=document.getElementById("fname").value.trim(),p=document.getElementById("fphone").value.trim(),r=document.getElementById("freq").value.trim();if(!n||!r){alert("Please fill name and requirement.");return;}if(typeof gtag==="function")gtag("event","whatsapp_click",{event_category:"engagement",event_label:"contact_form"});window.open("https://wa.me/919425831035?text="+encodeURIComponent("Hello Electric Emporium!\n\nName: "+n+"\nPhone: "+(p||"Not provided")+"\nRequirement: "+r),"_blank");}
 
 /* ── NAV ── */
 var hb=document.getElementById("hb"),mm=document.getElementById("mm");
 hb.addEventListener("click",function(e){e.stopPropagation();hb.classList.toggle("open");mm.classList.toggle("open");});
 document.addEventListener("click",function(e){if(!hb.contains(e.target)&&!mm.contains(e.target)){hb.classList.remove("open");mm.classList.remove("open");}});
-document.getElementById("navPhone").addEventListener("click",function(){window.location.href="tel:+919425831035";});
+document.getElementById("navPhone").addEventListener("click",function(){if(typeof gtag==="function")gtag("event","call_click",{event_category:"engagement",event_label:"nav_phone"});window.location.href="tel:+919425831035";});
+
+/* ── CONVERSION TRACKING: WhatsApp buttons, directions, floating button ── */
+document.querySelectorAll(".cbtn-wa, #waFloat").forEach(function(el){
+  el.addEventListener("click",function(){
+    if(typeof gtag==="function")gtag("event","whatsapp_click",{event_category:"engagement",event_label:el.id||"contact_section"});
+  });
+});
+document.querySelectorAll(".cbtn-dir, .nav-cta-link").forEach(function(el){
+  el.addEventListener("click",function(){
+    if(typeof gtag==="function")gtag("event","directions_click",{event_category:"engagement",event_label:"get_directions"});
+  });
+});
 
 /* ── REVEAL ── */
 var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("visible");});},{threshold:0.05});
