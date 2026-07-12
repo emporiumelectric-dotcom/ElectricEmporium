@@ -199,6 +199,48 @@ function selectVariant(btn, type, value, price, inStock) {
   }
 }
 
+/* ── SCHEMA: builds Product JSON-LD from the loaded product + images,
+   injects it into <head> so Google can show price/stock/brand in
+   search results. Runs once product data is available. ── */
+function injectProductSchema() {
+  if (!product) return;
+
+  var priceNum = (product.Price || "").toString().replace(/[^0-9.]/g, "");
+  var imgList = allImages.length
+    ? allImages.map(function(i) { return i.image_url; })
+    : (product.Photo_url ? [product.Photo_url] : []);
+
+  var schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.Name || "",
+    "image": imgList,
+    "description": (product.Spec || product.Name || "").toString().split("\n").join(" "),
+    "sku": String(product.id),
+    "brand": { "@type": "Brand", "name": product.Brand || "" },
+    "offers": {
+      "@type": "Offer",
+      "url": window.location.href,
+      "priceCurrency": "INR",
+      "price": priceNum || "0",
+      "availability": product.in_stock
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      "itemCondition": "https://schema.org/NewCondition",
+      "seller": { "@type": "Organization", "name": "Electric Emporium" }
+    }
+  };
+
+  var tag = document.getElementById("product-schema");
+  if (!tag) {
+    tag = document.createElement("script");
+    tag.type = "application/ld+json";
+    tag.id = "product-schema";
+    document.head.appendChild(tag);
+  }
+  tag.textContent = JSON.stringify(schema);
+}
+
 function renderProduct() {
   allImages = images.length > 0 ? images : (product.Photo_url ? [{ image_url: product.Photo_url }] : []);
 
@@ -342,6 +384,8 @@ function renderProduct() {
 
   document.getElementById("bc-name").textContent = product.Name || "";
   document.title = (product.Name || "Product") + " - Electric Emporium";
+
+  injectProductSchema();
 }
 
 async function loadProduct() {
