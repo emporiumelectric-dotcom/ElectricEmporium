@@ -34,7 +34,7 @@ body.clicking #cursor-dot{width:10px;height:10px;background:var(--red)}
 #spark-canvas{position:fixed;inset:0;pointer-events:none;z-index:9997}
 
 nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:84px;max-width:1400px;margin:0 auto}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 3rem;height:84px;max-width:100%;margin:0 auto}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:none}
 .nav-logo img{height:52px;object-fit:contain}
 .nav-word-wrap{display:flex;flex-direction:column;line-height:1.15}
@@ -59,7 +59,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .mob-menu.open{max-height:300px}
 .mob-menu a{padding:1rem 1.5rem;font-size:0.9rem;font-weight:600;color:var(--black);text-decoration:none;border-top:1px solid var(--border)}
 
-.hero{padding:1.5rem 1.5rem 0;max-width:1400px;margin:0 auto}
+.hero{padding:1.5rem 1.5rem 0;max-width:100%;margin:0 auto}
 .hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:1px;border-radius:20px;overflow:hidden;background:var(--border)}
 .hero-left{background:var(--off);padding:3.5rem;display:flex;flex-direction:column;justify-content:center;border-radius:20px 0 0 20px}
 .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:1.2rem}
@@ -102,7 +102,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 @keyframes floatBubbleB{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-4px,-12px) rotate(1.5deg)}}
 
 /* ===== HERO 5 (refined) ===== */
-.hero5-wrap{padding:1.5rem 1.5rem 0;max-width:1400px;margin:0 auto}
+.hero5-wrap{padding:1.5rem 1.5rem 0;max-width:100%;margin:0 auto}
 .hero5{min-height:540px;background:var(--black);color:#fff;display:grid;grid-template-columns:1.02fr .98fr;overflow:hidden;border-radius:20px}
 .hero5-copy{padding:3.5rem;display:flex;flex-direction:column;justify-content:center}
 .hero5-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:.04em;padding:0.5rem 1rem;border-radius:30px;margin-bottom:1rem;width:fit-content;text-transform:uppercase}
@@ -188,7 +188,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
   .trust-intro{display:none}
 }
 
-.features{max-width:1400px;margin:0 auto;padding:0 3rem 4rem}
+.features{max-width:100%;margin:0 auto;padding:0 3rem 4rem}
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;border:1px solid var(--border)}
 .feature{background:var(--white);padding:2rem 2.2rem;display:flex;align-items:flex-start;gap:1rem;transition:background 0.25s;cursor:none}
 .feature:hover{background:var(--off)}
@@ -197,7 +197,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .feature-title{font-size:0.95rem;font-weight:700;margin-bottom:0.2rem}
 .feature-sub{font-size:0.8rem;color:var(--gray)}
 
-.cats{max-width:1400px;margin:0 auto;padding:1rem 3rem 5rem}
+.cats{max-width:100%;margin:0 auto;padding:1rem 3rem 5rem}
 .cats-header{margin-bottom:2.5rem}
 .cats-kicker{font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:0.5rem}
 .cats-title{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-0.02em}
@@ -246,7 +246,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 @keyframes steamRise{0%{opacity:0;transform:translateY(0) scaleX(1)}30%{opacity:0.7}100%{opacity:0;transform:translateY(-22px) scaleX(1.4)}}
 .geyser-body{transition:stroke 0.3s}.cat-card:hover .geyser-body{stroke:var(--red)}
 
-.brands{max-width:1400px;margin:0 auto;padding:0 3rem 5rem}
+.brands{max-width:100%;margin:0 auto;padding:0 3rem 5rem}
 .brands-label{font-size:0.85rem;font-weight:800;letter-spacing:0.22em;text-transform:uppercase;color:var(--black);text-align:center;margin-bottom:2rem}
 .bc-wrap{position:relative;width:100%;height:200px;overflow:hidden}
 .bc-wrap::before,.bc-wrap::after{content:'';position:absolute;top:0;bottom:0;width:160px;z-index:3;pointer-events:none}
@@ -262,7 +262,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .bc-dot{width:6px;height:6px;border-radius:50%;background:var(--border);border:none;padding:0;cursor:none;transition:all 0.3s}
 .bc-dot.on{width:20px;border-radius:3px;background:var(--red)}
 
-.why{max-width:1400px;margin:0 auto;padding:0 3rem 5rem}
+.why{max-width:100%;margin:0 auto;padding:0 3rem 5rem}
 .why-header{margin-bottom:2rem}
 .why-kicker{font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:0.5rem}
 .why-title{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-0.02em}
@@ -277,7 +277,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .why-card:hover .why-card-text{color:rgba(255,255,255,0.85)}
 @media(max-width:900px){.why-grid{grid-template-columns:1fr;border-radius:16px}.why{padding:0 1.5rem 3rem}}
 
-.contact{max-width:1400px;margin:0 auto;padding:0 1.5rem 5rem}
+.contact{max-width:100%;margin:0 auto;padding:0 1.5rem 5rem}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;background:var(--black)}
 .contact-left{padding:3.5rem;color:var(--white);display:flex;flex-direction:column;justify-content:center}
 .contact-kicker{font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:0.5rem}
@@ -306,7 +306,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 
 #waFloat{position:fixed;bottom:1.8rem;right:1.8rem;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:200;cursor:none;text-decoration:none;transition:transform 0.2s}
 #waFloat:hover{transform:scale(1.08)}
-footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-copy{font-size:0.8rem;color:var(--gray)}
 .footer-links{display:flex;gap:1.5rem}
 .footer-links a{font-size:0.8rem;color:var(--gray);text-decoration:none;cursor:none}
