@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin-upload.html
 
 Sitemap: https://electricemporium.in/sitemap.xml
