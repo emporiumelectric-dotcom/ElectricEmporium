@@ -188,8 +188,10 @@ function sendEnquiry() {
     parts.push(type + ": " + selectedVariants[type].value);
   });
   if (parts.length) msg += " Selected: " + parts.join(", ") + ".";
-  var priceEl = document.getElementById("price-display");
-  if (priceEl && priceEl.textContent) msg += " Price: " + priceEl.textContent + ".";
+  if (product.Price) {
+    var priceEl = document.getElementById("price-display");
+    if (priceEl && priceEl.textContent) msg += " Price: " + priceEl.textContent + ".";
+  }
   msg += " Please confirm availability. Thank you!";
   openWA(msg);
 }
@@ -304,13 +306,16 @@ function renderProduct() {
   var priceWrap = makeEl("div", "");
   var priceEl = makeEl("div", "pi-price", "");
   priceEl.id = "price-display";
-  priceEl.textContent = (product.Price ? (product.Price.startsWith('₹') || product.Price.startsWith('Rs') ? '' : '₹') + product.Price : '');
   if (product.Price) {
+    priceEl.textContent = (product.Price.startsWith('₹') || product.Price.startsWith('Rs') ? '' : '₹') + product.Price;
     priceWrap.appendChild(priceEl);
     var taxNote = document.createElement('div');
     taxNote.style.cssText = 'font-size:0.68rem;color:#888;font-weight:600;margin-top:4px;letter-spacing:0.05em';
     taxNote.textContent = 'Incl. of all taxes';
     priceWrap.appendChild(taxNote);
+  } else {
+    priceEl.textContent = 'Call for Price';
+    priceWrap.appendChild(priceEl);
   }
   info.appendChild(priceWrap);
 
