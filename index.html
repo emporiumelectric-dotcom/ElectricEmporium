@@ -878,9 +878,9 @@ drawSparks();
     {l:'Exhaust Fans',      cat:'Fans',     ic:'i-exhaust',    b:'Havells · Crompton',            kw:'exhaust ventilation kitchen bathroom fan chimney'},
 
     {l:'LED Bulbs',         cat:'Lights and LEDs',   ic:'i-bulb',       b:'Havells · Surya · Indoasian',   kw:'led bulb lamp light cfl watt'},
-    {l:'Tube Lights',       cat:'Lights and LEDs',   ic:'i-tube',       b:'Havells · Surya',               kw:'tube light batten led rod'},
+    {l:'Tube Lights',       cat:'Lights and LEDs',   ic:'i-tube',       b:'Havells · Surya · Nortek',      kw:'tube light batten led rod'},
     {l:'Fancy & Decorative Lights', cat:'Lights and LEDs', ic:'i-chandelier', b:'Havells · Surya',         kw:'fancy decorative chandelier pendant hanging decor ceiling light'},
-    {l:'Panel & Downlights',cat:'Lights and LEDs',   ic:'i-panel',      b:'Havells · Indoasian',           kw:'panel downlight cove false ceiling spot light'},
+    {l:'Panel & Downlights',cat:'Lights and LEDs',   ic:'i-panel',      b:'Havells · Indoasian · Nortek',  kw:'panel downlight cove false ceiling spot light'},
     {l:'Outdoor & Solar Lights', cat:'Lights and LEDs', ic:'i-lamp',    b:'Surya · Indoasian',             kw:'outdoor solar street garden flood gate light'},
 
     {l:'Modular Switches',  cat:'Switches and Sockets', ic:'i-switch',     b:'Legrand · Anchor · Polycab',    kw:'modular switch board plate socket anchor'},
@@ -901,13 +901,15 @@ drawSparks();
     {l:'Instant Geysers',   cat:'Geysers',  ic:'i-geyser',     b:'Havells · V-Guard',             kw:'instant geyser water heater bathroom litre'},
     {l:'Storage Geysers',   cat:'Geysers',  ic:'i-geyser',     b:'Havells · V-Guard',             kw:'storage geyser water heater tank litre'},
 
-    {l:'Stabilisers',       cat:'ACs and Freezers',      ic:'i-stabilizer', b:'V-Guard · Nortek',              kw:'stabiliser stabilizer voltage ac fridge tv guard'}
+    {l:'Stabilisers',       cat:'ACs and Freezers',      ic:'i-stabilizer', b:'V-Guard',                       kw:'stabiliser stabilizer voltage ac fridge tv guard'},
+
+    {l:'Kitchen Appliances',cat:'Appliances', ic:'i-plug',    b:'Sujata',                         kw:'juicer mixer grinder blender kitchen appliance'}
   ];
 
   // brand → the category that brand mostly sits in, so "daikin" alone still lands somewhere sane
-  var BRANDS={havells:'Lights',legrand:'Switches',atomberg:'Fans','v-guard':'Geysers',vguard:'Geysers',
-    daikin:'ACs',crompton:'Fans',polycab:'Wires',kei:'Wires',nortek:'Lights',indoasian:'Lights',
-    surya:'Lights',mitsubishi:'ACs',lloyd:'ACs',samsung:'ACs','blue star':'ACs',bluestar:'ACs',anchor:'Switches'};
+  var BRANDS={havells:'Lights and LEDs',legrand:'Switches and Sockets',atomberg:'Fans','v-guard':'Geysers',vguard:'Geysers',
+    daikin:'ACs and Freezers',crompton:'Fans',polycab:'Wires and Cables',kei:'Wires and Cables',nortek:'Lights and LEDs',indoasian:'Lights and LEDs',
+    surya:'Lights and LEDs',mitsubishi:'ACs and Freezers',lloyd:'ACs and Freezers',samsung:'ACs and Freezers','blue star':'ACs and Freezers',bluestar:'ACs and Freezers',anchor:'Switches and Sockets',sujata:'Appliances'};
 
   var norm=function(x){return (x||'').toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();};
   var esc=function(x){return x.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
