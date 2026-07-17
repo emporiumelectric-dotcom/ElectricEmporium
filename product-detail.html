@@ -316,7 +316,11 @@ function renderProduct() {
 
   if (product.Spec) {
     var spec = makeEl("div", "pi-spec", "");
-    spec.innerHTML = (product.Spec || "").split("\n").join("<br>");
+    var specLines = product.Spec.split("\n");
+    specLines.forEach(function(line, i) {
+      if (i > 0) spec.appendChild(document.createElement("br"));
+      spec.appendChild(document.createTextNode(line));
+    });
     info.appendChild(spec);
   }
 

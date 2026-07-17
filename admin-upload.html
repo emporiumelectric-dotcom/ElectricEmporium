@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Havells Bulk Upload — Electric Emporium</title>
+<title>Bulk Product Upload — Electric Emporium Admin</title>
+<meta name="robots" content="noindex,nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -17,9 +18,9 @@ h1{font-size:1.2rem;font-weight:900;text-transform:uppercase;letter-spacing:-0.3
 h1 em{color:var(--red);font-style:normal}
 .sub{font-size:0.75rem;color:var(--gray);margin-bottom:2rem}
 
-/* Step cards */
 .steps{display:flex;flex-direction:column;gap:1.5rem}
 .step{background:var(--white);border:1px solid var(--border);padding:1.8rem}
+.step[hidden]{display:none}
 .step-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
 .step-num{width:36px;height:36px;border-radius:50%;background:var(--black);color:#fff;font-size:0.75rem;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-num.done{background:var(--green)}
@@ -27,37 +28,36 @@ h1 em{color:var(--red);font-style:normal}
 .step-title{font-size:0.88rem;font-weight:800;text-transform:uppercase;letter-spacing:0.05em}
 .step-desc{font-size:0.72rem;color:var(--gray)}
 
-/* Upload zone */
+.field{margin-bottom:0.8rem}
+.field label{display:block;font-size:0.66rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);margin-bottom:4px}
+.field input{width:100%;max-width:340px;padding:0.7rem 0.9rem;border:1.5px solid var(--border);font-family:Montserrat,sans-serif;font-size:0.82rem}
+.field input:focus{outline:none;border-color:var(--red)}
+
 .upload-zone{border:2px dashed var(--border);padding:2rem;text-align:center;cursor:pointer;background:var(--off);transition:border-color 0.2s;margin-bottom:1rem}
 .upload-zone:hover{border-color:var(--red)}
 .upload-zone.has-file{border-color:var(--green);background:#f1f8e9}
 .upload-zone p{font-size:0.8rem;font-weight:600;color:var(--gray)}
 .upload-zone .file-name{font-size:0.78rem;font-weight:700;color:var(--green);margin-top:0.5rem}
 
-/* Progress */
 .progress-wrap{margin:1rem 0;display:none}
 .progress-bar-bg{background:var(--border);height:8px;border-radius:4px;overflow:hidden}
 .progress-bar{height:100%;background:var(--red);border-radius:4px;transition:width 0.3s;width:0%}
 .progress-text{font-size:0.7rem;color:var(--gray);margin-top:6px;font-weight:600}
 
-/* Log */
 .log{background:#1a1a1a;color:#ccc;font-family:monospace;font-size:0.7rem;padding:1rem;height:200px;overflow-y:auto;margin-top:1rem;display:none;border-radius:2px}
 .log .ok{color:#81c784}.log .err{color:#ef9a9a}.log .info{color:#90caf9}
 
-/* Stats */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1rem 0}
 .stat{background:var(--off);border:1px solid var(--border);padding:1rem;text-align:center}
 .stat-n{font-size:1.6rem;font-weight:900;color:var(--red);line-height:1}
 .stat-l{font-size:0.6rem;color:var(--gray);font-weight:700;letter-spacing:0.1em;text-transform:uppercase;margin-top:3px}
 
-/* Buttons */
 .btn{padding:0.85rem 1.8rem;border:none;font-family:Montserrat,sans-serif;font-size:0.72rem;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
 .btn-primary{background:var(--black);color:#fff}.btn-primary:hover{background:var(--red)}
 .btn-primary:disabled{background:#aaa;cursor:not-allowed}
 .btn-danger{background:none;border:1.5px solid #ffcdd2;color:#c62828;font-size:0.65rem;padding:0.5rem 1rem}
 .btn-danger:hover{background:#ffebee}
 
-/* Result table */
 .result-table{width:100%;border-collapse:collapse;font-size:0.68rem;margin-top:1rem}
 .result-table th{background:var(--black);color:#fff;padding:0.6rem 0.8rem;text-align:left;font-size:0.58rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase}
 .result-table td{padding:0.6rem 0.8rem;border-bottom:1px solid var(--border)}
@@ -76,45 +76,56 @@ h1 em{color:var(--red);font-style:normal}
 
 <nav>
   <div class="nav-logo"><span>Electric</span> Emporium <span class="badge">Bulk Upload</span></div>
-  <a href="admin.html" style="color:#aaa;font-size:0.68rem;font-weight:700;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase">&larr; Back to Admin</a>
 </nav>
 
 <div class="wrap">
-  <h1>Havells <em>Bulk Upload</em></h1>
-  <div class="sub">Uploads all 117 product images to Supabase storage, then inserts all product records in one go.</div>
+  <h1>Bulk Product <em>Upload</em></h1>
+  <div class="sub">Uploads product images to Supabase storage, then inserts product records — via an authenticated Edge Function, not a client-side key.</div>
 
   <div class="steps">
 
-    <!-- STEP 1: Select ZIP -->
-    <div class="step">
+    <!-- STEP 0: SIGN IN -->
+    <div class="step" id="login-step">
       <div class="step-head">
-        <div class="step-num active" id="num1">1</div>
-        <div><div class="step-title">Select the Images ZIP</div><div class="step-desc">Select havells_product_images.zip you downloaded</div></div>
+        <div class="step-num active" id="num0">1</div>
+        <div><div class="step-title">Sign In</div><div class="step-desc">Admin account required — writes are rejected server-side for anyone else</div></div>
+      </div>
+      <div class="field"><label>Email</label><input type="email" id="email" autocomplete="username"></div>
+      <div class="field"><label>Password</label><input type="password" id="password" autocomplete="current-password"></div>
+      <button class="btn btn-primary" id="login-btn">Sign In</button>
+      <div class="msg" id="login-msg" style="display:none"></div>
+    </div>
+
+    <!-- STEP 1: SELECT ZIP -->
+    <div class="step" id="step1" hidden>
+      <div class="step-head">
+        <div class="step-num active" id="num1">2</div>
+        <div><div class="step-title">Select the Images ZIP</div><div class="step-desc">Select the product images ZIP you downloaded</div></div>
       </div>
       <div class="upload-zone" id="zip-zone" onclick="document.getElementById('zip-input').click()">
-        <p>Click to select <strong>havells_product_images.zip</strong></p>
+        <p>Click to select images ZIP</p>
         <input type="file" id="zip-input" accept=".zip" style="display:none">
         <div class="file-name" id="zip-name" style="display:none"></div>
       </div>
     </div>
 
-    <!-- STEP 2: Select JSON -->
-    <div class="step">
+    <!-- STEP 2: SELECT JSON -->
+    <div class="step" id="step2" hidden>
       <div class="step-head">
-        <div class="step-num" id="num2">2</div>
-        <div><div class="step-title">Select the Products JSON</div><div class="step-desc">Select havells_products_supabase.json you downloaded</div></div>
+        <div class="step-num" id="num2">3</div>
+        <div><div class="step-title">Select the Products JSON</div><div class="step-desc">Select the products JSON you downloaded</div></div>
       </div>
       <div class="upload-zone" id="json-zone" onclick="document.getElementById('json-input').click()">
-        <p>Click to select <strong>havells_products_supabase.json</strong></p>
+        <p>Click to select products JSON</p>
         <input type="file" id="json-input" accept=".json" style="display:none">
         <div class="file-name" id="json-name" style="display:none"></div>
       </div>
     </div>
 
-    <!-- STEP 3: Upload -->
-    <div class="step">
+    <!-- STEP 3: UPLOAD -->
+    <div class="step" id="step3" hidden>
       <div class="step-head">
-        <div class="step-num" id="num3">3</div>
+        <div class="step-num" id="num3">4</div>
         <div><div class="step-title">Upload Everything</div><div class="step-desc">Uploads images to storage, then inserts all product records</div></div>
       </div>
 
@@ -132,14 +143,13 @@ h1 em{color:var(--red);font-style:normal}
 
       <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-top:0.5rem">
         <button class="btn btn-primary" id="upload-btn" onclick="startUpload()" disabled>Start Upload</button>
-        <button class="btn btn-danger" id="delete-btn" onclick="deleteAllHavells()" style="display:none">Delete All Havells Products</button>
       </div>
 
       <div class="msg" id="main-msg" style="display:none"></div>
       <div class="log" id="log"></div>
     </div>
 
-    <!-- STEP 4: Results -->
+    <!-- STEP 4: RESULTS -->
     <div class="step" id="results-step" style="display:none">
       <div class="step-head">
         <div class="step-num done">✓</div>
@@ -148,14 +158,35 @@ h1 em{color:var(--red);font-style:normal}
       <div id="results-table"></div>
     </div>
 
+    <!-- DANGER ZONE -->
+    <div class="step" id="danger-step" hidden>
+      <div class="step-head">
+        <div class="step-num" style="background:#c62828">!</div>
+        <div><div class="step-title">Delete Products By Brand</div><div class="step-desc">Deletes all products (and their images/variants) for the given brand — cannot be undone</div></div>
+      </div>
+      <div class="field"><label>Brand</label><input type="text" id="delete-brand" placeholder="e.g. Havells" style="max-width:200px"></div>
+      <button class="btn btn-danger" id="delete-btn" onclick="deleteByBrand()">Delete All Products For This Brand</button>
+      <div class="msg" id="delete-msg" style="display:none"></div>
+    </div>
+
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────────
 var SURL = "https://dnmzzckeuctnkqbphwdg.supabase.co";
-var SKEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
-var BUCKET = "product-photos";
+// Public/anon key -- only ever used to establish the login session below.
+// It cannot read or write anything on its own; the products/product_images/
+// product_variants tables and the product-photos bucket are select-only for
+// this key (enforced by RLS). All writes go through the admin-products Edge
+// Function, which independently verifies the session and the specific admin
+// user id before touching anything with the service_role key.
+var ANON_KEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
+var FN_URL = SURL + "/functions/v1/admin-products";
+
+var supabaseClient = window.supabase.createClient(SURL, ANON_KEY);
+var session = null;
 
 // ── STATE ───────────────────────────────────────────────────────────────────
 var zipFile   = null;
@@ -163,6 +194,64 @@ var jsonData  = null;
 var uploaded  = 0;
 var failed    = 0;
 var results   = [];
+
+// ── LOGIN ───────────────────────────────────────────────────────────────────
+function showMsg(id, type, text) {
+  var el = document.getElementById(id);
+  el.className = 'msg ' + type;
+  el.textContent = text;
+  el.style.display = 'block';
+}
+
+document.getElementById('login-btn').addEventListener('click', async function() {
+  var email = document.getElementById('email').value.trim();
+  var password = document.getElementById('password').value;
+  if (!email || !password) { showMsg('login-msg', 'error', 'Enter email and password.'); return; }
+
+  var btn = document.getElementById('login-btn');
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+
+  var { data, error } = await supabaseClient.auth.signInWithPassword({ email: email, password: password });
+
+  btn.disabled = false;
+  btn.textContent = 'Sign In';
+
+  if (error || !data.session) {
+    showMsg('login-msg', 'error', 'Sign in failed: ' + (error ? error.message : 'unknown error'));
+    return;
+  }
+
+  session = data.session;
+  showMsg('login-msg', 'success', 'Signed in as ' + data.user.email);
+  document.getElementById('num0').classList.remove('active');
+  document.getElementById('num0').classList.add('done');
+  document.getElementById('num0').textContent = '✓';
+  document.getElementById('step1').hidden = false;
+  document.getElementById('step2').hidden = false;
+  document.getElementById('step3').hidden = false;
+  document.getElementById('danger-step').hidden = false;
+  document.getElementById('email').disabled = true;
+  document.getElementById('password').disabled = true;
+  btn.disabled = true;
+});
+
+// ── EDGE FUNCTION CALL ──────────────────────────────────────────────────────
+async function callFn(payload) {
+  if (!session) throw new Error('Not signed in');
+  var res = await fetch(FN_URL, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + session.access_token,
+      'apikey': ANON_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+  var data = await res.json();
+  if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+  return data;
+}
 
 // ── FILE INPUTS ─────────────────────────────────────────────────────────────
 document.getElementById('zip-input').addEventListener('change', function(e) {
@@ -209,7 +298,6 @@ document.getElementById('json-input').addEventListener('change', function(e) {
 function checkReady() {
   if (zipFile && jsonData) {
     document.getElementById('upload-btn').disabled = false;
-    document.getElementById('delete-btn').style.display = 'inline-block';
   }
 }
 
@@ -234,15 +322,7 @@ function setProgress(done, total, msg) {
   document.getElementById('s-fail').textContent = failed;
 }
 
-function showMsg(id, type, text) {
-  var el = document.getElementById(id);
-  el.className = 'msg ' + type;
-  el.textContent = text;
-  el.style.display = 'block';
-}
-
 // ── READ ZIP ────────────────────────────────────────────────────────────────
-// Using fflate via CDN for ZIP reading in browser
 function loadFflate(cb) {
   if (window.fflate) { cb(); return; }
   var s = document.createElement('script');
@@ -259,7 +339,6 @@ async function readZipEntries(file) {
         try {
           var uint8 = new Uint8Array(e.target.result);
           var unzipped = fflate.unzipSync(uint8);
-          // Returns object: { 'filename.jpg': Uint8Array, ... }
           resolve(unzipped);
         } catch(err) {
           reject(err);
@@ -271,51 +350,31 @@ async function readZipEntries(file) {
   });
 }
 
-// ── UPLOAD IMAGE TO SUPABASE STORAGE ────────────────────────────────────────
-async function uploadImage(filename, uint8data, mimeType) {
-  // Use a unique path: havells/FILENAME to avoid conflicts
-  var storagePath = 'havells/' + filename;
-  var blob = new Blob([uint8data], { type: mimeType || 'image/jpeg' });
-  
-  var res = await fetch(SURL + '/storage/v1/object/' + BUCKET + '/' + storagePath, {
-    method: 'POST',
-    headers: {
-      'Authorization': 'Bearer ' + SKEY,
-      'apikey': SKEY,
-      'Content-Type': mimeType || 'image/jpeg',
-      'x-upsert': 'true'
-    },
-    body: blob
-  });
-  
-  if (!res.ok) {
-    var txt = await res.text();
-    throw new Error(res.status + ' ' + txt);
+function bytesToBase64(bytes) {
+  var binary = '';
+  var chunk = 0x8000;
+  for (var i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
   }
-  
-  // Return public URL
-  return SURL + '/storage/v1/object/public/' + BUCKET + '/havells/' + filename;
+  return btoa(binary);
 }
 
-// ── INSERT PRODUCT TO SUPABASE ───────────────────────────────────────────────
-async function insertProduct(product) {
-  var res = await fetch(SURL + '/rest/v1/products', {
-    method: 'POST',
-    headers: {
-      'apikey': SKEY,
-      'Authorization': 'Bearer ' + SKEY,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    },
-    body: JSON.stringify(product)
+// ── UPLOAD IMAGE VIA EDGE FUNCTION ──────────────────────────────────────────
+async function uploadImage(filename, uint8data, mimeType) {
+  var storagePath = 'havells/' + filename;
+  var data = await callFn({
+    action: 'uploadImage',
+    path: storagePath,
+    contentType: mimeType || 'image/jpeg',
+    dataBase64: bytesToBase64(uint8data)
   });
-  
-  if (!res.ok) {
-    var txt = await res.text();
-    throw new Error(res.status + ' ' + txt);
-  }
-  
-  return await res.json();
+  return data.url;
+}
+
+// ── INSERT PRODUCT VIA EDGE FUNCTION ────────────────────────────────────────
+async function insertProduct(product) {
+  var data = await callFn({ action: 'insertProduct', product: product });
+  return data.product;
 }
 
 // ── MAIN UPLOAD FLOW ─────────────────────────────────────────────────────────
@@ -329,7 +388,7 @@ async function startUpload() {
   document.getElementById('log').innerHTML = '';
 
   log('Reading ZIP file...', 'info');
-  
+
   var zipEntries;
   try {
     zipEntries = await readZipEntries(zipFile);
@@ -339,32 +398,29 @@ async function startUpload() {
     btn.textContent = 'Start Upload';
     return;
   }
-  
+
   var imgNames = Object.keys(zipEntries).filter(function(k) {
     return k.toLowerCase().endsWith('.jpg') || k.toLowerCase().endsWith('.png');
   });
-  
+
   log('ZIP contains ' + imgNames.length + ' images', 'info');
   document.getElementById('s-imgs').textContent = imgNames.length;
-  
-  // Build name → image filename map
-  // Product name → safe filename (same logic used when creating the ZIP)
+
   function toSafeFilename(name) {
     return 'HAVELLS_' + name.replace(/ /g,'_').replace(/\//g,'-').replace(/\(/g,'').replace(/\)/g,'').toUpperCase().substring(0,50) + '.jpg';
   }
-  
+
   var total = jsonData.length;
   log('Starting upload of ' + total + ' products...', 'info');
-  
+
   for (var i = 0; i < jsonData.length; i++) {
-    var product = Object.assign({}, jsonData[i]); // copy
+    var product = Object.assign({}, jsonData[i]);
     var fname = toSafeFilename(product.Name);
-    
+
     setProgress(i, total, 'Uploading ' + (i+1) + '/' + total + ': ' + product.Name);
-    
+
     var photoUrl = '';
-    
-    // 1. Upload image if we have it
+
     if (zipEntries[fname]) {
       try {
         photoUrl = await uploadImage(fname, zipEntries[fname], 'image/jpeg');
@@ -376,12 +432,11 @@ async function startUpload() {
     } else {
       log('- No image found for: ' + product.Name + ' (expected ' + fname + ')', 'info');
     }
-    
-    // 2. Insert product record
+
     product.Photo_url = photoUrl;
     try {
       var saved = await insertProduct(product);
-      var pid = saved[0] ? saved[0].id : '?';
+      var pid = saved ? saved.id : '?';
       log('✓ Product saved: ' + product.Name + ' (id=' + pid + ')', 'ok');
       uploaded++;
       results.push({ name: product.Name, img: photoUrl, status: 'ok', id: pid });
@@ -390,25 +445,24 @@ async function startUpload() {
       failed++;
       results.push({ name: product.Name, img: photoUrl, status: 'error', err: e.message });
     }
-    
+
     document.getElementById('s-done').textContent = uploaded;
     document.getElementById('s-fail').textContent = failed;
   }
-  
+
   setProgress(total, total, 'Done! ' + uploaded + ' products uploaded, ' + failed + ' failed.');
-  
+
   if (failed === 0) {
-    showMsg('main-msg', 'success', '🎉 All ' + uploaded + ' Havells products uploaded successfully!');
+    showMsg('main-msg', 'success', 'All ' + uploaded + ' products uploaded successfully!');
     document.getElementById('num3').classList.remove('active');
     document.getElementById('num3').classList.add('done');
     document.getElementById('num3').textContent = '✓';
   } else {
     showMsg('main-msg', 'error', uploaded + ' products uploaded, ' + failed + ' failed. Check the log above.');
   }
-  
-  // Show results table
+
   renderResults();
-  
+
   btn.disabled = false;
   btn.textContent = 'Start Upload';
 }
@@ -418,50 +472,71 @@ function renderResults() {
   if (!results.length) return;
   var step = document.getElementById('results-step');
   step.style.display = 'block';
-  
-  var html = '<table class="result-table"><thead><tr><th>Photo</th><th>Product Name</th><th>Status</th></tr></thead><tbody>';
+
+  var table = document.createElement('table');
+  table.className = 'result-table';
+  var thead = document.createElement('thead');
+  thead.innerHTML = '<tr><th>Photo</th><th>Product Name</th><th>Status</th></tr>';
+  table.appendChild(thead);
+  var tbody = document.createElement('tbody');
+
   results.forEach(function(r) {
-    var imgCell = r.img
-      ? '<img class="thumb" src="' + r.img + '" alt="" onerror="this.style.display=\'none\'">'
-      : '<div style="width:40px;height:40px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:1.2rem">📷</div>';
-    var badge = r.status === 'ok'
-      ? '<span class="ok-badge">Saved</span>'
-      : '<span class="err-badge">Failed: ' + (r.err||'').substring(0,40) + '</span>';
-    html += '<tr><td>' + imgCell + '</td><td style="font-weight:700">' + r.name + '</td><td>' + badge + '</td></tr>';
+    var tr = document.createElement('tr');
+
+    var tdImg = document.createElement('td');
+    if (r.img) {
+      var img = document.createElement('img');
+      img.className = 'thumb';
+      img.src = r.img;
+      img.alt = '';
+      img.addEventListener('error', function() { img.style.display = 'none'; });
+      tdImg.appendChild(img);
+    } else {
+      var ph = document.createElement('div');
+      ph.style.cssText = 'width:40px;height:40px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:1.2rem';
+      ph.textContent = '📷';
+      tdImg.appendChild(ph);
+    }
+
+    var tdName = document.createElement('td');
+    tdName.style.fontWeight = '700';
+    tdName.textContent = r.name;
+
+    var tdStatus = document.createElement('td');
+    var badge = document.createElement('span');
+    if (r.status === 'ok') {
+      badge.className = 'ok-badge';
+      badge.textContent = 'Saved';
+    } else {
+      badge.className = 'err-badge';
+      badge.textContent = 'Failed: ' + (r.err || '').substring(0, 40);
+    }
+    tdStatus.appendChild(badge);
+
+    tr.appendChild(tdImg);
+    tr.appendChild(tdName);
+    tr.appendChild(tdStatus);
+    tbody.appendChild(tr);
   });
-  html += '</tbody></table>';
-  
-  document.getElementById('results-table').innerHTML = html;
+
+  table.appendChild(tbody);
+  var resultsTable = document.getElementById('results-table');
+  resultsTable.innerHTML = '';
+  resultsTable.appendChild(table);
   step.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ── DELETE ALL HAVELLS ────────────────────────────────────────────────────────
-async function deleteAllHavells() {
-  if (!confirm('Delete ALL Havells products from the database? This cannot be undone.')) return;
-  
-  log('Fetching all Havells products...', 'info');
-  
+// ── DELETE BY BRAND VIA EDGE FUNCTION ───────────────────────────────────────
+async function deleteByBrand() {
+  var brand = document.getElementById('delete-brand').value.trim();
+  if (!brand) { showMsg('delete-msg', 'error', 'Enter a brand name.'); return; }
+  if (!confirm('Delete ALL "' + brand + '" products from the database? This cannot be undone.')) return;
+
   try {
-    var res = await fetch(SURL + '/rest/v1/products?Brand=eq.Havells&select=id', {
-      headers: { 'apikey': SKEY, 'Authorization': 'Bearer ' + SKEY }
-    });
-    var rows = await res.json();
-    
-    if (!rows.length) { log('No Havells products found.', 'info'); return; }
-    log('Found ' + rows.length + ' Havells products. Deleting...', 'info');
-    
-    for (var i = 0; i < rows.length; i++) {
-      var id = rows[i].id;
-      var h = { 'apikey': SKEY, 'Authorization': 'Bearer ' + SKEY };
-      await fetch(SURL + '/rest/v1/product_images?product_id=eq.' + id, { method: 'DELETE', headers: h });
-      await fetch(SURL + '/rest/v1/product_variants?product_id=eq.' + id, { method: 'DELETE', headers: h });
-      await fetch(SURL + '/rest/v1/products?id=eq.' + id, { method: 'DELETE', headers: h });
-      log('Deleted id=' + id, 'ok');
-    }
-    
-    showMsg('main-msg', 'success', 'All ' + rows.length + ' Havells products deleted.');
+    var data = await callFn({ action: 'deleteByBrand', brand: brand });
+    showMsg('delete-msg', 'success', 'Deleted ' + data.deleted + ' "' + brand + '" products.');
   } catch(e) {
-    showMsg('main-msg', 'error', 'Delete failed: ' + e.message);
+    showMsg('delete-msg', 'error', 'Delete failed: ' + e.message);
   }
 }
 </script>
