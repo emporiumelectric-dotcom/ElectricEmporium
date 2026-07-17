@@ -859,8 +859,9 @@ drawSparks();
 
 /* ================= SLAB HERO ================= */
 /* ---- real search: typeahead over the catalog, keyboard-driven ----
-   Every result lands on products.html?category=X — the six values that page
-   actually reads (Fans, Lights, Switches, Wires, ACs, Geysers). No invented params.
+   Every result lands on products.html?category=X — cat values here must match
+   the Category strings actually stored in Supabase (Fans, Lights and LEDs,
+   Switches and Sockets, Wires and Cables, ACs and Freezers, Geysers, Appliances).
    Anything with no match falls through to WhatsApp, which is the real shop behaviour. */
 (function(){
   var input=document.getElementById('req'), btn=document.getElementById('reqBtn'),
@@ -882,25 +883,25 @@ drawSparks();
     {l:'Panel & Downlights',cat:'Lights and LEDs',   ic:'i-panel',      b:'Havells · Indoasian',           kw:'panel downlight cove false ceiling spot light'},
     {l:'Outdoor & Solar Lights', cat:'Lights and LEDs', ic:'i-lamp',    b:'Surya · Indoasian',             kw:'outdoor solar street garden flood gate light'},
 
-    {l:'Modular Switches',  cat:'Switches', ic:'i-switch',     b:'Legrand · Anchor · Polycab',    kw:'modular switch board plate socket anchor'},
-    {l:'MCB & RCCB',        cat:'Switches', ic:'i-mcb',        b:'Legrand · Havells',             kw:'mcb rccb rccbo elcb breaker trip safety fuse'},
-    {l:'Distribution Boards',cat:'Switches',ic:'i-panel',      b:'Legrand · Havells',             kw:'distribution board db box panel meter'},
-    {l:'Sockets & Plugs',   cat:'Switches', ic:'i-socket',     b:'Legrand · Anchor',              kw:'socket plug point 5amp 16amp top'},
-    {l:'Extension Boards',  cat:'Switches', ic:'i-extension',  b:'Anchor · Havells',              kw:'extension board spike guard multi plug strip'},
-    {l:'Doorbells',         cat:'Switches', ic:'i-bell',       b:'Anchor · Havells',              kw:'doorbell bell chime buzzer'},
+    {l:'Modular Switches',  cat:'Switches and Sockets', ic:'i-switch',     b:'Legrand · Anchor · Polycab',    kw:'modular switch board plate socket anchor'},
+    {l:'MCB & RCCB',        cat:'Switches and Sockets', ic:'i-mcb',        b:'Legrand · Havells',             kw:'mcb rccb rccbo elcb breaker trip safety fuse'},
+    {l:'Distribution Boards',cat:'Switches and Sockets',ic:'i-panel',      b:'Legrand · Havells',             kw:'distribution board db box panel meter'},
+    {l:'Sockets & Plugs',   cat:'Switches and Sockets', ic:'i-socket',     b:'Legrand · Anchor',              kw:'socket plug point 5amp 16amp top'},
+    {l:'Extension Boards',  cat:'Switches and Sockets', ic:'i-extension',  b:'Anchor · Havells',              kw:'extension board spike guard multi plug strip'},
+    {l:'Doorbells',         cat:'Switches and Sockets', ic:'i-bell',       b:'Anchor · Havells',              kw:'doorbell bell chime buzzer'},
 
     {l:'House Wiring (FR / FRLS)', cat:'Wires and Cables', ic:'i-wire',   b:'Polycab · KEI · Havells',       kw:'wire wiring fr frls house cable copper 1.5 2.5 4 sqmm'},
     {l:'Armoured Cables',   cat:'Wires and Cables',    ic:'i-wire',       b:'Polycab · KEI',                 kw:'armoured cable underground xlpe heavy'},
     {l:'Submersible & Motor Cables', cat:'Wires and Cables', ic:'i-motor',b:'Polycab · KEI',                 kw:'submersible motor pump cable flat three phase borewell'},
 
-    {l:'Split ACs',         cat:'ACs',      ic:'i-ac',         b:'Daikin · Mitsubishi · Lloyd · Blue Star', kw:'split ac air conditioner cooling ton'},
-    {l:'Window ACs',        cat:'ACs',      ic:'i-ac',         b:'Lloyd · Blue Star',             kw:'window ac air conditioner cooling ton'},
-    {l:'Inverter ACs',      cat:'ACs',      ic:'i-ac',         b:'Daikin · Samsung · Lloyd',      kw:'inverter ac air conditioner star rating power saving'},
+    {l:'Split ACs',         cat:'ACs and Freezers',      ic:'i-ac',         b:'Daikin · Mitsubishi · Lloyd · Blue Star', kw:'split ac air conditioner cooling ton'},
+    {l:'Window ACs',        cat:'ACs and Freezers',      ic:'i-ac',         b:'Lloyd · Blue Star',             kw:'window ac air conditioner cooling ton'},
+    {l:'Inverter ACs',      cat:'ACs and Freezers',      ic:'i-ac',         b:'Daikin · Samsung · Lloyd',      kw:'inverter ac air conditioner star rating power saving'},
 
     {l:'Instant Geysers',   cat:'Geysers',  ic:'i-geyser',     b:'Havells · V-Guard',             kw:'instant geyser water heater bathroom litre'},
     {l:'Storage Geysers',   cat:'Geysers',  ic:'i-geyser',     b:'Havells · V-Guard',             kw:'storage geyser water heater tank litre'},
 
-    {l:'Stabilisers',       cat:'ACs',      ic:'i-stabilizer', b:'V-Guard · Nortek',              kw:'stabiliser stabilizer voltage ac fridge tv guard'}
+    {l:'Stabilisers',       cat:'ACs and Freezers',      ic:'i-stabilizer', b:'V-Guard · Nortek',              kw:'stabiliser stabilizer voltage ac fridge tv guard'}
   ];
 
   // brand → the category that brand mostly sits in, so "daikin" alone still lands somewhere sane
