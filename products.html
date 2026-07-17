@@ -10,7 +10,19 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=5.0">
-<title>Products - Electric Emporium Balaghat</title>
+<title>Shop Electrical Products Online | Electric Emporium Balaghat</title>
+<meta name="description" content="Browse genuine electrical products from Havells, V-Guard, Legrand, Atomberg, Daikin & 15+ authorised brands. Fans, LED lights, wires, switches, ACs & geysers. Balaghat, MP — since 1989.">
+<link rel="canonical" href="https://electricemporium.in/products.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shop Electrical Products Online | Electric Emporium Balaghat">
+<meta property="og:description" content="Genuine electrical products from Havells, V-Guard, Legrand, Atomberg, Daikin & 15+ authorised brands. Balaghat's most trusted electrical shop since 1989.">
+<meta property="og:url" content="https://electricemporium.in/products.html">
+<meta property="og:image" content="https://electricemporium.in/logo-512.png">
+<meta property="og:site_name" content="Electric Emporium">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shop Electrical Products Online | Electric Emporium Balaghat">
+<meta name="twitter:description" content="Genuine electrical products from Havells, V-Guard, Legrand, Atomberg, Daikin & 15+ authorised brands. Balaghat's most trusted electrical shop since 1989.">
+<meta name="twitter:image" content="https://electricemporium.in/logo-512.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -91,7 +103,6 @@ footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:cen
     <button class="nav-cta" id="enquireBtn">Enquire Now</button>
   </div>
 </nav>
-
 <div class="page-wrap">
   <aside class="sidebar" id="sidebar"></aside>
   <main class="main">
@@ -103,17 +114,14 @@ footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:cen
     <div class="pgrid" id="pgrid"><div class="loading-state"><p>Loading products...</p></div></div>
   </main>
 </div>
-
 <a href="https://wa.me/919425831035" target="_blank" id="waFloat">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
-
 <footer>
   <div class="fw"><span class="e">Electric </span><span class="em">Emporium</span></div>
   <div class="fc">&copy; 2026 <span>Electric Emporium</span> &middot; Gujri Chowk, Balaghat &middot; Est. 1989</div>
   <a href="index.html" style="font-size:0.64rem;font-weight:700;color:rgba(255,255,255,0.32);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase">&larr; Home</a>
 </footer>
-
 <script>
 var SURL = "https://dnmzzckeuctnkqbphwdg.supabase.co";
 var SKEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
@@ -121,17 +129,14 @@ var PHONE = "919425831035";
 var allProducts = [];
 var activeCat = "All";
 var activeBrand = "All";
-
 function openWA(msg) { window.open("https://wa.me/" + PHONE + "?text=" + encodeURIComponent(msg), "_blank"); }
 document.getElementById("enquireBtn").addEventListener("click", function() { openWA("Hello Electric Emporium! I would like to enquire about your products."); });
-
 function makeEl(tag, cls, text) {
   var el = document.createElement(tag);
   if (cls) el.className = cls;
   if (text !== undefined) el.textContent = text;
   return el;
 }
-
 async function fetchProducts() {
   try {
     var res = await fetch(SURL + "/rest/v1/products?select=*&order=id.asc", {
@@ -144,14 +149,12 @@ async function fetchProducts() {
     document.getElementById("pgrid").innerHTML = "<div class='empty-state'><p>Could not load products. Please try again.</p></div>";
   }
 }
-
 function getCats() { var s={},r=[]; allProducts.forEach(function(p){if(p.Category&&!s[p.Category]){s[p.Category]=1;r.push(p.Category);}}); return r.sort(); }
 function getBrands() {
   var s={},r=[];
   var f = activeCat==="All" ? allProducts : allProducts.filter(function(p){return p.Category===activeCat;});
   f.forEach(function(p){if(p.Brand&&!s[p.Brand]){s[p.Brand]=1;r.push(p.Brand);}}); return r.sort();
 }
-
 function buildSidebar() {
   var sb = document.getElementById("sidebar"); sb.innerHTML = "";
   sb.appendChild(makeEl("span","sb-label","Categories"));
@@ -170,7 +173,6 @@ function buildSidebar() {
     btn.addEventListener("click",function(){setBrand(b);});sb.appendChild(btn);
   });
 }
-
 function buildBrandBar() {
   var bar=document.getElementById("brand-bar"); bar.innerHTML="";
   var ab=makeEl("button","bpill"+(activeBrand==="All"?" active":""),"All");
@@ -180,7 +182,6 @@ function buildBrandBar() {
     btn.addEventListener("click",function(){setBrand(b);});bar.appendChild(btn);
   });
 }
-
 function buildGrid() {
   var grid=document.getElementById("pgrid"); grid.innerHTML="";
   var filtered=allProducts.filter(function(p){
@@ -196,14 +197,12 @@ function buildGrid() {
   filtered.forEach(function(p){
     var card=document.createElement("a");
     card.className="pcard";
-    card.href="product-detail.html?id="+p.id;
-
+    card.href="products/"+p.id+".html";
     var imgDiv=makeEl("div","pimg");
     if(p.Photo_url){
       var img=document.createElement("img"); img.src=p.Photo_url; img.alt=p.Name||""; img.loading="lazy"; imgDiv.appendChild(img);
     }else{imgDiv.appendChild(makeEl("div","pimg-ph","&#128247;"));}
     if(!p.in_stock){imgDiv.appendChild(makeEl("div","out-badge","Out of Stock"));}
-
     var body=makeEl("div","pbody");
     body.appendChild(makeEl("div","pbrand",p.Brand||""));
     body.appendChild(makeEl("div","pname",p.Name||""));
@@ -211,15 +210,12 @@ function buildGrid() {
     if(p.Price)body.appendChild(makeEl("div","pprice",p.Price));
     var viewBtn=makeEl("div","pview","View Product →");
     body.appendChild(viewBtn);
-
     card.appendChild(imgDiv); card.appendChild(body); grid.appendChild(card);
   });
 }
-
 function render(){buildSidebar();buildBrandBar();buildGrid();}
 function setCat(k){activeCat=k;activeBrand="All";render();window.scrollTo(0,0);}
 function setBrand(b){activeBrand=b;render();}
-
 function getParam(name) {
   var href=window.location.href; var idx=href.indexOf("?"); if(idx===-1)return "";
   var pairs=href.substring(idx+1).split("&");
