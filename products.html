@@ -222,7 +222,7 @@ function getParam(name) {
   for(var i=0;i<pairs.length;i++){var eq=pairs[i].indexOf("=");if(eq===-1)continue;if(decodeURIComponent(pairs[i].substring(0,eq))===name)return decodeURIComponent(pairs[i].substring(eq+1));}
   return "";
 }
-var pc=getParam("cat"),pb=getParam("brand");
+var pc=getParam("category"),pb=getParam("brand");
 if(pb)activeBrand=pb; else if(pc)activeCat=pc;
 fetchProducts();
 </script>
