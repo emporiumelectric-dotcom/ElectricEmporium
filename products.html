@@ -197,7 +197,7 @@ function buildGrid() {
   filtered.forEach(function(p){
     var card=document.createElement("a");
     card.className="pcard";
-    card.href="products/"+p.id+".html";
+    card.href="product-detail.html?id="+p.id;
     var imgDiv=makeEl("div","pimg");
     if(p.Photo_url){
       var img=document.createElement("img"); img.src=p.Photo_url; img.alt=p.Name||""; img.loading="lazy"; imgDiv.appendChild(img);
