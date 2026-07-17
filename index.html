@@ -17,14 +17,12 @@
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"LocalBusiness","name":"Electric Emporium","alternateName":"Electric Emporium Balaghat","description":"Balaghat's most trusted electrical shop since 1989. Authorised dealer of Havells, Legrand, Atomberg, Daikin, V-Guard and more.","url":"https://electricemporium.in","logo":"https://electricemporium.in/logo-512.png","telephone":"+919425831035","priceRange":"₹₹","image":"https://electricemporium.in/shop10.png","address":{"@type":"PostalAddress","streetAddress":"Main Rd, Gujri Chowk, Chitragupt Nagar","addressLocality":"Balaghat","addressRegion":"Madhya Pradesh","postalCode":"481001","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":21.8314,"longitude":80.1837},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"10:00","closes":"21:00"}],"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"72","bestRating":"5"}}
 </script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--red:#E63946;--yellow:#FFC700;--black:#111;--white:#fff;--off:#FAFAFA;--gray:#8A8A8A;--border:#EFEFEF}
+:root{--red:#E63946;--yellow:#FFC700;--black:#111;--white:#fff;--off:#FAFAFA;--gray:#8A8A8A;--border:#EFEFEF;--slab:#0E0E10;--spin:100s}
 html{scroll-behavior:smooth}
 body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;cursor:none}
 
@@ -59,7 +57,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .mob-menu.open{max-height:300px}
 .mob-menu a{padding:1rem 1.5rem;font-size:0.9rem;font-weight:600;color:var(--black);text-decoration:none;border-top:1px solid var(--border)}
 
-.hero{padding:1.5rem 1.5rem 0;max-width:100%;margin:0 auto}
 .hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:1px;border-radius:20px;overflow:hidden;background:var(--border)}
 .hero-left{background:var(--off);padding:3.5rem;display:flex;flex-direction:column;justify-content:center;border-radius:20px 0 0 20px}
 .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:1.2rem}
@@ -102,91 +99,127 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 @keyframes floatBubbleB{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-4px,-12px) rotate(1.5deg)}}
 
 /* ===== HERO 5 (refined) ===== */
-.hero5-wrap{padding:1.5rem 1.5rem 0;max-width:100%;margin:0 auto}
-.hero5{min-height:540px;background:var(--black);color:#fff;display:grid;grid-template-columns:1.02fr .98fr;overflow:hidden;border-radius:20px}
-.hero5-copy{padding:3.5rem;display:flex;flex-direction:column;justify-content:center}
-.hero5-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-size:0.7rem;font-weight:800;letter-spacing:.04em;padding:0.5rem 1rem;border-radius:30px;margin-bottom:1rem;width:fit-content;text-transform:uppercase}
-.hero5-trust{font-size:clamp(1.3rem,2.4vw,1.9rem);font-weight:800;line-height:1.08;letter-spacing:-.02em;text-transform:uppercase;color:#fff}
-.hero5-accent{color:var(--yellow)}
-.hero5-divider{width:44px;height:3px;background:var(--red);margin:1.1rem 0}
-.hero5-h1{font-size:clamp(2.1rem,4vw,3.3rem);line-height:.92;letter-spacing:-.03em;text-transform:uppercase}
-.hero5-red{color:var(--red)}
-.hero5-desc{font-size:0.9rem;line-height:1.7;color:#d5d5d5;max-width:400px;margin:1.3rem 0 1.7rem;font-weight:400}
-.hero5-btns{display:flex;gap:0.8rem}
+/* ===== dark slab ===== */
+.slab{position:relative;margin:1.5rem 1.5rem 0;border-radius:20px;background:var(--slab);overflow:hidden;
+  min-height:min(680px,calc(100vh - 120px));display:flex;flex-direction:column;
+  box-shadow:0 30px 70px rgba(14,14,16,.16)}
+.slab-wash{position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60% 60% at 15% 10%,rgba(230,57,70,.15),transparent 70%),
+    radial-gradient(50% 50% at 88% 90%,rgba(255,199,0,.08),transparent 70%)}
+/* vignette: darkens the slab edges so the ball's silhouette pops */
+.slab-vig{position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:radial-gradient(closest-side circle at 50% 50%,transparent 55%,rgba(14,14,16,.55) 100%)}
 
-.hero5-showroom{position:relative;overflow:hidden;background:linear-gradient(130deg,#292929 0%,#111 55%,#4b1d22 100%);border-radius:0 20px 20px 0;padding:2.2rem;display:flex;flex-direction:column}
-.hero5-showroom:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 48px,rgba(255,255,255,.035) 49px 50px)}
-.hero5-showroom:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 20%,rgba(255,195,66,.42),transparent 40%),radial-gradient(circle at 15% 88%,rgba(230,57,70,.28),transparent 45%)}
+/* ===== globe ===== */
+.globe-scene{position:absolute;inset:0;z-index:1;pointer-events:none;perspective:900px;overflow:hidden}
+.globe{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d;
+  transform:rotateX(-16deg) rotateY(0deg);animation:spin var(--spin) linear infinite}
+@keyframes spin{to{transform:rotateX(-16deg) rotateY(360deg)}}
 
-.hero5-pgrid{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:rgba(255,255,255,.08);border-radius:16px;overflow:hidden;flex:1}
-.hero5-pcell{background:rgba(255,255,255,.03);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;padding:1rem;transition:background .25s}
-.hero5-pcell:hover{background:rgba(255,255,255,.06)}
-.hero5-pcell svg{width:52px;height:52px;overflow:visible}
-.hero5-pcell .plabel{font-size:0.68rem;font-weight:700;color:#fff;letter-spacing:.02em}
+/* wire cage — this is what makes the eye read "ball" */
+.ring{position:absolute;border-radius:50%;border:1px solid #fff;opacity:.05;
+  left:50%;top:50%;transform-style:preserve-3d}
+.globe-lit .ring{border-color:var(--yellow);opacity:.5}
 
-.hero5-pfan-blades{transform-box:fill-box;transform-origin:50% 50%;animation:hero5spin 3s linear infinite}
-.hero5-breeze{opacity:0;animation:hero5breeze 1.8s ease-out infinite}
-.hero5-breeze:nth-child(1){animation-delay:0s}
-.hero5-breeze:nth-child(2){animation-delay:.4s}
-.hero5-breeze:nth-child(3){animation-delay:.8s}
-@keyframes hero5breeze{0%{opacity:0;transform:translateX(0) scaleX(.8)}25%{opacity:.55}100%{opacity:0;transform:translateX(14px) scaleX(1.3)}}
-
-.hero5-switch-knob{animation:hero5toggle 2.6s ease-in-out infinite}
-@keyframes hero5toggle{0%,40%{transform:translateX(0)}50%,90%{transform:translateX(-28px)}100%{transform:translateX(0)}}
-.hero5-switch-led{animation:hero5ledflicker 2.6s ease-in-out infinite}
-@keyframes hero5ledflicker{0%,40%{opacity:1}45%{opacity:.3}50%,90%{opacity:1}95%{opacity:.3}100%{opacity:1}}
-
-.hero5-current{offset-path:path('M10,45 C25,15 45,75 60,45 C75,15 90,45 90,45');offset-distance:0%;opacity:0;animation:hero5wiretravel 2s linear infinite}
-.hero5-current:nth-of-type(1){animation-delay:0s}
-.hero5-current:nth-of-type(2){animation-delay:1s}
-@keyframes hero5wiretravel{0%{offset-distance:0%;opacity:0}10%{opacity:1}90%{opacity:1}100%{offset-distance:100%;opacity:0}}
-@keyframes hero5spin{to{transform:rotate(360deg)}}
-.hero5-pbulb-glow{filter:drop-shadow(0 0 14px rgba(255,199,0,.85)) drop-shadow(0 0 28px rgba(255,199,0,.5))}
-.hero5-pcell.is-lit{position:relative}
-.hero5-pcell.is-lit:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,rgba(255,210,115,.35),transparent 65%);pointer-events:none}
-
-.hero5-years-row{position:relative;z-index:2;display:flex;align-items:baseline;justify-content:space-between;margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.12)}
-.hero5-years{font-size:2rem;font-weight:800;letter-spacing:-.03em;color:#fff}
-.hero5-years small{font-size:0.6rem;letter-spacing:.1em;text-transform:uppercase;display:block;color:#ccc;font-weight:600;margin-top:2px}
-.hero5-chip-row{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.hero5-chip{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);color:#fff;font-size:0.58rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:0.35rem 0.55rem;border-radius:20px;white-space:nowrap}
-
-@media(max-width:900px){
-  .hero5-wrap{padding:0}
-  .hero5{border-radius:0}
-  .hero5{grid-template-columns:1fr;border-radius:16px}
-  .hero5-showroom{border-radius:0;padding:1.6rem}
-  .hero5-copy{padding:2.2rem}
-  .hero5-pcell svg{width:40px;height:40px}
+/* items sit tangent on the skin */
+.gi{position:absolute;transform-style:preserve-3d;backface-visibility:hidden;
+  animation:fog var(--spin) linear infinite}   /* depth fog, synced to spin via negative delay */
+.gi svg{width:100%;height:100%;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+/* fog: bright at the front, gone at the back. sells depth without a single JS frame. */
+@keyframes fog{
+  0%{opacity:1}
+  22%{opacity:.62}
+  38%{opacity:.14}
+  50%{opacity:0}
+  62%{opacity:.14}
+  78%{opacity:.62}
+  100%{opacity:1}
 }
+.gw{position:absolute;transform-style:preserve-3d;backface-visibility:hidden;
+  font-weight:800;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;
+  animation:fog var(--spin) linear infinite}
 
-.trust-section{position:relative;height:400vh;width:100%}
-.trust-pin{height:100vh;width:100%;position:relative;overflow:hidden;background:var(--off)}
-.trust-intro{position:absolute;top:12%;left:50%;transform:translateX(-50%);text-align:center;z-index:10;width:100%;padding:0 1.5rem;pointer-events:none}
-.trust-intro h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.02em;color:var(--black)}
-.trust-intro h2 .accent{color:var(--red)}
-.trust-window{position:fixed;top:50%;left:50%;width:280px;height:180px;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.3);overflow:hidden;will-change:transform,width,height;z-index:50;background:linear-gradient(135deg,#0a0a0a,#1a1a1a)}
-.tw-layer{position:absolute;inset:0;opacity:0;will-change:opacity;display:flex;align-items:center;justify-content:center}
-.tw-layer svg{width:min(60vw,760px);height:min(60vw,760px);opacity:.9}
-.tw-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1) 0%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.92) 100%);display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:2.5rem;opacity:0;pointer-events:none}
-.tw-stat{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.6rem}
-.tw-stat .num{color:var(--white);font-size:clamp(3.2rem,8vw,6.5rem);font-weight:800;line-height:1;letter-spacing:-0.03em}
-.tw-stat .suffix{color:var(--red);font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:800}
-.tw-overlay h3{color:var(--white);font-size:1.5rem;font-weight:700}
-.tw-overlay h3 span{color:var(--red)}
-.tw-overlay p{color:rgba(255,255,255,.75);font-size:.92rem;margin-top:.4rem;max-width:520px;font-weight:400}
-.tw-badge{position:absolute;top:1.5rem;left:1.5rem;background:var(--red);color:#fff;font-size:.68rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:.4rem .9rem;border-radius:20px;opacity:0}
-.trust-progress{position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:60}
-.trust-progress span{width:28px;height:3px;background:rgba(0,0,0,.12);border-radius:2px;overflow:hidden;position:relative}
-.trust-progress span i{position:absolute;inset:0;background:var(--red);transform:scaleX(0);transform-origin:left;display:block}
-@media(max-width:900px){
-  .trust-window{width:180px;height:120px}
-  .tw-overlay{padding:1.4rem}
-  .tw-overlay h3{font-size:1.15rem}
-  .tw-overlay p{font-size:.8rem}
-  .tw-badge{top:.8rem;left:.8rem;font-size:.6rem;padding:.3rem .7rem}
-  .trust-intro{display:none}
-}
+/* sleeping */
+.globe-base .gi svg{stroke:#fff;opacity:.075}
+.globe-base .gw{color:#fff;opacity:.10}
+/* awake — only inside the torch */
+.globe-lit .gi svg{stroke:var(--yellow);opacity:.95}
+.globe-lit .gw{color:var(--yellow);opacity:.95;text-shadow:0 0 12px rgba(255,199,0,.55)}
+
+.globe-lit-wrap{position:absolute;inset:0;z-index:2;pointer-events:none;perspective:900px;overflow:hidden;
+  -webkit-mask-image:radial-gradient(circle 205px at var(--mx,-999px) var(--my,-999px),#000 0%,rgba(0,0,0,.7) 48%,transparent 76%);
+  mask-image:radial-gradient(circle 205px at var(--mx,-999px) var(--my,-999px),#000 0%,rgba(0,0,0,.7) 48%,transparent 76%)}
+.torch-bloom{position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:radial-gradient(circle 265px at var(--mx,-999px) var(--my,-999px),rgba(255,199,0,.16),rgba(255,199,0,.05) 48%,transparent 76%)}
+@media(max-width:900px){.globe-lit-wrap,.torch-bloom{display:none}}
+
+/* ===== search ===== */
+.searchwrap{position:relative;z-index:12;width:100%;max-width:31rem;margin:2.4rem auto 0;padding:0 1.5rem}
+.search{position:relative;display:flex;align-items:center;gap:.7rem;background:#fff;border-radius:9999px;padding:.42rem .42rem .42rem 1.3rem;
+  box-shadow:0 10px 34px rgba(0,0,0,.35)}
+/* red current running the ring */
+.search::after{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.8px;
+  background:conic-gradient(from var(--sweep,0deg),transparent 0deg,transparent 290deg,rgba(230,57,70,.55) 320deg,#FF5C67 345deg,transparent 360deg);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;animation:sweep 4s linear infinite;pointer-events:none}
+@property --sweep{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes sweep{to{--sweep:360deg}}
+.search .mag{width:17px;height:17px;stroke:var(--gray);fill:none;stroke-width:2.2;stroke-linecap:round;flex-shrink:0}
+.search input{flex:1;background:transparent;border:none;outline:none;font-family:inherit;font-size:.9rem;font-weight:500;color:var(--slab);min-width:0}
+.search input::placeholder{color:rgba(14,14,16,.38)}
+.search button{background:var(--red);border:none;border-radius:9999px;padding:.6rem .65rem;cursor:pointer;display:flex;color:#fff;transition:transform .15s;flex-shrink:0}
+.search button:hover{transform:scale(1.07)}
+.search button svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== hero ===== */
+.hero{position:relative;z-index:10;flex:1;display:flex;align-items:center;justify-content:center;padding:2rem 1.5rem;perspective:900px;pointer-events:none}
+.hero-stack{transform-style:preserve-3d;will-change:transform;text-align:center}
+
+/* est line — no pill, just a struck line */
+.est{display:flex;align-items:center;justify-content:center;gap:.85rem;margin-bottom:1.7rem}
+.est span{font-size:.6rem;font-weight:800;letter-spacing:.42em;text-transform:uppercase;color:rgba(255,255,255,.5);padding-left:.42em}
+.est i{display:block;width:34px;height:1px;background:var(--red);opacity:.8}
+
+/* real extrusion: stacked copies in Z. tilts with the head, so the depth is actual, not painted. */
+.h1-3d{position:relative;transform-style:preserve-3d}
+.hero h1{font-size:clamp(2.8rem,8.2vw,6.4rem);font-weight:900;line-height:.88;letter-spacing:-.035em;text-transform:uppercase;margin:0}
+.h1-face{position:relative;color:#fff;transform:translateZ(0);
+  text-shadow:-1px -1px 0 rgba(255,199,0,.55),-2px -2px 0 rgba(255,199,0,.18)}
+.h1-face .pos{color:var(--red)}
+.h1-layer{position:absolute;left:0;top:0;width:100%;pointer-events:none;user-select:none}
+.h1-layer .pos{color:inherit}
+.h1-shadow{position:absolute;left:0;top:0;width:100%;pointer-events:none;user-select:none;color:#000;
+  filter:blur(18px);opacity:.75}
+
+.rule{width:64px;height:3px;background:var(--red);border-radius:2px;margin:1.7rem auto}
+.trust{font-size:clamp(.95rem,1.6vw,1.18rem);font-weight:600;max-width:540px;line-height:1.7;color:rgba(255,255,255,.7);margin:0 auto}
+
+/* trust line reads like a lit shop sign: caps, spaced, warm glow, hand-drawn red underline */
+.trust .lead{display:block;font-size:.66rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.55rem}
+.mark{position:relative;display:inline-block;color:#fff;font-weight:800;white-space:nowrap;
+  font-size:1.32em;letter-spacing:.005em;line-height:1.25;
+  text-shadow:0 0 22px rgba(255,199,0,.30),0 0 46px rgba(255,199,0,.14)}
+.mark .u-draw{position:absolute;left:-2%;right:-2%;bottom:-.42em;width:104%;height:.5em;overflow:visible;pointer-events:none}
+.mark .u-draw path{fill:none;stroke:var(--red);stroke-width:5;stroke-linecap:round;
+  stroke-dasharray:520;stroke-dashoffset:520;animation:draw 1s cubic-bezier(.6,0,.3,1) 1.05s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.trust .tail{display:block;margin-top:.85rem;font-size:.92em;color:rgba(255,255,255,.6);font-weight:600}
+
+/* ===== strip ===== */
+.strip{position:relative;z-index:12;border-top:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.02)}
+.strip-in{max-width:88rem;margin:0 auto;padding:1.1rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap}
+.strip-l{display:flex;align-items:center;gap:.6rem;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.strip-l .pin{color:var(--red)}
+.stats{display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.stat{display:flex;align-items:baseline;gap:.4rem}
+.stat .n{font-size:1.05rem;font-weight:900;letter-spacing:-.02em;color:#fff}
+.stat .n .u{color:var(--red)}
+.stat .l{font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.scroll-cue{display:flex;align-items:center;gap:.45rem;font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.scroll-cue svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;animation:bob 1.9s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+
 
 .features{max-width:100%;margin:0 auto;padding:0 3rem 4rem}
 .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;border:1px solid var(--border)}
@@ -277,6 +310,17 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .why-card:hover .why-card-text{color:rgba(255,255,255,0.85)}
 @media(max-width:900px){.why-grid{grid-template-columns:1fr;border-radius:16px}.why{padding:0 1.5rem 3rem}}
 
+
+.landmarks{max-width:100%;margin:0 auto;padding:0 3rem 5rem}
+.land-header{margin-bottom:2rem}
+.land-kicker{font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:0.5rem}
+.land-title{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-0.02em}
+.land-title .accent{color:var(--red)}
+.land-row{display:flex;flex-wrap:wrap;gap:0.8rem}
+.land-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem 1.5rem;font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:0.7rem;transition:border-color 0.25s,transform 0.25s;cursor:none}
+.land-item:hover{border-color:var(--red);transform:translateY(-3px)}
+.land-item .tick{color:var(--red);font-weight:900}
+@media(max-width:900px){.landmarks{padding:0 1.5rem 3rem}}
 .contact{max-width:100%;margin:0 auto;padding:0 1.5rem 5rem}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;background:var(--black)}
 .contact-left{padding:3.5rem;color:var(--white);display:flex;flex-direction:column;justify-content:center}
@@ -304,6 +348,27 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .submit-btn:hover{background:var(--red)}
 @media(max-width:900px){.contact-grid{grid-template-columns:1fr;border-radius:16px}.contact-left,.contact-right{padding:2rem}}
 
+.rise{opacity:0;transform:translateY(22px);animation:rise .85s cubic-bezier(.2,.8,.2,1) forwards}
+.rise:nth-child(1){animation-delay:.05s}.rise:nth-child(2){animation-delay:.13s}
+.rise:nth-child(3){animation-delay:.21s}.rise:nth-child(4){animation-delay:.29s}
+@keyframes rise{to{opacity:1;transform:translateY(0)}}
+.searchwrap{opacity:0;transform:translateY(-14px);animation:drop .8s cubic-bezier(.2,.8,.2,1) .3s forwards}
+@keyframes drop{to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:600px){
+  .slab{margin:0 .7rem .7rem;border-radius:20px}
+  .hero h1{font-size:clamp(2.4rem,13vw,3.4rem)}
+  .strip-l,.scroll-cue{display:none}
+  .stats{justify-content:center;width:100%;gap:1.1rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .rise,.searchwrap{animation:none;opacity:1;transform:none}
+  .globe,.gi,.gw{animation:none}
+  .search::after,.scroll-cue svg{animation:none}
+  .mark .u-draw path{animation:none;stroke-dashoffset:0}
+}
+
+
 #waFloat{position:fixed;bottom:1.8rem;right:1.8rem;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:200;cursor:none;text-decoration:none;transition:transform 0.2s}
 #waFloat:hover{transform:scale(1.08)}
 footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:100%;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
@@ -322,7 +387,6 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:100%;mar
 @media(max-width:900px){
   .hero-grid{grid-template-columns:1fr;border-radius:16px}
   .hero-left,.hero-right{border-radius:0;padding:2.2rem}
-  .hero{padding:1.5rem}
   .features{padding:0 1.5rem 3rem}
   .features-grid{grid-template-columns:1fr;border-radius:16px}
   .cats{padding:0 1.5rem 3rem}
@@ -371,75 +435,160 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:100%;mar
   </div>
 </nav>
 
-<div class="hero5-wrap">
-  <div class="hero5">
-    <section class="hero5-copy">
-      <div class="hero5-badge">Established 1989</div>
-      <div class="hero5-trust">Most Trusted Electrical Shop<br><span class="hero5-accent">Balaghat &amp; Beyond</span></div>
-      <div class="hero5-divider"></div>
-      <h1 class="hero5-h1">LIGHTS.<br>POWER.<br><span class="hero5-red">POSSIBILITY.</span></h1>
-      <p class="hero5-desc">Genuine electrical products from Havells, V-Guard, Legrand, Atomberg, Daikin and 15+ authorised brands &mdash; expert guidance and a local legacy that keeps Balaghat moving.</p>
-      <div class="hero5-btns">
-        <a href="products.html" style="text-decoration:none"><button class="btn-primary"><span>Browse Products</span></button></a>
-        <a href="https://maps.google.com/?q=Electric+Emporium+Gujri+Chowk+Balaghat" target="_blank" style="text-decoration:none"><button class="btn-secondary">Get Directions</button></a>
+<!-- icon library -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-fan" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="7"/>
+    <path d="M50 43C50 25 44 14 50 8c6 6 0 17 0 35z"/>
+    <path d="M50 43C50 25 44 14 50 8c6 6 0 17 0 35z" transform="rotate(120 50 50)"/>
+    <path d="M50 43C50 25 44 14 50 8c6 6 0 17 0 35z" transform="rotate(240 50 50)"/>
+    <line x1="50" y1="8" x2="50" y2="0"/>
+  </symbol>
+  <symbol id="i-bulb" viewBox="0 0 100 100">
+    <path d="M50 12a26 26 0 0 1 14 48c-3 2-4 5-4 9v3H40v-3c0-4-1-7-4-9A26 26 0 0 1 50 12z"/>
+    <path d="M42 40 Q50 30 58 40 Q50 50 42 40z"/>
+    <line x1="40" y1="78" x2="60" y2="78"/><line x1="42" y1="85" x2="58" y2="85"/>
+  </symbol>
+  <symbol id="i-geyser" viewBox="0 0 100 100">
+    <rect x="26" y="26" width="48" height="60" rx="12"/>
+    <circle cx="50" cy="48" r="7"/><line x1="38" y1="68" x2="62" y2="68"/>
+    <path d="M40 22 Q44 14 40 6"/><path d="M60 22 Q64 14 60 6"/>
+  </symbol>
+  <symbol id="i-ac" viewBox="0 0 100 60">
+    <rect x="6" y="6" width="88" height="30" rx="5"/>
+    <line x1="12" y1="28" x2="88" y2="28"/>
+    <path d="M20 46 Q34 42 48 46 Q62 50 76 46"/>
+  </symbol>
+  <symbol id="i-switch" viewBox="0 0 100 60">
+    <rect x="8" y="8" width="84" height="44" rx="6"/>
+    <rect x="22" y="18" width="24" height="24" rx="4"/>
+    <circle cx="68" cy="24" r="3"/><circle cx="68" cy="38" r="3"/>
+  </symbol>
+  <symbol id="i-socket" viewBox="0 0 100 100">
+    <rect x="14" y="14" width="72" height="72" rx="12"/>
+    <circle cx="38" cy="42" r="5"/><circle cx="62" cy="42" r="5"/><rect x="44" y="60" width="12" height="8" rx="2"/>
+  </symbol>
+  <symbol id="i-lamp" viewBox="0 0 100 100">
+    <path d="M28 40 L50 10 L72 40 Z"/>
+    <line x1="50" y1="40" x2="50" y2="72"/>
+    <path d="M34 90 Q50 66 66 90 Z"/>
+  </symbol>
+  <symbol id="i-wire" viewBox="0 0 120 60">
+    <path d="M4 30 Q24 4 44 30 Q64 56 84 30 Q98 10 116 24"/>
+    <circle cx="4" cy="30" r="3"/>
+  </symbol>
+  <symbol id="i-mcb" viewBox="0 0 60 100">
+    <rect x="10" y="8" width="40" height="84" rx="5"/>
+    <rect x="22" y="26" width="16" height="26" rx="3"/>
+    <line x1="18" y1="66" x2="42" y2="66"/><line x1="18" y1="76" x2="42" y2="76"/>
+  </symbol>
+  <symbol id="i-tube" viewBox="0 0 140 40">
+    <rect x="8" y="12" width="124" height="16" rx="8"/>
+    <line x1="20" y1="12" x2="20" y2="28"/><line x1="120" y1="12" x2="120" y2="28"/>
+  </symbol>
+  <symbol id="i-plug" viewBox="0 0 100 100">
+    <path d="M32 16v20"/><path d="M68 16v20"/>
+    <path d="M24 38h52v14a26 26 0 0 1-26 26 26 26 0 0 1-26-26z"/>
+    <path d="M50 78v14"/>
+  </symbol>
+  <symbol id="i-panel" viewBox="0 0 100 100">
+    <rect x="12" y="16" width="76" height="68" rx="6"/>
+    <line x1="12" y1="34" x2="88" y2="34"/>
+    <rect x="24" y="46" width="10" height="22" rx="2"/>
+    <rect x="42" y="46" width="10" height="22" rx="2"/>
+    <rect x="60" y="46" width="10" height="22" rx="2"/>
+  </symbol>
+  <symbol id="i-stabilizer" viewBox="0 0 100 100">
+    <rect x="18" y="22" width="64" height="56" rx="6"/>
+    <circle cx="50" cy="44" r="11"/><line x1="50" y1="44" x2="57" y2="37"/>
+    <line x1="30" y1="66" x2="70" y2="66"/>
+  </symbol>
+  <symbol id="i-chandelier" viewBox="0 0 100 100">
+    <line x1="50" y1="6" x2="50" y2="24"/>
+    <path d="M22 34 Q50 18 78 34"/>
+    <line x1="26" y1="34" x2="26" y2="48"/><line x1="50" y1="26" x2="50" y2="48"/><line x1="74" y1="34" x2="74" y2="48"/>
+    <path d="M18 48h16l-8 16z"/><path d="M42 48h16l-8 16z"/><path d="M66 48h16l-8 16z"/>
+  </symbol>
+  <symbol id="i-exhaust" viewBox="0 0 100 100">
+    <rect x="10" y="10" width="80" height="80" rx="8"/>
+    <circle cx="50" cy="50" r="26"/>
+    <path d="M50 50 Q64 34 50 26 Q36 34 50 50z"/>
+    <path d="M50 50 Q66 64 74 50 Q66 36 50 50z"/>
+    <path d="M50 50 Q34 66 26 50 Q34 36 50 50z"/>
+  </symbol>
+  <symbol id="i-extension" viewBox="0 0 120 60">
+    <rect x="8" y="14" width="90" height="34" rx="8"/>
+    <circle cx="30" cy="31" r="6"/><circle cx="52" cy="31" r="6"/><circle cx="74" cy="31" r="6"/>
+    <path d="M98 31h14"/>
+  </symbol>
+  <symbol id="i-bell" viewBox="0 0 100 100">
+    <path d="M28 68V46a22 22 0 0 1 44 0v22"/>
+    <line x1="20" y1="68" x2="80" y2="68"/>
+    <path d="M42 76a8 8 0 0 0 16 0"/>
+    <line x1="50" y1="24" x2="50" y2="14"/>
+  </symbol>
+  <symbol id="i-motor" viewBox="0 0 100 80">
+    <rect x="14" y="22" width="52" height="40" rx="6"/>
+    <rect x="66" y="34" width="14" height="16" rx="2"/>
+    <line x1="80" y1="42" x2="92" y2="42"/>
+    <line x1="26" y1="22" x2="26" y2="12"/><line x1="54" y1="22" x2="54" y2="12"/>
+  </symbol>
+</defs></svg>
+
+<!-- SLAB -->
+<div class="slab" id="slab">
+  <div class="slab-wash"></div>
+
+  <div class="globe-scene"><div class="globe globe-base" id="globeBase"></div></div>
+  <div class="globe-lit-wrap" id="globeLitWrap"><div class="globe globe-lit" id="globeLit"></div></div>
+  <div class="torch-bloom" id="torchBloom"></div>
+  <div class="slab-vig"></div>
+
+  <!-- SEARCH -->
+  <div class="searchwrap">
+    <div class="search">
+      <svg class="mag" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" id="req" placeholder="Fan, MCB, wire, geyser, AC...">
+      <button id="reqBtn" aria-label="Ask on WhatsApp"><svg viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="hero-stack" id="heroStack">
+      <div class="est rise"><i></i><span>Est. 1989</span><i></i></div>
+      <div class="h1-3d rise" id="h1Wrap">
+        <h1 class="h1-face" id="h1Face">Lights. Power.<br><span class="pos">Possibility.</span></h1>
       </div>
-    </section>
-    <section class="hero5-showroom">
-      <div class="hero5-pgrid">
-        <div class="hero5-pcell">
-          <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="6" fill="#fff"/><g class="hero5-pfan-blades"><ellipse cx="50" cy="28" rx="9" ry="20" fill="#ddd" stroke="#999" stroke-width="1"/><ellipse cx="50" cy="28" rx="9" ry="20" fill="#ddd" stroke="#999" stroke-width="1" transform="rotate(120 50 50)"/><ellipse cx="50" cy="28" rx="9" ry="20" fill="#ddd" stroke="#999" stroke-width="1" transform="rotate(240 50 50)"/></g><circle cx="50" cy="50" r="3" fill="#fff"/><path class="hero5-breeze" d="M68,40 Q78,42 68,48" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/><path class="hero5-breeze" d="M70,50 Q82,52 70,58" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/><path class="hero5-breeze" d="M66,60 Q76,64 64,68" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round"/></svg>
-          <div class="plabel">Fans</div>
-        </div>
-        <div class="hero5-pcell is-lit">
-          <svg viewBox="0 0 100 100" class="hero5-pbulb-glow"><path d="M50 12a26 26 0 0 1 14 48c-3 2-4 5-4 9v3H40v-3c0-4-1-7-4-9A26 26 0 0 1 50 12z" fill="none" stroke="var(--yellow)" stroke-width="2.5"/><path d="M42 38 Q50 28 58 38 Q50 48 42 38z" fill="none" stroke="var(--yellow)" stroke-width="2.5" stroke-linejoin="round"/><rect x="40" y="74" width="20" height="5" rx="1" fill="#ccc"/><rect x="42" y="80" width="16" height="5" rx="1" fill="#ccc"/></svg>
-          <div class="plabel">Lights &amp; LEDs</div>
-        </div>
-        <div class="hero5-pcell">
-          <svg viewBox="0 0 100 100"><rect x="20" y="38" width="60" height="24" rx="12" fill="none" stroke="#fff" stroke-width="2.5"/><circle class="hero5-switch-knob" cx="64" cy="50" r="9" fill="var(--red)" stroke="#fff" stroke-width="2"/><circle class="hero5-switch-led" cx="50" cy="80" r="3.5" fill="var(--red)"/><rect x="14" y="14" width="72" height="72" rx="6" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/></svg>
-          <div class="plabel">Switches</div>
-        </div>
-        <div class="hero5-pcell">
-          <svg viewBox="0 0 100 90"><path d="M10,45 C25,15 45,75 60,45 C75,15 90,45 90,45" fill="none" stroke="var(--red)" stroke-width="4" stroke-linecap="round"/><circle cx="10" cy="45" r="4" fill="#fff"/><circle cx="90" cy="45" r="4" fill="#fff"/><circle class="hero5-current" r="4" fill="#fff"/><circle class="hero5-current" r="4" fill="#fff"/></svg>
-          <div class="plabel">Wires</div>
-        </div>
+      <div class="rule rise"></div>
+      <p class="trust rise">
+        <span class="lead">Balaghat &amp; Beyond</span>
+        <span class="mark">Most Trusted Electrical Shop
+          <svg class="u-draw" viewBox="0 0 500 24" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M6 15 C 90 5, 165 20, 250 11 S 410 6, 494 14"/>
+          </svg>
+        </span>
+        <span class="tail">Genuine brands &middot; honest pricing &middot; expert guidance</span>
+      </p>
+    </div>
+  </main>
+
+  <!-- STRIP -->
+  <div class="strip">
+    <div class="strip-in">
+      <div class="strip-l"><span class="pin">&#9679;</span>Gujri Chowk, Balaghat &middot; Open 10AM&ndash;9PM</div>
+      <div class="stats">
+        <div class="stat"><span class="n">36<span class="u">+</span></span><span class="l">Years</span></div>
+        <div class="stat"><span class="n">15<span class="u">+</span></span><span class="l">Brands</span></div>
+        <div class="stat"><span class="n">4.9<span class="u">&#9733;</span></span><span class="l">72+ Reviews</span></div>
+        <div class="stat"><span class="n">100<span class="u">km+</span></span><span class="l">Reach</span></div>
       </div>
-      <div class="hero5-years-row">
-        <div>
-          <div class="hero5-years">36<span style="font-size:1.2rem">+</span></div>
-          <small>Years of Trust</small>
-        </div>
-        <div class="hero5-chip-row">
-          <div class="hero5-chip">15+ Brands</div>
-          <div class="hero5-chip">4.9★ Rated</div>
-          <div class="hero5-chip">100km+ Reach</div>
-        </div>
-      </div>
-    </section>
+      <div class="scroll-cue">Scroll<svg viewBox="0 0 24 24"><path d="M12 5v14"/><path d="m19 12-7 7-7-7"/></svg></div>
+    </div>
   </div>
 </div>
 
-<section class="trust-section">
-  <div class="trust-pin">
-    <div class="trust-intro">
-      <h2>Most Trusted <span class="accent">Electrical Shop</span><br>Balaghat &amp; Beyond</h2>
-    </div>
 
-    <div class="trust-window" id="twWindow">
-      <div class="tw-layer" id="twLayerA"></div>
-      <div class="tw-layer" id="twLayerB"></div>
-      <div class="tw-badge" id="twBadge">Since 1989</div>
-      <div class="tw-overlay" id="twOverlay">
-        <div class="tw-stat"><span class="num" id="twNum">35</span><span class="suffix" id="twSuffix">+</span></div>
-        <h3 id="twTitle">Serving <span>Balaghat</span> Since 1989</h3>
-        <p id="twDesc">Genuine brands, honest pricing, every single time.</p>
-      </div>
-    </div>
-
-    <div class="trust-progress">
-      <span><i id="tp1"></i></span><span><i id="tp2"></i></span><span><i id="tp3"></i></span><span><i id="tp4"></i></span>
-    </div>
-  </div>
-</section>
 
 <div class="features reveal">
   <div class="features-grid">
@@ -510,6 +659,19 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:100%;mar
   </div>
 </div>
 
+<div class="landmarks reveal">
+  <div class="land-header">
+    <div class="land-kicker">Trusted By Institutions</div>
+    <h2 class="land-title">Local <span class="accent">Landmarks</span></h2>
+  </div>
+  <div class="land-row">
+    <div class="land-item"><span class="tick">&#10003;</span>Tripod Hospital</div>
+    <div class="land-item"><span class="tick">&#10003;</span>ACA Health Care</div>
+    <div class="land-item"><span class="tick">&#10003;</span>Aarogyam Hospital</div>
+    <div class="land-item"><span class="tick">&#10003;</span>Sardar Patel University</div>
+  </div>
+</div>
+
 <div class="contact reveal" id="contact">
   <div class="contact-grid">
     <div class="contact-left">
@@ -545,7 +707,7 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:100%;mar
   </div>
   <div class="footer-social">
     <a href="https://www.instagram.com/electricemporiumbgt" target="_blank" title="Instagram" rel="noopener">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
     </a>
   </div>
 </footer>
@@ -586,60 +748,6 @@ document.addEventListener('mousemove',function(e){var dx=e.clientX-lastX,dy=e.cl
 function drawSparks(){ctx.clearRect(0,0,canvas.width,canvas.height);for(var i=sparks.length-1;i>=0;i--){var s=sparks[i];s.x+=s.vx;s.y+=s.vy;s.vy+=0.12;s.life-=s.decay;if(s.life<=0){sparks.splice(i,1);continue;}var grad=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.size*2);grad.addColorStop(0,'rgba(230,57,70,'+(s.life*0.7)+')');grad.addColorStop(1,'rgba(230,57,70,0)');ctx.fillStyle=grad;ctx.beginPath();ctx.arc(s.x,s.y,s.size*2,0,Math.PI*2);ctx.fill();}requestAnimationFrame(drawSparks);}
 drawSparks();
 
-(function(){
-  gsap.registerPlugin(ScrollTrigger);
-  var twPanels = [
-    {badge:'Since 1989', num:'35', suffix:'+', title:'Serving <span>Balaghat</span> Since 1989', desc:'Genuine brands, honest pricing, every single time.',
-     svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="86" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="4 8" opacity="0.5"/><circle cx="100" cy="100" r="60" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.25"/><line x1="100" y1="100" x2="100" y2="55" stroke="#E63946" stroke-width="4" stroke-linecap="round"/><line x1="100" y1="100" x2="132" y2="112" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="100" cy="100" r="6" fill="#E63946"/></svg>'},
-    {badge:'Widest Range', num:'15', suffix:'+', title:'Authorized <span>Brands</span>, One Roof', desc:'The widest range of major electrical brands in Balaghat — under one roof.',
-     svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke-width="2"><rect x="24" y="24" width="60" height="60" rx="10" stroke="#E63946" opacity="0.9"/><rect x="116" y="24" width="60" height="60" rx="10" stroke="#fff" opacity="0.35"/><rect x="24" y="116" width="60" height="60" rx="10" stroke="#fff" opacity="0.35"/><rect x="116" y="116" width="60" height="60" rx="10" stroke="#E63946" opacity="0.9"/></g><circle cx="54" cy="54" r="6" fill="#E63946"/><circle cx="146" cy="146" r="6" fill="#E63946"/></svg>'},
-    {badge:'Genuinely Rated', num:'4.9', suffix:'★', title:'Rated by <span>72+</span> Customers', desc:'Real Google reviews, zero shortcuts — earned over decades, not bought.',
-     svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><polygon points="100,20 118,74 176,74 129,108 147,163 100,130 53,163 71,108 24,74 82,74" fill="none" stroke="#E63946" stroke-width="3" stroke-linejoin="round"/><polygon points="100,44 112,80 150,80 119,102 131,138 100,116 69,138 81,102 50,80 88,80" fill="#E63946" opacity="0.15"/></svg>'},
-    {badge:'Regional Reach', num:'100', suffix:'km+', title:'Trusted Across the <span>Region</span>', desc:'Customers travel from well beyond Balaghat for genuine parts and honest advice.',
-     svg:'<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="10" fill="#E63946"/><circle cx="100" cy="100" r="34" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.3"/><circle cx="100" cy="100" r="62" fill="none" stroke="#fff" stroke-width="1.5" opacity="0.22"/><circle cx="100" cy="100" r="90" fill="none" stroke="#E63946" stroke-width="2" stroke-dasharray="3 7" opacity="0.6"/></svg>'}
-  ];
-  var layerA=document.getElementById('twLayerA'), layerB=document.getElementById('twLayerB');
-  if(layerA && layerB){
-    var cur=0, toggle=true;
-    var crossfadeTo = function(idx){
-      var p=twPanels[idx];
-      var showingLayer = toggle?layerA:layerB;
-      var hiddenLayer  = toggle?layerB:layerA;
-      hiddenLayer.innerHTML = p.svg;
-      gsap.to(hiddenLayer,{opacity:1,duration:0.7,ease:'power2.inOut'});
-      gsap.to(showingLayer,{opacity:0,duration:0.7,ease:'power2.inOut'});
-      document.getElementById('twBadge').textContent = p.badge;
-      document.getElementById('twNum').textContent = p.num;
-      document.getElementById('twSuffix').textContent = p.suffix;
-      document.getElementById('twTitle').innerHTML = p.title;
-      document.getElementById('twDesc').textContent = p.desc;
-      toggle=!toggle;
-    };
-    layerA.innerHTML = twPanels[0].svg;
-    gsap.set(layerA,{opacity:1});
-    var tl = gsap.timeline({
-      scrollTrigger:{
-        trigger:'.trust-section', start:'top top', end:'bottom bottom', scrub:1, pin:'.trust-pin',
-        onUpdate:function(self){
-          var idx=Math.min(3,Math.floor(self.progress*4));
-          if(idx!==cur){cur=idx;crossfadeTo(idx);}
-          [1,2,3,4].forEach(function(n){
-            var bar=document.getElementById('tp'+n);
-            var segProg=Math.max(0,Math.min(1,(self.progress*4)-(n-1)));
-            bar.style.transform='scaleX('+segProg+')';
-          });
-        }
-      }
-    });
-    tl.fromTo('#twWindow',
-      {xPercent:-50,yPercent:-50,x:-350,y:100,rotate:-22,scale:.55,width:280,height:180,borderRadius:16},
-      {xPercent:-50,yPercent:-50,x:0,y:0,rotate:0,scale:1,width:'100vw',height:'100vh',borderRadius:0,ease:'none',duration:0.4}
-    )
-    .to('#twOverlay',{opacity:1,duration:.15},'-=0.1')
-    .to('#twBadge',{opacity:1,duration:.15},'-=0.2')
-    .to({},{duration:2.2});
-  }
-})();
 
 (function(){
   var brands=[
@@ -712,6 +820,170 @@ drawSparks();
   timer=setInterval(function(){goTo(cur+1);},2800);
   window.addEventListener('resize',render);
 })();
+</script>
+
+<script>
+
+/* ================= SLAB HERO ================= */
+/* search → WhatsApp */
+(function(){
+  var input=document.getElementById('req'),btn=document.getElementById('reqBtn');
+  function send(){
+    var r=(input.value||'').trim();
+    var msg='Hello Electric Emporium!'+(r?('\n\nI am looking for: '+r):'');
+    window.open('https://wa.me/919425831035?text='+encodeURIComponent(msg),'_blank');
+  }
+  btn.addEventListener('click',send);
+  input.addEventListener('keydown',function(e){if(e.key==='Enter')send();});
+})();
+
+/* ---- build the globe: wire cage + icons + words, all tangent to the skin ---- */
+(function(){
+  var SPIN=100;                                  // seconds — must match --spin
+  var R=430;                                     // smaller ball = more of it fits the slab
+
+  var ICONS=['i-fan','i-bulb','i-geyser','i-ac','i-switch','i-socket','i-lamp','i-wire','i-mcb','i-tube','i-plug','i-panel',
+             'i-stabilizer','i-chandelier','i-exhaust','i-extension','i-bell','i-motor'];
+  var SIZES={'i-fan':[70,70],'i-bulb':[54,54],'i-geyser':[58,58],'i-ac':[84,50],'i-switch':[70,42],
+             'i-socket':[56,56],'i-lamp':[56,56],'i-wire':[88,44],'i-mcb':[36,60],'i-tube':[92,26],
+             'i-plug':[54,54],'i-panel':[60,60],'i-stabilizer':[58,58],'i-chandelier':[60,60],
+             'i-exhaust':[60,60],'i-extension':[84,42],'i-bell':[54,54],'i-motor':[70,56]};
+  var VB={'i-fan':'0 0 100 100','i-bulb':'0 0 100 100','i-geyser':'0 0 100 100','i-ac':'0 0 100 60',
+          'i-switch':'0 0 100 60','i-socket':'0 0 100 100','i-lamp':'0 0 100 100','i-wire':'0 0 120 60',
+          'i-mcb':'0 0 60 100','i-tube':'0 0 140 40','i-plug':'0 0 100 100','i-panel':'0 0 100 100',
+          'i-stabilizer':'0 0 100 100','i-chandelier':'0 0 100 100','i-exhaust':'0 0 100 100',
+          'i-extension':'0 0 120 60','i-bell':'0 0 100 100','i-motor':'0 0 100 80'};
+  var WORDS=['Switches','Wires','Cables','Lights','Fancy Lamps','Fans','Air Conditioner'];
+
+  var N=76;                                      // total items on the skin
+  var WORD_EVERY=5;                              // every 5th slot is a word, not an icon
+  var LAT_SQUASH=0.60;                           // keeps items off the poles → nothing slides under the nav/strip
+
+  function place(el,lon,lat,r){
+    el.style.transform='rotateY('+lon.toFixed(2)+'deg) rotateX('+(-lat).toFixed(2)+'deg) translateZ('+r+'px)';
+    // fog runs on the same clock as the spin; negative delay parks each item at its own longitude
+    el.style.animationDelay=(-(((lon%360)+360)%360)/360*SPIN).toFixed(2)+'s';
+  }
+
+  function build(host){
+    var frag=document.createDocumentFragment();
+
+    // wire cage — 4 meridians + 3 parallels. faint, but this is what says "sphere".
+    for(var m=0;m<4;m++){
+      var ring=document.createElement('div');
+      ring.className='ring';
+      ring.style.width=(R*2)+'px'; ring.style.height=(R*2)+'px';
+      ring.style.marginLeft=(-R)+'px'; ring.style.marginTop=(-R)+'px';
+      ring.style.transform='rotateY('+(m*45)+'deg)';
+      frag.appendChild(ring);
+    }
+    [-34,0,34].forEach(function(lat){
+      var rr=R*Math.cos(lat*Math.PI/180);
+      var y=R*Math.sin(lat*Math.PI/180);
+      var ring=document.createElement('div');
+      ring.className='ring';
+      ring.style.width=(rr*2)+'px'; ring.style.height=(rr*2)+'px';
+      ring.style.marginLeft=(-rr)+'px'; ring.style.marginTop=(-rr)+'px';
+      ring.style.transform='translateY('+(-y)+'px) rotateX(90deg)';
+      frag.appendChild(ring);
+    });
+
+    // items, fibonacci-spread so nothing clumps
+    var wi=0, ii=0;
+    for(var i=0;i<N;i++){
+      var y=1-(i/(N-1))*2;
+      var lat=Math.asin(y)*180/Math.PI*LAT_SQUASH;   // squashed: ±54°, not ±90°
+      var lon=(i*137.508)%360;
+      var el;
+      if(i%WORD_EVERY===0){
+        el=document.createElement('div');
+        el.className='gw';
+        el.textContent=WORDS[wi%WORDS.length]; wi++;
+        var long=el.textContent.length>9;
+        el.style.fontSize=long?'12px':'15px';
+        el.style.left='-90px'; el.style.top='-10px'; el.style.width='180px'; el.style.textAlign='center';
+      } else {
+        var id=ICONS[ii%ICONS.length]; ii++;
+        var w=SIZES[id][0], h=SIZES[id][1];
+        el=document.createElement('div');
+        el.className='gi';
+        el.style.width=w+'px'; el.style.height=h+'px';
+        el.style.left=(-w/2)+'px'; el.style.top=(-h/2)+'px';
+        el.innerHTML='<svg viewBox="'+VB[id]+'"><use href="#'+id+'"/></svg>';
+      }
+      place(el,lon,lat,R);
+      frag.appendChild(el);
+    }
+    host.appendChild(frag);
+  }
+  build(document.getElementById('globeBase'));
+  build(document.getElementById('globeLit'));
+})();
+
+/* headline extrusion: clone the face back through Z so it has real sides */
+(function(){
+  var wrap=document.getElementById('h1Wrap'), face=document.getElementById('h1Face');
+  if(!wrap||!face)return;
+  var DEPTH=16, STEP=1.4;
+  var frag=document.createDocumentFragment();
+
+  // far soft shadow, sits deepest
+  var sh=face.cloneNode(true);
+  sh.removeAttribute('id'); sh.className='h1-shadow';
+  sh.style.transform='translateZ(-'+((DEPTH+6)*STEP)+'px) translate(10px,14px)';
+  frag.appendChild(sh);
+
+  // the extruded sides — warm dark near the face, black at the back
+  for(var i=DEPTH;i>=1;i--){
+    var t=i/DEPTH;                                  // 1 = deepest
+    var r=Math.round(58*(1-t)), g=Math.round(13*(1-t)), b=Math.round(16*(1-t));
+    var L=face.cloneNode(true);
+    L.removeAttribute('id'); L.className='h1-layer';
+    L.style.color='rgb('+r+','+g+','+b+')';
+    L.style.transform='translateZ(-'+(i*STEP)+'px)';
+    frag.appendChild(L);
+  }
+  wrap.insertBefore(frag,face);
+})();
+
+/* torch: lights the skin + tilts the headline. one light source. */
+(function(){
+  var slab=document.getElementById('slab');
+  var litWrap=document.getElementById('globeLitWrap');
+  var bloom=document.getElementById('torchBloom');
+  var stack=document.getElementById('heroStack');
+  if(!slab||!litWrap)return;
+  if(window.matchMedia('(max-width:900px)').matches)return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+
+  var tx=-999,ty=-999,cx=-999,cy=-999,inside=false,raf=null;
+  var trx=0,try_=0,rx=0,ry=0;
+
+  slab.addEventListener('mousemove',function(e){
+    var r=slab.getBoundingClientRect();
+    tx=e.clientX-r.left; ty=e.clientY-r.top;
+    if(!inside){inside=true;cx=tx;cy=ty;}
+    try_=((tx/r.width)-0.5)*16;
+    trx=-((ty/r.height)-0.5)*11;
+    if(!raf)raf=requestAnimationFrame(tick);
+  });
+  slab.addEventListener('mouseleave',function(){
+    inside=false;tx=-999;ty=-999;trx=0;try_=0;
+    if(!raf)raf=requestAnimationFrame(tick);
+  });
+
+  function tick(){
+    cx+=(tx-cx)*0.16; cy+=(ty-cy)*0.16;
+    rx+=(trx-rx)*0.10; ry+=(try_-ry)*0.10;
+    var x=cx.toFixed(1)+'px', y=cy.toFixed(1)+'px';
+    litWrap.style.setProperty('--mx',x); litWrap.style.setProperty('--my',y);
+    bloom.style.setProperty('--mx',x);   bloom.style.setProperty('--my',y);
+    stack.style.transform='rotateX('+rx.toFixed(2)+'deg) rotateY('+ry.toFixed(2)+'deg)';
+    var moving=Math.abs(tx-cx)>0.5||Math.abs(ty-cy)>0.5||Math.abs(trx-rx)>0.05||Math.abs(try_-ry)>0.05;
+    raf = moving ? requestAnimationFrame(tick) : null;
+  }
+})();
+
 </script>
 </body>
 </html>
