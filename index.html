@@ -154,7 +154,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
   mask-image:radial-gradient(circle 205px at var(--mx,-999px) var(--my,-999px),#000 0%,rgba(0,0,0,.7) 48%,transparent 76%)}
 .torch-bloom{position:absolute;inset:0;z-index:3;pointer-events:none;
   background:radial-gradient(circle 265px at var(--mx,-999px) var(--my,-999px),rgba(255,199,0,.16),rgba(255,199,0,.05) 48%,transparent 76%)}
-@media(max-width:900px){.globe-lit-wrap,.torch-bloom{display:none}}
+@media(max-width:900px){.globe-scene,.globe-lit-wrap,.torch-bloom{display:none}}
 
 /* ===== search ===== */
 .searchwrap{position:relative;z-index:12;width:100%;max-width:31rem;margin:2.4rem auto 0;padding:0 1.5rem}
@@ -1051,8 +1051,15 @@ drawSparks();
   });
 })();
 
-/* ---- build the globe: wire cage + icons + words, all tangent to the skin ---- */
+/* ---- build the globe: wire cage + icons + words, all tangent to the skin ----
+   Skipped on phones/tablets: constructing ~150 3D-positioned elements (two
+   copies of the ball, base + lit) is expensive on weaker mobile CPUs, and the
+   ball is hidden by CSS below 900px anyway (it's mouse-hover-driven, so it
+   never activates on touch). Building it anyway just means wasted work and a
+   visible moment where all the pieces are still bunched at the center before
+   the 3D transforms finish spreading them into a sphere. */
 (function(){
+  if(window.matchMedia('(max-width:900px)').matches)return;
   var SPIN=100;                                  // seconds — must match --spin
   var R=430;                                     // smaller ball = more of it fits the slab
 
