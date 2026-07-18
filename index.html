@@ -101,7 +101,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 /* ===== HERO 5 (refined) ===== */
 /* ===== dark slab ===== */
 .slab{position:relative;margin:1.5rem 1.5rem 0;border-radius:20px;background:var(--slab);overflow:hidden;
-  min-height:min(680px,calc(100vh - 120px));display:flex;flex-direction:column;
+  min-height:min(680px,calc(100vh - 120px));
+  min-height:min(680px,calc(100dvh - 120px));
+  display:flex;flex-direction:column;
   box-shadow:0 30px 70px rgba(14,14,16,.16)}
 .slab-wash{position:absolute;inset:0;z-index:0;pointer-events:none;
   background:
@@ -377,7 +379,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 #reqClear svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
 #reqClear:hover{color:var(--black)}
 .sugg{position:absolute;left:1.5rem;right:1.5rem;top:calc(100% + 8px);z-index:60;background:#fff;border-radius:16px;
-  box-shadow:0 18px 48px rgba(0,0,0,.34);overflow:hidden;max-height:min(58vh,380px);overflow-y:auto;
+  box-shadow:0 18px 48px rgba(0,0,0,.34);overflow:hidden;overflow-y:auto;
+  max-height:min(58vh,380px);
+  max-height:min(58dvh,380px);
   animation:suggIn .16s ease-out}
 @keyframes suggIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 .sugg-head{font-size:.56rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--gray);
@@ -397,7 +401,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .sg-wa{border-top:1px solid var(--border)}
 .sg-wa .sg-ic{color:#25D366;opacity:1}
 .sg-empty{padding:1rem 1.1rem;font-size:.8rem;color:var(--gray);font-weight:500}
-@media(max-width:600px){.sugg{max-height:52vh}}
+@media(max-width:600px){.sugg{max-height:52vh;max-height:52dvh}}
 
 #waFloat{position:fixed;bottom:1.8rem;right:1.8rem;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,0.2);z-index:200;cursor:none;text-decoration:none;transition:transform 0.2s}
 #waFloat:hover{transform:scale(1.08)}
