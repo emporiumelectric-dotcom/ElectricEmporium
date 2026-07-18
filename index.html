@@ -232,18 +232,23 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
 .feature-title{font-size:0.95rem;font-weight:700;margin-bottom:0.2rem}
 .feature-sub{font-size:0.8rem;color:var(--gray)}
 
-.cats{max-width:100%;margin:0 auto;padding:1rem 3rem 5rem}
-.cats-header{margin-bottom:2.5rem}
-.cats-kicker{font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:0.5rem}
-.cats-title{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-0.02em}
+.cats{max-width:88rem;margin:0 auto;padding:1rem 3rem 5rem}
+.cats-header{margin-bottom:2.8rem;max-width:42rem}
+.cats-kicker{font-size:0.78rem;font-weight:600;color:var(--red);margin-bottom:0.6rem}
+.cats-title{font-size:clamp(2rem,3.4vw,2.9rem);font-weight:800;letter-spacing:-0.02em;line-height:1.15;margin-bottom:0.7rem}
 .cats-title .accent{color:var(--red)}
-.cats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;border:1px solid var(--border)}
-.cat-card{background:var(--white);padding:1.8rem 1.2rem;cursor:none;transition:background 0.25s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0.8rem;text-decoration:none}
+.cats-hint{font-size:0.85rem;color:var(--gray)}
+.cats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:20px;overflow:hidden;border:1px solid var(--border)}
+.cat-card{background:var(--white);padding:2.6rem 2.2rem;cursor:none;transition:background 0.3s;display:flex;flex-direction:column;align-items:flex-start;text-align:left;text-decoration:none;min-height:236px}
 .cat-card:hover{background:var(--off)}
-.cat-icon-wrap{width:54px;height:54px;display:flex;align-items:center;justify-content:center}
+.cat-icon-wrap{width:64px;height:64px;display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.cat-card:hover .cat-icon-wrap{transform:translateY(-3px)}
 .cat-icon-wrap svg{width:100%;height:100%;overflow:visible}
-.cat-name{font-size:0.78rem;font-weight:700}
-.cat-sub{font-size:0.65rem;color:var(--gray);line-height:1.5}
+.cat-tag{font-size:0.64rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem}
+.cat-name{font-size:1.3rem;font-weight:800;letter-spacing:-0.01em;line-height:1.2;margin-bottom:0.5rem;color:var(--black)}
+.cat-sub{font-size:0.78rem;color:var(--gray);line-height:1.55;margin-bottom:1.3rem}
+.cat-cta{margin-top:auto;font-size:0.78rem;font-weight:700;color:var(--black);display:inline-flex;align-items:center;gap:0.35rem;transition:gap 0.2s,color 0.2s}
+.cat-card:hover .cat-cta{color:var(--red);gap:0.6rem}
 .fan-blades{transform-box:fill-box;transform-origin:50% 50%}
 .cat-card:hover .fan-blades{animation:fanSpin 0.5s linear infinite}
 @keyframes fanSpin{to{transform:rotate(360deg)}}
@@ -362,6 +367,7 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop
   .hero h1{font-size:clamp(2.4rem,13vw,3.4rem)}
   .strip-l,.scroll-cue{display:none}
   .stats{justify-content:center;width:100%;gap:1.1rem}
+  .cats-row{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){
   .rise,.searchwrap{animation:none;opacity:1;transform:none}
@@ -647,33 +653,52 @@ footer{border-top:1px solid var(--border);padding:2.5rem 3rem;max-width:100%;mar
 
 <div class="cats reveal">
   <div class="cats-header">
-    <div class="cats-kicker">What We Carry</div>
-    <h2 class="cats-title">Hover to <span class="accent">switch it on</span></h2>
+    <div class="cats-kicker">Solutions For Every Home</div>
+    <h2 class="cats-title">We don&rsquo;t sell products.<br>We solve <span class="accent">problems.</span></h2>
+    <div class="cats-hint">Hover any card &mdash; it comes alive.</div>
   </div>
   <div class="cats-row">
     <a class="cat-card" href="products.html?category=Fans">
       <div class="cat-icon-wrap"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="6" fill="#222"/><g class="fan-blades"><ellipse cx="50" cy="28" rx="9" ry="20" fill="#ddd" stroke="#999" stroke-width="1"/><ellipse cx="50" cy="28" rx="9" ry="20" fill="#ddd" stroke="#999" stroke-width="1" transform="rotate(120 50 50)"/><ellipse cx="50" cy="28" rx="9" ry="20" fill="#ddd" stroke="#999" stroke-width="1" transform="rotate(240 50 50)"/></g><circle cx="50" cy="50" r="3" fill="#222"/></svg></div>
-      <div class="cat-name">Fans</div><div class="cat-sub">Havells, Atomberg &amp; Crompton Fans</div>
+      <div class="cat-tag">Fans</div>
+      <div class="cat-name">Move Air, Beautifully</div>
+      <div class="cat-sub">Havells, Atomberg &amp; Crompton &mdash; quiet, energy-saving BLDC fans</div>
+      <div class="cat-cta">Shop Fans &rarr;</div>
     </a>
     <a class="cat-card" href="products.html?category=Lights">
       <div class="cat-icon-wrap"><svg viewBox="0 0 100 100"><g class="bulb-glow"><circle cx="50" cy="40" r="28" fill="rgba(255,199,0,0.18)"/></g><line class="bulb-ray" x1="50" y1="4" x2="50" y2="14" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round"/><line class="bulb-ray" x1="14" y1="40" x2="22" y2="40" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round"/><line class="bulb-ray" x1="78" y1="40" x2="86" y2="40" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round"/><line class="bulb-ray" x1="22" y1="12" x2="29" y2="19" stroke="var(--yellow)" stroke-width="3" stroke-linecap="round"/><path d="M50 12a26 26 0 0 1 14 48c-3 2-4 5-4 9v3H40v-3c0-4-1-7-4-9A26 26 0 0 1 50 12z" fill="none" stroke="#333" stroke-width="2.5"/><path class="bulb-filament" d="M42 38 Q50 28 58 38 Q50 48 42 38z" fill="none" stroke-width="2.5" stroke-linejoin="round"/><rect x="40" y="74" width="20" height="5" rx="1" fill="#333"/><rect x="42" y="80" width="16" height="5" rx="1" fill="#333"/><rect x="44" y="86" width="12" height="4" rx="1" fill="#333"/></svg></div>
-      <div class="cat-name">Lights &amp; LEDs</div><div class="cat-sub">Havells &amp; Surya LED Lights</div>
+      <div class="cat-tag">Lights &amp; LEDs</div>
+      <div class="cat-name">Illuminate Every Space</div>
+      <div class="cat-sub">Havells &amp; Surya LEDs &mdash; from everyday bulbs to statement lighting</div>
+      <div class="cat-cta">Shop Lights &rarr;</div>
     </a>
     <a class="cat-card" href="products.html?category=Wires">
       <div class="cat-icon-wrap"><svg viewBox="0 0 100 90"><path class="wire-path" d="M10,45 C25,15 45,75 60,45 C75,15 90,45 90,45" fill="none" stroke="#999" stroke-width="4" stroke-linecap="round"/><circle class="wire-pulse" r="4" fill="var(--red)"/><circle class="wire-pulse" r="4" fill="var(--red)"/></svg></div>
-      <div class="cat-name">Wires</div><div class="cat-sub">Polycab, KEI &amp; Havells Wires</div>
+      <div class="cat-tag">Wires</div>
+      <div class="cat-name">Protect Every Circuit</div>
+      <div class="cat-sub">Polycab, KEI &amp; Havells &mdash; the wiring your home&rsquo;s safety depends on</div>
+      <div class="cat-cta">Shop Wires &rarr;</div>
     </a>
     <a class="cat-card" href="products.html?category=Switches">
       <div class="cat-icon-wrap"><svg viewBox="0 0 100 100"><rect class="switch-track" x="20" y="38" width="60" height="24" rx="12" fill="none" stroke="#999" stroke-width="2.5"/><circle class="switch-knob" cx="34" cy="50" r="9" fill="#fff" stroke="#999" stroke-width="2"/><g class="switch-led-glow"><circle cx="50" cy="78" r="10" fill="rgba(230,57,70,0.18)"/></g><circle class="switch-led" cx="50" cy="78" r="4" fill="#ccc"/><rect x="14" y="14" width="72" height="72" rx="6" fill="none" stroke="#eee" stroke-width="2"/></svg></div>
-      <div class="cat-name">Switches</div><div class="cat-sub">Legrand &amp; Havells Switches</div>
+      <div class="cat-tag">Switches</div>
+      <div class="cat-name">Control At Your Fingertips</div>
+      <div class="cat-sub">Legrand &amp; Havells &mdash; modular switches built for daily use, for years</div>
+      <div class="cat-cta">Shop Switches &rarr;</div>
     </a>
     <a class="cat-card" href="products.html?category=ACs">
       <div class="cat-icon-wrap"><svg viewBox="0 0 100 80"><rect class="ac-body" x="8" y="10" width="84" height="28" rx="4" fill="#fff" stroke="#999" stroke-width="2.5"/><circle class="ac-light" cx="80" cy="18" r="2.5" fill="#ccc"/><line x1="14" y1="30" x2="86" y2="30" stroke="#ccc" stroke-width="1.5"/><line x1="14" y1="34" x2="86" y2="34" stroke="#ccc" stroke-width="1.5"/><path class="ac-wave" d="M14,46 Q24,42 34,46 Q44,50 54,46" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round"/><path class="ac-wave" d="M14,58 Q24,54 34,58 Q44,62 54,58" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round"/><path class="ac-wave" d="M14,70 Q24,66 34,70 Q44,74 54,70" fill="none" stroke="var(--red)" stroke-width="2.5" stroke-linecap="round"/></svg></div>
-      <div class="cat-name">ACs</div><div class="cat-sub">Daikin, Mitsubishi &amp; Lloyd ACs</div>
+      <div class="cat-tag">ACs</div>
+      <div class="cat-name">Power Your Comfort</div>
+      <div class="cat-sub">Daikin, Mitsubishi &amp; Lloyd &mdash; cooling that earns its electricity bill</div>
+      <div class="cat-cta">Shop ACs &rarr;</div>
     </a>
     <a class="cat-card" href="products.html?category=Geysers">
       <div class="cat-icon-wrap"><svg viewBox="0 0 100 100"><path class="steam-line" d="M40,30 Q44,22 40,14" fill="none" stroke="#bbb" stroke-width="3" stroke-linecap="round"/><path class="steam-line" d="M50,30 Q54,22 50,14" fill="none" stroke="#bbb" stroke-width="3" stroke-linecap="round"/><path class="steam-line" d="M60,30 Q64,22 60,14" fill="none" stroke="#bbb" stroke-width="3" stroke-linecap="round"/><rect class="geyser-body" x="28" y="32" width="44" height="56" rx="10" fill="#fff" stroke="#999" stroke-width="2.5"/><line x1="38" y1="50" x2="62" y2="50" stroke="#eee" stroke-width="2"/><line x1="38" y1="62" x2="62" y2="62" stroke="#eee" stroke-width="2"/></svg></div>
-      <div class="cat-name">Geysers</div><div class="cat-sub">V-Guard &amp; Havells Geysers</div>
+      <div class="cat-tag">Geysers</div>
+      <div class="cat-name">Never Run Cold</div>
+      <div class="cat-sub">V-Guard &amp; Havells &mdash; fast, safe hot water for every season</div>
+      <div class="cat-cta">Shop Geysers &rarr;</div>
     </a>
   </div>
 </div>
