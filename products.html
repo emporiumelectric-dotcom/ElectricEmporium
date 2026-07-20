@@ -201,7 +201,7 @@ function buildGrid() {
     var imgDiv=makeEl("div","pimg");
     if(p.Photo_url){
       var img=document.createElement("img"); img.src=p.Photo_url; img.alt=p.Name||""; img.loading="lazy"; imgDiv.appendChild(img);
-    }else{imgDiv.appendChild(makeEl("div","pimg-ph","&#128247;"));}
+    }else{imgDiv.appendChild(makeEl("div","pimg-ph","📷"));}
     if(!p.in_stock){imgDiv.appendChild(makeEl("div","out-badge","Out of Stock"));}
     var body=makeEl("div","pbody");
     body.appendChild(makeEl("div","pbrand",p.Brand||""));
