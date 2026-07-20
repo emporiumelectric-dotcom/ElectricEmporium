@@ -207,7 +207,8 @@ function buildGrid() {
     body.appendChild(makeEl("div","pbrand",p.Brand||""));
     body.appendChild(makeEl("div","pname",p.Name||""));
     if(p.Spec)body.appendChild(makeEl("div","pspec",(p.Spec||"").substring(0,60)));
-    if(p.Price)body.appendChild(makeEl("div","pprice",p.Price));
+    var priceText=p.Price?((p.Price.startsWith('₹')||p.Price.startsWith('Rs'))?'':'₹')+p.Price:'Call for Price';
+    body.appendChild(makeEl("div","pprice",priceText));
     var viewBtn=makeEl("div","pview","View Product →");
     body.appendChild(viewBtn);
     card.appendChild(imgDiv); card.appendChild(body); grid.appendChild(card);
