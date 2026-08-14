@@ -167,6 +167,73 @@ h2{font-size:var(--t-section);text-transform:uppercase}
 .scroll-cue{display:flex;align-items:center;gap:.7rem;color:var(--muted);font-size:var(--t-sm);font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .scroll-track{position:relative;display:block;width:4.6rem;height:1.5px;overflow:hidden;background:var(--line-d)}
 .scroll-track i{position:absolute;inset:0;background:var(--red-hot);transform-origin:left;animation:cue 2.6s var(--ease-io) infinite}
+.since{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--xl);align-items:center;
+  padding:var(--xl) var(--lg);border:var(--rule) solid var(--line-l);border-radius:var(--r-md);background:#F6F4F1}
+.since p{margin:0;max-width:60ch;color:var(--ink-3);line-height:1.72}
+.since strong{color:var(--ink);font-weight:800}
+.featured{display:flex;align-items:baseline;flex-wrap:wrap;gap:.45rem;margin:var(--md) 0 0;font-size:.78rem}
+.featured b{font-weight:800;letter-spacing:-.01em}
+.featured span{color:var(--muted)}
+.featured i{font-style:normal;color:var(--red-hot);font-weight:800;font-variant-numeric:tabular-nums}
+.icon-btn{display:grid;place-items:center;width:2.7rem;height:2.7rem;padding:0;border:var(--rule) solid var(--line-d);
+  border-radius:var(--r-sm);background:transparent;color:var(--white);cursor:pointer;
+  transition:background-color var(--fast) var(--ease),border-color var(--fast) var(--ease)}
+.icon-btn:hover{background:rgba(255,255,255,.08);border-color:var(--white)}
+.icon-btn svg{width:1.05rem;height:1.05rem;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round}
+.search-scrim{position:fixed;inset:0;z-index:70;display:grid;place-items:start center;padding:12vh var(--md) var(--md);
+  background:rgba(0,0,0,.62);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  opacity:0;visibility:hidden;transition:opacity var(--ui) var(--ease),visibility var(--ui)}
+.search-scrim.open{opacity:1;visibility:visible}
+.search-box{width:min(38rem,100%);background:var(--ink-2);color:var(--white);border:var(--rule) solid var(--line-d);
+  border-radius:var(--r-md);box-shadow:0 40px 90px -40px #000;overflow:hidden;transform:translateY(-.6rem);
+  transition:transform var(--ui) var(--ease)}
+.search-scrim.open .search-box{transform:none}
+.search-field{display:flex;align-items:center;gap:.7rem;padding:var(--md) var(--lg);border-bottom:var(--rule) solid var(--line-d)}
+.search-field svg{flex:none;width:1.05rem;height:1.05rem;fill:none;stroke:var(--muted);stroke-width:1.9;stroke-linecap:round}
+.search-field input{flex:1;min-width:0;border:0;background:transparent;color:var(--white);font-size:1.02rem;font-weight:600}
+.search-field input::placeholder{color:var(--muted-2)}
+.search-field input:focus{outline:none}
+.search-field kbd{flex:none;padding:.2rem .45rem;border:var(--rule) solid var(--line-d);border-radius:.35rem;
+  color:var(--muted);font-size:.62rem;font-weight:700;font-family:inherit}
+.search-results{max-height:min(48vh,26rem);overflow-y:auto;margin:0;padding:.4rem;list-style:none}
+.search-results li{list-style:none}
+.search-results a{display:flex;align-items:center;gap:.8rem;padding:.62rem .8rem;border-radius:var(--r-sm)}
+.search-results a:hover,.search-results a.cursor{background:rgba(255,255,255,.07)}
+.search-results a.cursor{box-shadow:inset 2px 0 0 var(--red-hot)}
+.res-kind{flex:none;width:2.1rem;height:2.1rem;display:grid;place-items:center;border-radius:.45rem;
+  background:rgba(227,6,19,.18);color:var(--red-hot);font-size:.55rem;font-weight:800}
+.res-kind.alt{background:rgba(255,255,255,.08);color:var(--bone)}
+.res-text{min-width:0}
+.res-text strong{display:block;font-size:.87rem;font-weight:700}
+.res-text span{display:block;color:var(--muted);font-size:.73rem}
+.res-go{margin-left:auto;color:var(--muted-2);font-size:.72rem;font-weight:700}
+.search-empty{padding:var(--lg);color:var(--muted);font-size:.85rem}
+.search-foot{margin:0;padding:.6rem var(--lg);border-top:var(--rule) solid var(--line-d);background:rgba(255,255,255,.04);
+  color:var(--muted-2);font-size:.67rem;font-weight:600}
+.jump{position:fixed;right:var(--pad);bottom:calc(var(--lg) + env(safe-area-inset-bottom,0px));z-index:55;
+  display:flex;flex-direction:column;align-items:flex-end;gap:.4rem}
+.jump-list{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;opacity:0;visibility:hidden;
+  transform:translateY(.5rem) scale(.96);transform-origin:100% 100%;
+  transition:opacity var(--ui) var(--ease),transform var(--ui) var(--ease),visibility var(--ui)}
+.jump:hover .jump-list,.jump:focus-within .jump-list,.jump[data-open="true"] .jump-list{opacity:1;visibility:visible;transform:none}
+.jump-list button{display:flex;align-items:center;gap:.55rem;padding:.42rem .75rem .42rem .6rem;
+  border:var(--rule) solid var(--line-d);border-radius:99px;background:var(--glass-d);color:var(--white);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;white-space:nowrap;
+  font-size:.73rem;font-weight:700;box-shadow:0 8px 24px -14px #000;
+  transition:transform var(--fast) var(--ease),border-color var(--fast) var(--ease),color var(--fast) var(--ease)}
+.jump-list button:hover{transform:translateX(-3px);border-color:var(--white)}
+.jump-list button.on{border-color:var(--red-hot);color:var(--red-hot)}
+.jump-list button i{width:.4rem;height:.4rem;border-radius:50%;background:var(--muted-2)}
+.jump-list button.on i{background:var(--red-hot)}
+.jump-list button em{font-style:normal;color:var(--muted-2);font-size:.58rem;font-weight:800;letter-spacing:.1em}
+.jump-toggle{display:flex;align-items:center;gap:.5rem;height:3rem;padding:0 .95rem;border-radius:99px;border:0;
+  background:var(--white);color:var(--ink);cursor:pointer;box-shadow:0 14px 34px -16px #000;
+  transition:transform var(--fast) var(--ease),background-color var(--fast) var(--ease),color var(--fast) var(--ease)}
+.jump-toggle:hover{transform:translateY(-2px);background:var(--red);color:#fff}
+.jump-toggle svg{width:1.05rem;height:1.05rem;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.jump-toggle span{max-width:0;overflow:hidden;white-space:nowrap;font-size:.73rem;font-weight:800;
+  transition:max-width var(--ui) var(--ease)}
+.jump:hover .jump-toggle span,.jump:focus-within .jump-toggle span,.jump[data-open="true"] .jump-toggle span{max-width:8rem}
 @keyframes cue{0%{transform:scaleX(0)}45%{transform:scaleX(1)}100%{transform:scaleX(1) translateX(100%)}}
 .hero-stats{display:flex;gap:var(--xl)}
 .hero-stat strong{display:block;font-size:1.45rem;font-weight:800;letter-spacing:-.03em;line-height:1}
@@ -343,6 +410,9 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
     <a href="#geysers"><span>Geysers</span><span>Warm</span></a>
   </nav>
   <div class="nav-actions">
+    <button class="icon-btn" id="searchOpen" aria-label="Search products" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </button>
     <a class="btn ghost" href="tel:+919425831035">Call store</a>
     <a class="btn red" href="products.html">Products</a>
     <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -366,6 +436,28 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
 <div class="hud" aria-hidden="true">
   <b id="hudNum">00</b><span class="sep"></span><span id="hudName">Est. 1989</span>
   <span class="sep"></span><span class="pw" id="hudPower">Standby</span>
+</div>
+
+<div class="search-scrim" id="searchScrim" role="dialog" aria-modal="true" aria-label="Search products" hidden>
+  <div class="search-box">
+    <div class="search-field">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Search fans, MCB, Havells, geyser…" aria-label="Search"
+             aria-controls="searchResults" aria-expanded="true" role="combobox">
+      <kbd>Esc</kbd>
+    </div>
+    <ul class="search-results" id="searchResults" role="listbox" aria-label="Results"></ul>
+    <p class="search-foot">Enter to open · ↑ ↓ to browse</p>
+  </div>
+</div>
+
+<div class="jump" id="jump" data-open="false">
+  <div class="jump-list" id="jumpList" role="group" aria-label="Jump to a chapter"></div>
+  <button class="jump-toggle" id="jumpToggle" aria-expanded="false" aria-controls="jumpList">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    <span>Jump to a section</span>
+  </button>
 </div>
 
 <main class="page">
@@ -404,7 +496,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
         <span class="mask-line" style="--i:2"><span class="spark">here.</span></span>
       </h2>
       <p class="lede reveal d2">Polycab, KEI and Havells house wiring, backed by MCBs, RCCBs and distribution boards chosen for the load your home actually carries — not the one on the box.</p>
-      <a class="tag reveal d3" href="products.html?category=Wires">Explore wires &amp; cables</a>
+      <a class="tag reveal d3" href="products.html?category=Wires%20and%20Cables">Explore wires &amp; cables</a>
+      <p class="featured reveal d3"><b>Havells Life Guard FR-LSH</b><span>1.0–6.0 sq mm cable</span></p>
       <p class="brand-line reveal d3"><span>Polycab</span><span>KEI</span><span>Havells</span><span>V-Guard</span></p>
       <div class="chapter-card reveal d4">
         <strong>Gauge matters more than price</strong>
@@ -422,7 +515,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
         <span class="mask-line" style="--i:2"><span class="spark">fingertips.</span></span>
       </h2>
       <p class="lede reveal d2">Legrand and Havells modular switches and sockets — the one part of the wiring you touch every day, so it is the last place to save fifty rupees.</p>
-      <a class="tag reveal d3" href="products.html?category=Switches">Explore switches &amp; sockets</a>
+      <a class="tag reveal d3" href="products.html">Explore switches &amp; sockets</a>
+      <p class="featured reveal d3"><b>Legrand modular range</b><span>Full range on display in store</span></p>
       <p class="brand-line reveal d3"><span>Legrand</span><span>Havells</span><span>Indo Asian</span></p>
       <div class="chapter-card reveal d4">
         <strong>Authorised Legrand dealer</strong>
@@ -440,7 +534,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
         <span class="mask-line" style="--i:2"><span class="spark">space.</span></span>
       </h2>
       <p class="lede reveal d2">Havells, Surya and Nortek — from everyday bulbs and tube lights to panels, downlights and decorative fixtures worth designing a room around.</p>
-      <a class="tag reveal d3" href="products.html?category=Lights">Explore lights &amp; LEDs</a>
+      <a class="tag reveal d3" href="products.html?category=Lights%20and%20LEDs">Explore lights &amp; LEDs</a>
+      <p class="featured reveal d3"><b>Havells Octane+ LED Panel</b><span>Round surface panel</span><i>₹750</i></p>
       <p class="brand-line reveal d3"><span>Havells</span><span>Surya</span><span>Nortek</span></p>
       <div class="chapter-card reveal d4">
         <strong>Lit before you buy it</strong>
@@ -458,6 +553,7 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">Havells, Atomberg and Crompton — familiar ceiling models through to quiet BLDC fans that run an entire Balaghat summer on a fraction of the power.</p>
       <a class="tag reveal d3" href="products.html?category=Fans">Explore fans</a>
+      <p class="featured reveal d3"><b>Atomberg Aris Contour</b><span>Smart BLDC ceiling fan</span><i>₹6,999</i></p>
       <p class="brand-line reveal d3"><span>Havells</span><span>Atomberg</span><span>Crompton</span></p>
       <div class="chapter-card reveal d4">
         <strong>Matched to the room</strong>
@@ -475,7 +571,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
         <span class="mask-line" style="--i:2"><span class="spark">bill.</span></span>
       </h2>
       <p class="lede reveal d2">Daikin, Mitsubishi and Lloyd split units — sized honestly to the room, sold with the star rating explained, and installed by people who still answer the phone next summer.</p>
-      <a class="tag reveal d3" href="products.html?category=ACs">Explore air conditioners</a>
+      <a class="tag reveal d3" href="products.html?category=ACs%20and%20Freezers">Explore air conditioners</a>
+      <p class="featured reveal d3"><b>Daikin 1.5 Ton Split Inverter</b><span>3 star · 2026 model</span><i>₹37,490</i></p>
       <p class="brand-line reveal d3"><span>Daikin</span><span>Mitsubishi</span><span>Lloyd</span></p>
     </div>
   </section>
@@ -489,6 +586,7 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">V-Guard and Havells water heaters — the right capacity, proper pressure rating and safe installation, ready before the first cold morning.</p>
       <a class="tag reveal d3" href="products.html?category=Geysers">Explore geysers</a>
+      <p class="featured reveal d3"><b>Havells Instanio Prime 15L</b><span>Storage water heater</span><i>₹8,490</i></p>
       <p class="brand-line reveal d3"><span>V-Guard</span><span>Havells</span></p>
       <div class="chapter-card reveal d4">
         <strong>End of the line, start of the visit</strong>
@@ -532,22 +630,10 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
   </div>
 </section>
 
-<section class="light sec" id="story" aria-labelledby="storyTitle">
-  <div class="archive">
-    <div class="archive-copy reveal">
-      <p class="eyebrow">From our archives · 2000</p>
-      <h2 id="storyTitle">Two generations,<br>one address.</h2>
-      <p>Electric Emporium was founded in 1989 by <strong>Manoj Katariya</strong> on Main Road, Gujri Chowk — Balaghat's first dedicated electrical shop, built on one belief: every home deserves genuine quality at a fair price. This newspaper advertisement, printed in the year 2000, catches the shop at eleven years old and already a landmark. Same address, same family, same promise.</p>
-      <ul class="gen">
-        <li><b>1989</b><div><strong>Manoj Katariya</strong><span>Opens the first dedicated electrical shop in Balaghat</span></div></li>
-        <li><b>2000s</b><div><strong>Sanjay &amp; Vikesh Katariya</strong><span>Brothers join and grow the range across lighting, wiring and appliances</span></div></li>
-        <li><b>Today</b><div><strong>Yash Katariya</strong><span>Third generation, carrying the same values online and in store</span></div></li>
-      </ul>
-    </div>
-    <figure class="ad-frame reveal d2">
-      <img src="legacy_ad.jpg" alt="Newspaper advertisement for Electric Emporium published in the year 2000" loading="lazy">
-      <figcaption><span>Balaghat press</span><span>Year 2000</span></figcaption>
-    </figure>
+<section class="light sec" id="story" style="padding-block:var(--xxxl)" aria-label="About Electric Emporium">
+  <div class="since reveal">
+    <p><strong>Since 1989.</strong> Balaghat's first dedicated electrical shop, opened by Manoj Katariya on Main Road and run by the same family ever since — now into its third generation.</p>
+    <a class="btn dark" href="about.html">Read our story</a>
   </div>
 </section>
 
@@ -614,6 +700,208 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
 
 <!-- three.js r160 UMD build. If it fails to load the page degrades to the
      static gradient backdrop on its own — see the !window.THREE guard below. -->
+<script>
+/* Search + floating jump. Deliberately separate from the WebGL block so both
+   keep working if three.js fails to load. */
+(function(){
+  'use strict';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function clamp(v,a,b){ return v < a ? a : v > b ? b : v; }
+
+  var scrollRAF = 0;
+  function glideTo(y){
+    cancelAnimationFrame(scrollRAF);
+    y = clamp(y, 0, document.body.scrollHeight - innerHeight);
+    if (reduce){ scrollTo(0, y); return; }
+    var from = scrollY, delta = y - from;
+    if (Math.abs(delta) < 2) return;
+    var dur = clamp(380 + Math.abs(delta) * 0.3, 440, 1500), t0 = performance.now();
+    (function step(now){
+      var t = clamp((now - t0) / dur, 0, 1);
+      var e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+      scrollTo(0, from + delta * e);
+      if (t < 1) scrollRAF = requestAnimationFrame(step);
+    })(t0);
+  }
+  ['wheel','touchstart','keydown'].forEach(function(ev){
+    addEventListener(ev, function(){ cancelAnimationFrame(scrollRAF); }, { passive:true });
+  });
+  function glideToId(id){
+    var el = document.getElementById(id);
+    if (el) glideTo(el.getBoundingClientRect().top + scrollY);
+  }
+
+  /* ---- floating chapter jump ---- */
+  var CHAPTERS = [
+    { id:'wires',    n:'01', label:'Wires & MCBs' },
+    { id:'switches', n:'02', label:'Switches' },
+    { id:'lights',   n:'03', label:'Lights' },
+    { id:'fans',     n:'04', label:'Fans' },
+    { id:'acs',      n:'05', label:'ACs' },
+    { id:'geysers',  n:'06', label:'Geysers' }
+  ];
+  var jump = document.getElementById('jump');
+  var jumpList = document.getElementById('jumpList');
+  var jumpToggle = document.getElementById('jumpToggle');
+  CHAPTERS.forEach(function(c){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.innerHTML = '<i></i><em></em><span></span>';
+    b.querySelector('em').textContent = c.n;
+    b.querySelector('span').textContent = c.label;
+    b.setAttribute('aria-label', 'Go to ' + c.label);
+    b.addEventListener('click', function(){
+      jump.dataset.open = 'false';
+      jumpToggle.setAttribute('aria-expanded','false');
+      glideToId(c.id);
+    });
+    jumpList.appendChild(b);
+  });
+  jumpToggle.addEventListener('click', function(){
+    var open = jump.dataset.open !== 'true';
+    jump.dataset.open = String(open);
+    jumpToggle.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function(e){
+    if (!jump.contains(e.target) && jump.dataset.open === 'true'){
+      jump.dataset.open = 'false';
+      jumpToggle.setAttribute('aria-expanded','false');
+    }
+  });
+  addEventListener('scroll', function(){
+    var mid = innerHeight * 0.5, active = -1;
+    CHAPTERS.forEach(function(c, i){
+      var el = document.getElementById(c.id);
+      if (!el) return;
+      var r = el.getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid) active = i;
+    });
+    [].forEach.call(jumpList.children, function(b, i){ b.classList.toggle('on', i === active); });
+  }, { passive:true });
+
+  /* ---- search ----
+     products.html filters on an exact Category match, so every href below
+     uses the string the database actually stores. */
+  var INDEX = [
+    { kind:'Shop', name:'Fans', desc:'Ceiling, table, pedestal & BLDC', href:'products.html?category=Fans',
+      terms:'fan fans ceiling bldc pedestal table exhaust wall air atomberg havells crompton aris renesa inveno' },
+    { kind:'Shop', name:'Lights & LEDs', desc:'Panels, battens, tube lights', href:'products.html?category=Lights%20and%20LEDs',
+      terms:'light lights led leds bulb tube panel batten downlight strip lamp octane nortek surya' },
+    { kind:'Shop', name:'Wires & Cables', desc:'House wiring, MCBs, DBs', href:'products.html?category=Wires%20and%20Cables',
+      terms:'wire wires cable cables mcb mcbs rccb db distribution board conduit earthing lifeguard life guard polycab kei havells' },
+    { kind:'Shop', name:'ACs & Freezers', desc:'Split units and cooling', href:'products.html?category=ACs%20and%20Freezers',
+      terms:'ac acs air conditioner conditioning split window cooling inverter ton daikin freezer' },
+    { kind:'Shop', name:'Geysers', desc:'Storage & instant water heaters', href:'products.html?category=Geysers',
+      terms:'geyser geysers water heater instant storage bathroom hot instanio fabia monza orazio carlo havells' },
+    { kind:'Shop', name:'Appliances', desc:'Mixers, grinders, induction', href:'products.html?category=Appliances',
+      terms:'appliance appliances mixer grinder juicer induction cooktop sujata vguard v-guard kitchen' },
+    { kind:'Shop', name:'All products', desc:'Everything in stock', href:'products.html',
+      terms:'all everything products catalogue catalog switch switches socket sockets modular legrand plate' },
+
+    { kind:'Brand', name:'Havells',  desc:'Fans, lighting, wires, geysers', href:'products.html?brand=Havells',  terms:'havells' },
+    { kind:'Brand', name:'Atomberg', desc:'BLDC ceiling fans',              href:'products.html?brand=Atomberg', terms:'atomberg bldc aris renesa ikano' },
+    { kind:'Brand', name:'Daikin',   desc:'Air conditioning',               href:'products.html?brand=Daikin',   terms:'daikin' },
+    { kind:'Brand', name:'Nortek',   desc:'LED lighting',                   href:'products.html?brand=Nortek',   terms:'nortek' },
+    { kind:'Brand', name:'V-Guard',  desc:'Appliances & stabilisers',       href:'products.html?brand=V-Guard',  terms:'vguard v-guard guard' },
+    { kind:'Brand', name:'Sujata',   desc:'Mixers & juicers',               href:'products.html?brand=Sujata',   terms:'sujata mixer juicer' },
+
+    { kind:'Visit', name:'Visit the store', desc:'Gujri Chowk · open daily 10–9', href:'#visit',
+      terms:'visit store address shop map directions timing hours phone call contact' },
+    { kind:'Visit', name:'Our story', desc:'Since 1989, three generations', href:'about.html',
+      terms:'about story history family katariya 1989 since founded' }
+  ];
+  CHAPTERS.forEach(function(c){
+    INDEX.push({ kind:'Tour', name:c.label, desc:'See it in the tour', href:'#'+c.id, terms:c.label.toLowerCase() });
+  });
+
+  var scrim = document.getElementById('searchScrim');
+  var input = document.getElementById('searchInput');
+  var results = document.getElementById('searchResults');
+  var cursor = 0, lastFocus = null;
+
+  function score(item, q){
+    var name = item.name.toLowerCase();
+    if (name === q) return 100;
+    if (name.indexOf(q) === 0) return 80;
+    if (name.indexOf(q) > -1) return 60;
+    var terms = item.terms.split(' ');
+    for (var i = 0; i < terms.length; i++){
+      if (terms[i] === q) return 55;
+      if (terms[i].indexOf(q) === 0) return 40;
+    }
+    return item.terms.indexOf(q) > -1 ? 20 : 0;
+  }
+  function render(){
+    var q = input.value.trim().toLowerCase(), list;
+    if (!q) list = INDEX.filter(function(i){ return i.kind === 'Shop'; });
+    else list = INDEX.map(function(i){ return { i:i, s:score(i,q) }; })
+                     .filter(function(r){ return r.s > 0; })
+                     .sort(function(a,b){ return b.s - a.s; })
+                     .slice(0,8).map(function(r){ return r.i; });
+    results.innerHTML = '';
+    if (!list.length){
+      results.innerHTML = '<li class="search-empty">Nothing matched. Try “fan”, “MCB”, “geyser” or a brand — or <a href="https://wa.me/919425831035" style="color:var(--red-hot);font-weight:700">ask us on WhatsApp</a>.</li>';
+      cursor = -1; return;
+    }
+    cursor = 0;
+    list.forEach(function(item, idx){
+      var li = document.createElement('li'), a = document.createElement('a');
+      a.href = item.href;
+      a.setAttribute('role','option');
+      a.innerHTML = '<span class="res-kind"></span><span class="res-text"><strong></strong><span></span></span><span class="res-go">↵</span>';
+      a.querySelector('.res-kind').textContent = item.kind === 'Shop' ? 'SHOP' : item.kind.toUpperCase();
+      if (item.kind !== 'Shop' && item.kind !== 'Brand') a.querySelector('.res-kind').classList.add('alt');
+      a.querySelector('strong').textContent = item.name;
+      a.querySelector('.res-text span').textContent = item.desc;
+      if (idx === 0) a.classList.add('cursor');
+      a.addEventListener('mousemove', function(){ move(idx); });
+      a.addEventListener('click', function(e){
+        if (item.href.charAt(0) !== '#') return;
+        e.preventDefault(); close(); glideToId(item.href.slice(1));
+      });
+      li.appendChild(a); results.appendChild(li);
+    });
+  }
+  function move(n){
+    var items = results.querySelectorAll('a');
+    if (!items.length) return;
+    cursor = (n + items.length) % items.length;
+    [].forEach.call(items, function(a,i){ a.classList.toggle('cursor', i === cursor); });
+    items[cursor].scrollIntoView({ block:'nearest' });
+  }
+  function open_(){
+    lastFocus = document.activeElement;
+    scrim.hidden = false;
+    requestAnimationFrame(function(){ scrim.classList.add('open'); });
+    document.body.classList.add('menu-open');
+    input.value = ''; render(); input.focus();
+  }
+  function close(){
+    scrim.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    setTimeout(function(){ scrim.hidden = true; }, 300);
+    if (lastFocus) lastFocus.focus();
+  }
+  document.getElementById('searchOpen').addEventListener('click', open_);
+  input.addEventListener('input', render);
+  scrim.addEventListener('click', function(e){ if (e.target === scrim) close(); });
+  input.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowDown'){ e.preventDefault(); move(cursor + 1); }
+    else if (e.key === 'ArrowUp'){ e.preventDefault(); move(cursor - 1); }
+    else if (e.key === 'Enter'){
+      var a = results.querySelectorAll('a')[cursor];
+      if (a){ e.preventDefault(); a.click(); }
+    }
+  });
+  addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && scrim.classList.contains('open')){ close(); return; }
+    if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)){ e.preventDefault(); open_(); return; }
+    if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)){
+      e.preventDefault(); open_();
+    }
+  });
+})();
+</script>
 <script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
 <script>
 (function(){
