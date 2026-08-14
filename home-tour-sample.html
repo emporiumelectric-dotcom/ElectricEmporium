@@ -1,0 +1,1623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Electric Emporium Home Tour</title>
+<meta name="description" content="Walk room by room through a home wired at Electric Emporium, Balaghat. Fans, switches, lighting, ACs, geysers and MCBs shown where they actually live.">
+<meta name="theme-color" content="#F7F5F1">
+<link rel="icon" href="favicon-32.png" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   Electric Emporium · home tour concept
+   The camera walks a real floor plan at eye height. Each room hands off to
+   the next through an archway, turning to face the product on the way past.
+   ========================================================================== */
+:root{
+  /* warm interior neutrals — biased toward the wall colour in the 3D scene,
+     so the page and the render read as one room rather than two palettes */
+  --paper:#F7F5F1; --paper-2:#EFEBE4; --paper-3:#E4DED4;
+  --ink:#16151A; --ink-2:#3B3945; --muted:#6E6B77; --muted-2:#9A96A2;
+  --red:#E30613; --red-hot:#FF2A3A; --red-soft:#FFE7E8; --red-deep:#A00410;
+  --line:rgba(22,21,26,.14); --line-2:rgba(22,21,26,.08);
+  --glass:rgba(247,245,241,.82); --shadow:22,21,26;
+  --font:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+
+  --xs:.5rem; --sm:.75rem; --md:1rem; --lg:1.5rem; --xl:2rem; --xxl:3rem; --xxxl:4.5rem; --huge:7rem;
+  --t-sm:.72rem; --t-lg:clamp(1rem,1.1vw,1.14rem);
+  --t-display:clamp(2.6rem,6.6vw,6rem); --t-section:clamp(2rem,4.9vw,4.4rem); --t-head:clamp(1.8rem,4.1vw,3.6rem);
+  --r-sm:.6rem; --r-md:1.1rem; --r-lg:1.8rem; --r-pill:99px;
+  --ease:cubic-bezier(.16,1,.3,1); --ease-io:cubic-bezier(.65,0,.35,1);
+  --fast:170ms; --ui:300ms; --scene:820ms;
+  --pad:clamp(1.1rem,4vw,4rem); --nav-h:4.6rem; --rule:1px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;overflow-x:clip}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:1rem;line-height:1.62;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---------- the room, behind everything ---------- */
+#world{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;background:var(--paper-2)}
+.world-fallback{position:fixed;inset:0;z-index:0;display:none;
+  background:linear-gradient(180deg,#FBF9F6 0%,#EFEAE1 52%,#D9CFC1 100%)}
+.no-webgl .world-fallback{display:block}.no-webgl #world{display:none}
+.grain{position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.035;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.progress{position:fixed;left:0;right:0;top:0;height:2px;z-index:60;transform-origin:left;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--red),var(--red-hot))}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:var(--sm);left:var(--pad);right:var(--pad);height:var(--nav-h);z-index:50;
+  display:flex;align-items:center;justify-content:space-between;gap:var(--md);
+  padding:var(--xs) var(--xs) var(--xs) var(--sm);
+  background:var(--glass);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);
+  border:var(--rule) solid var(--line);border-radius:var(--r-md);
+  box-shadow:0 10px 34px -22px rgba(var(--shadow),.5);
+  transition:transform var(--ui) var(--ease),opacity var(--ui) var(--ease)}
+.nav.hidden{transform:translateY(calc(-100% - var(--xl)));opacity:0}
+.brand{display:flex;align-items:center;gap:.6rem;min-width:0}
+.brand img{width:2.6rem;height:2.6rem;object-fit:contain;border-radius:.5rem}
+.brand-copy{display:grid;line-height:1.05}
+.brand-copy strong{font-size:.88rem;font-weight:800;letter-spacing:-.012em}
+.brand-copy span{margin-top:.2rem;color:var(--muted);font-size:.56rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:.1rem}
+.nav-links a{padding:.45rem .7rem;border-radius:var(--r-pill);color:var(--muted);font-size:var(--t-sm);font-weight:700;white-space:nowrap;
+  transition:color var(--fast) var(--ease),background-color var(--fast) var(--ease)}
+.nav-links a:hover{color:var(--ink);background:var(--paper-2)}
+.nav-links a.on{color:var(--red)}
+.nav-actions{display:flex;align-items:center;gap:var(--xs)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:2.6rem;padding:.58rem 1rem;
+  border:var(--rule) solid var(--ink);border-radius:var(--r-sm);background:var(--ink);color:var(--paper);
+  font-size:var(--t-sm);font-weight:800;letter-spacing:.02em;white-space:nowrap;cursor:pointer;
+  transition:transform var(--fast) var(--ease),background-color var(--fast) var(--ease),color var(--fast) var(--ease),border-color var(--fast) var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:translateY(0)}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn.red:hover{background:var(--red-hot);border-color:var(--red-hot)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+.icon-btn{display:grid;place-items:center;width:2.6rem;height:2.6rem;padding:0;border:var(--rule) solid var(--line);
+  border-radius:var(--r-sm);background:transparent;cursor:pointer;transition:background-color var(--fast) var(--ease),border-color var(--fast) var(--ease)}
+.icon-btn:hover{background:var(--paper-2);border-color:var(--ink)}
+.icon-btn svg{width:1.05rem;height:1.05rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.menu-toggle{display:none}
+.menu-toggle i{display:block;width:1rem;height:1.5px;background:var(--ink);transition:transform var(--ui) var(--ease),opacity var(--ui) var(--ease)}
+.menu-toggle i+i{margin-top:.28rem}
+.menu-toggle[aria-expanded="true"] i:first-child{transform:translateY(4.3px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"] i:nth-child(2){opacity:0}
+.menu-toggle[aria-expanded="true"] i:last-child{transform:translateY(-4.3px) rotate(-45deg)}
+.mobile-menu{position:fixed;inset:0;z-index:45;display:none;visibility:hidden;opacity:0;
+  padding:calc(var(--nav-h) + var(--xxl)) var(--pad) var(--xl);background:var(--paper);
+  transition:opacity var(--ui) var(--ease),visibility var(--ui)}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu a{display:flex;align-items:baseline;gap:.7rem;padding:var(--sm) 0;border-bottom:var(--rule) solid var(--line);
+  font-size:clamp(1.4rem,7vw,2.2rem);font-weight:800;letter-spacing:-.03em}
+.mobile-menu a b{color:var(--red);font-size:.6rem;font-weight:800;letter-spacing:.15em}
+
+/* ---------- search ---------- */
+.search-scrim{position:fixed;inset:0;z-index:70;display:grid;place-items:start center;padding:12vh var(--md) var(--md);
+  background:rgba(22,21,26,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;visibility:hidden;transition:opacity var(--ui) var(--ease),visibility var(--ui)}
+.search-scrim.open{opacity:1;visibility:visible}
+.search-box{width:min(38rem,100%);background:var(--paper);border:var(--rule) solid var(--line);border-radius:var(--r-md);
+  box-shadow:0 40px 90px -40px rgba(var(--shadow),.6);overflow:hidden;transform:translateY(-.6rem);
+  transition:transform var(--ui) var(--ease)}
+.search-scrim.open .search-box{transform:none}
+.search-field{display:flex;align-items:center;gap:.7rem;padding:var(--md) var(--lg);border-bottom:var(--rule) solid var(--line-2)}
+.search-field svg{flex:none;width:1.1rem;height:1.1rem;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.search-field input{flex:1;min-width:0;border:0;background:transparent;font-size:1.05rem;font-weight:600;letter-spacing:-.01em}
+.search-field input::placeholder{color:var(--muted-2);font-weight:500}
+.search-field input:focus{outline:none}
+.search-field kbd{flex:none;padding:.2rem .45rem;border:var(--rule) solid var(--line);border-radius:.35rem;
+  color:var(--muted);font-size:.62rem;font-weight:700;font-family:inherit}
+.search-results{max-height:min(48vh,26rem);overflow-y:auto;padding:.4rem}
+.search-results li{list-style:none}
+.search-results a{display:flex;align-items:center;gap:.8rem;padding:.65rem .8rem;border-radius:var(--r-sm)}
+.search-results a:hover,.search-results a.cursor{background:var(--paper-2)}
+.search-results a.cursor{box-shadow:inset 2px 0 0 var(--red)}
+.res-kind{flex:none;width:2.1rem;height:2.1rem;display:grid;place-items:center;border-radius:.45rem;
+  background:var(--red-soft);color:var(--red);font-size:.58rem;font-weight:800;letter-spacing:.04em}
+/* NB: not ".room" — that is the page's chapter class and would drag its
+   108svh min-height onto a 2rem chip */
+.res-kind.alt{background:var(--paper-3);color:var(--ink-2)}
+.res-text{min-width:0}
+.res-text strong{display:block;font-size:.88rem;font-weight:700}
+.res-text span{display:block;color:var(--muted);font-size:.74rem}
+.res-go{margin-left:auto;color:var(--muted-2);font-size:.72rem;font-weight:700}
+.search-empty{padding:var(--lg);color:var(--muted);font-size:.85rem}
+.search-foot{padding:.6rem var(--lg);border-top:var(--rule) solid var(--line-2);background:var(--paper-2);
+  color:var(--muted);font-size:.68rem;font-weight:600}
+
+/* ---------- floating room jump ---------- */
+.jump{position:fixed;right:var(--pad);bottom:calc(var(--lg) + env(safe-area-inset-bottom,0px));z-index:55;
+  display:flex;flex-direction:column;align-items:flex-end;gap:.4rem}
+.jump-list{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem;
+  opacity:0;visibility:hidden;transform:translateY(.5rem) scale(.96);transform-origin:100% 100%;
+  transition:opacity var(--ui) var(--ease),transform var(--ui) var(--ease),visibility var(--ui)}
+.jump:hover .jump-list,.jump:focus-within .jump-list,.jump[data-open="true"] .jump-list{opacity:1;visibility:visible;transform:none}
+.jump-list button{display:flex;align-items:center;gap:.55rem;padding:.42rem .7rem .42rem .55rem;
+  border:var(--rule) solid var(--line);border-radius:var(--r-pill);background:var(--glass);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;white-space:nowrap;
+  font-size:.74rem;font-weight:700;box-shadow:0 8px 24px -16px rgba(var(--shadow),.7);
+  transition:transform var(--fast) var(--ease),border-color var(--fast) var(--ease),background-color var(--fast) var(--ease)}
+.jump-list button:hover{transform:translateX(-3px);border-color:var(--ink);background:var(--paper)}
+.jump-list button.on{border-color:var(--red);color:var(--red)}
+.jump-list button i{width:.42rem;height:.42rem;border-radius:50%;background:var(--muted-2)}
+.jump-list button.on i{background:var(--red)}
+.jump-list button em{font-style:normal;color:var(--muted);font-size:.6rem;font-weight:800;letter-spacing:.1em}
+.jump-toggle{display:flex;align-items:center;gap:.5rem;height:3rem;padding:0 .95rem;border-radius:var(--r-pill);
+  border:var(--rule) solid var(--line);background:var(--ink);color:var(--paper);cursor:pointer;
+  box-shadow:0 14px 34px -18px rgba(var(--shadow),.9);
+  transition:transform var(--fast) var(--ease),background-color var(--fast) var(--ease)}
+.jump-toggle:hover{transform:translateY(-2px);background:var(--red)}
+.jump-toggle svg{width:1.05rem;height:1.05rem;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.jump-toggle span{max-width:0;overflow:hidden;white-space:nowrap;font-size:.74rem;font-weight:800;letter-spacing:.02em;
+  transition:max-width var(--ui) var(--ease)}
+.jump:hover .jump-toggle span,.jump:focus-within .jump-toggle span,.jump[data-open="true"] .jump-toggle span{max-width:8rem}
+
+/* ---------- 3D hotspots ---------- */
+.hotspots{position:fixed;inset:0;z-index:12;pointer-events:none;overflow:hidden}
+/* zero-size anchor pinned to the product's projected point: the dot sits
+   exactly on it and the card hangs off to one side, so the label never
+   covers the thing it is labelling */
+.hot{position:absolute;top:0;left:0;width:0;height:0;
+  opacity:0;transition:opacity 420ms var(--ease);will-change:transform,opacity}
+.hot-dot{position:absolute;left:-.36rem;top:-.36rem;width:.72rem;height:.72rem;border-radius:50%;background:var(--red);
+  box-shadow:0 0 0 3px rgba(227,6,19,.22)}
+.hot-dot::after{content:"";position:absolute;inset:-.35rem;border-radius:50%;border:1.5px solid var(--red);
+  opacity:.65;animation:ping 2.6s var(--ease-io) infinite}
+@keyframes ping{0%{transform:scale(.6);opacity:.75}70%,100%{transform:scale(1.7);opacity:0}}
+.hot-card{position:absolute;top:.6rem;left:.9rem;pointer-events:auto;display:grid;gap:.05rem;padding:.42rem .7rem;border-radius:var(--r-sm);
+  background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:var(--rule) solid var(--line);box-shadow:0 10px 26px -18px rgba(var(--shadow),.8);
+  transition:transform var(--fast) var(--ease),border-color var(--fast) var(--ease)}
+.hot-card:hover{transform:translateY(-2px);border-color:var(--ink)}
+/* products on the left half of frame hang their card leftward, away from the copy */
+.hot.flip .hot-card{left:auto;right:.9rem}
+.hot-card strong{font-size:.76rem;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.hot-card span{color:var(--muted);font-size:.62rem;font-weight:600;white-space:nowrap}
+
+/* ---------- room chapters ---------- */
+.page{position:relative;z-index:10}
+.room{position:relative;min-height:108svh;padding:calc(var(--nav-h) + var(--xxxl)) var(--pad) var(--xxxl);
+  display:flex;align-items:center}
+/* the copy side gets a wash of the room's own wall colour, so text stays
+   readable without dropping a slab of tint over the render */
+.room::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(247,245,241,.95) 0%,rgba(247,245,241,.84) 30%,rgba(247,245,241,.34) 54%,rgba(247,245,241,0) 72%)}
+.room.right::before{background:linear-gradient(270deg,rgba(247,245,241,.95) 0%,rgba(247,245,241,.84) 30%,rgba(247,245,241,.34) 54%,rgba(247,245,241,0) 72%)}
+.room-inner{position:relative;z-index:2;width:min(37rem,44vw)}
+.room.right{justify-content:flex-end}
+.hero{min-height:100svh;padding-bottom:9svh}
+/* the scroll cue and stats sit low over a brightly lit floor, so the hero
+   gets a second wash rising from the bottom edge */
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:28%;z-index:1;pointer-events:none;
+  background:linear-gradient(0deg,rgba(247,245,241,.95) 0%,rgba(247,245,241,.6) 45%,rgba(247,245,241,0) 100%)}
+.hero .room-inner{width:min(42rem,50vw)}
+
+.eyebrow{margin:0 0 var(--md);display:flex;align-items:center;gap:.6rem;color:var(--muted);
+  font-size:var(--t-sm);font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.eyebrow::before{content:"";width:1.9rem;height:2px;background:var(--red)}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.04em;line-height:.98;text-wrap:balance}
+h1{font-size:var(--t-display);letter-spacing:-.045em}
+h2{font-size:var(--t-section)}
+.lede{max-width:48ch;margin:var(--lg) 0 var(--xl);color:var(--ink-2);font-size:var(--t-lg);line-height:1.7}
+.actions{display:flex;flex-wrap:wrap;gap:var(--sm)}
+.accent{color:var(--red)}
+
+.mask{display:block;overflow:hidden;padding-bottom:.06em}
+.mask>span{display:block;transform:translateY(110%);transition:transform 1s var(--ease);transition-delay:calc(var(--i,0) * 80ms)}
+.shown .mask>span{transform:none}
+/* no blur on the reveal — it forces a repaint of large type mid-scroll and is
+   the single biggest source of stutter on modest hardware */
+.up{opacity:0;transform:translateY(1.2rem);transition:opacity var(--scene) var(--ease),transform var(--scene) var(--ease)}
+.shown .up,.up.shown{opacity:1;transform:none}
+.d1{transition-delay:90ms}.d2{transition-delay:170ms}.d3{transition-delay:250ms}.d4{transition-delay:330ms}
+
+.tag{display:inline-flex;align-items:center;gap:.6rem;font-size:var(--t-sm);font-weight:800;letter-spacing:.03em}
+.tag::after{content:"";width:1.7rem;height:1.5px;background:var(--red);transition:width var(--fast) var(--ease)}
+.tag:hover::after{width:2.6rem}
+.brands-line{display:flex;flex-wrap:wrap;gap:.35rem;margin:var(--md) 0 0}
+.brands-line span{padding:.28rem .6rem;border:var(--rule) solid var(--line);border-radius:var(--r-pill);
+  color:var(--muted);font-size:.6rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.note{margin-top:var(--xl);padding:var(--md) var(--lg);border-left:2px solid var(--red);background:rgba(255,255,255,.6);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:0 var(--r-sm) var(--r-sm) 0}
+.note strong{display:block;margin-bottom:.15rem;font-size:.85rem;font-weight:800}
+.note p{margin:0;color:var(--muted);font-size:.84rem;line-height:1.58}
+
+/* right padding keeps the stats clear of the floating room-jump button */
+.hero-foot{position:absolute;z-index:2;left:var(--pad);right:calc(var(--pad) + 4.6rem);bottom:3.2rem;display:flex;align-items:flex-end;
+  justify-content:space-between;gap:var(--xl)}
+.cue{display:flex;align-items:center;gap:.7rem;color:var(--ink-2);font-size:var(--t-sm);font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase}
+.cue i{position:relative;display:block;width:4.2rem;height:1.5px;overflow:hidden;background:var(--line)}
+.cue i::after{content:"";position:absolute;inset:0;background:var(--red);transform-origin:left;animation:cue 2.6s var(--ease-io) infinite}
+@keyframes cue{0%{transform:scaleX(0)}45%{transform:scaleX(1)}100%{transform:scaleX(1) translateX(100%)}}
+.hero-stats{display:flex;gap:var(--xl)}
+.hero-stats div strong{display:block;font-size:1.4rem;font-weight:800;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.hero-stats div span{display:block;margin-top:.22rem;color:var(--ink-2);font-size:.58rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+
+/* ---------- solid sections after the tour ---------- */
+.solid{position:relative;z-index:14;background:var(--paper)}
+.sec{padding:var(--huge) var(--pad)}
+.sec-head{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:var(--xxxl);align-items:end;margin-bottom:var(--xxl)}
+.sec-head h2{font-size:var(--t-head)}
+.sec-head p{max-width:54ch;margin:0;color:var(--ink-2);line-height:1.76}
+
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--rule);background:var(--line);
+  border:var(--rule) solid var(--line);border-radius:var(--r-md);overflow:hidden}
+.stat{padding:var(--lg);background:var(--paper);display:grid;gap:var(--md);align-content:space-between;min-height:11.5rem;
+  transition:background-color var(--ui) var(--ease)}
+.stat:hover{background:var(--paper-2)}
+.stat b{color:var(--red);font-size:clamp(2rem,4vw,3.9rem);font-weight:800;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
+.stat strong{display:block;font-size:.82rem;font-weight:800}
+.stat span{display:block;margin-top:.25rem;color:var(--muted);font-size:.77rem;line-height:1.5}
+
+.marquee{position:relative;overflow:hidden;padding-block:var(--lg);border-block:var(--rule) solid var(--line);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;width:max-content;gap:var(--xxxl);align-items:center;animation:slide 46s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee-track img{height:2.5rem;width:auto;max-width:8.5rem;object-fit:contain;filter:grayscale(1);opacity:.55;
+  transition:filter var(--ui) var(--ease),opacity var(--ui) var(--ease)}
+.marquee-track img:hover{filter:none;opacity:1}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* the story lives on about.html — this is only the doorway to it */
+.since{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--xl);align-items:center;
+  padding:var(--xl) var(--lg);border:var(--rule) solid var(--line);border-radius:var(--r-md);background:var(--paper-2)}
+.since p{margin:0;max-width:62ch;color:var(--ink-2);line-height:1.7}
+.since strong{color:var(--ink);font-weight:800}
+
+.visit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden;border-radius:var(--r-lg);
+  background:var(--red);color:#fff}
+.visit-copy{padding:clamp(1.6rem,3.6vw,3.2rem)}
+.visit-copy .eyebrow{color:var(--red-soft)}
+.visit-copy .eyebrow::before{background:#fff}
+.visit-copy h2{font-size:var(--t-head)}
+.visit-list{display:grid;gap:var(--md);margin:var(--xl) 0}
+.visit-list div{padding-bottom:var(--md);border-bottom:var(--rule) solid rgba(255,255,255,.26)}
+.visit-list strong{display:block;font-size:.62rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--red-soft)}
+.visit-list span{display:block;margin-top:.28rem;font-size:1rem;font-weight:600;line-height:1.5}
+.visit .btn{background:#fff;border-color:#fff;color:var(--ink)}
+.visit .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+.visit .btn.ghost:hover{background:rgba(255,255,255,.14);border-color:#fff}
+.visit-photo{position:relative;min-height:24rem}
+.visit-photo img{width:100%;height:100%;object-fit:cover}
+
+/* extra right padding so the credit line clears the floating jump button */
+footer{position:relative;z-index:14;padding:var(--xl) calc(var(--pad) + 4.2rem) var(--xl) var(--pad);
+  background:var(--paper);border-top:var(--rule) solid var(--line)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:var(--lg);flex-wrap:wrap}
+.foot-brand{display:flex;align-items:center;gap:.6rem;font-weight:800}
+.foot-brand img{width:2.4rem;height:2.4rem;object-fit:contain}
+.foot nav{display:flex;gap:var(--md);flex-wrap:wrap}
+.foot nav a{color:var(--muted);font-size:var(--t-sm);font-weight:700}
+.foot nav a:hover{color:var(--red)}
+.foot p{margin:0;color:var(--muted);font-size:var(--t-sm)}
+
+/* ---------- responsive ---------- */
+@media(max-width:64rem){
+  .nav-links{display:none}
+  .menu-toggle{display:grid}
+  .mobile-menu{display:block}
+  .room,.room.right{justify-content:flex-start;align-items:flex-end;min-height:100svh;
+    padding-top:calc(var(--nav-h) + var(--xl));padding-bottom:var(--xxxl)}
+  .room::before,.room.right::before{
+    background:linear-gradient(0deg,rgba(247,245,241,.97) 0%,rgba(247,245,241,.88) 36%,rgba(247,245,241,.36) 62%,rgba(247,245,241,0) 84%)}
+  .room-inner,.room.right .room-inner,.hero .room-inner{width:min(36rem,100%)}
+  .hero{align-items:flex-end;padding-bottom:5.4rem}
+  .hero-foot{bottom:calc(var(--md) + env(safe-area-inset-bottom,0px))}
+  .hero-stats{display:none}
+  .sec{padding-block:var(--xxxl)}
+  .sec-head{grid-template-columns:minmax(0,1fr);gap:var(--lg)}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .since{grid-template-columns:minmax(0,1fr);gap:var(--md)}
+  .visit{grid-template-columns:minmax(0,1fr)}
+  .visit-photo{min-height:18rem}
+  .jump{bottom:calc(var(--md) + env(safe-area-inset-bottom,0px))}
+}
+@media(max-width:35rem){
+  :root{--pad:1rem;--huge:4.5rem}
+  .nav{top:.45rem}
+  .brand-copy span{display:none}
+  .nav-actions .btn.red{display:none}
+  h1{font-size:clamp(2.4rem,12vw,3.6rem)}
+  .lede{font-size:.95rem}
+  .stats{grid-template-columns:minmax(0,1fr)}
+  .stat{min-height:auto}
+  .hot-card span{display:none}
+  .foot{flex-direction:column;align-items:flex-start}
+}
+@media(hover:none),(pointer:coarse){
+  .btn:hover,.jump-toggle:hover,.jump-list button:hover,.hot-card:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:140ms!important}
+  .mask>span,.up{opacity:1!important;transform:none!important}
+  .marquee-track{animation:none}
+  .hot-dot::after{display:none}
+}
+@media(prefers-reduced-transparency:reduce){
+  .nav,.jump-list button,.hot-card,.note{background:var(--paper);backdrop-filter:none}
+}
+@media print{#world,.grain,.jump,.hotspots,.progress{display:none}}
+</style>
+</head>
+<body>
+
+<canvas id="world" aria-hidden="true"></canvas>
+<div class="world-fallback" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="hotspots" id="hotspots" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" data-jump aria-label="Electric Emporium, home">
+    <img src="logo_icon.png" alt="" width="42" height="42">
+    <span class="brand-copy"><strong>Electric Emporium</strong><span>Est. 1989 · Balaghat</span></span>
+  </a>
+  <nav class="nav-links" id="navLinks" aria-label="Rooms">
+    <a href="#living" data-jump>Fans</a>
+    <a href="#hallway" data-jump>Switches</a>
+    <a href="#kitchen" data-jump>Lights</a>
+    <a href="#bedroom" data-jump>ACs</a>
+    <a href="#bathroom" data-jump>Geysers</a>
+    <a href="#utility" data-jump>Wires &amp; MCBs</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="icon-btn" id="searchOpen" aria-label="Search products" aria-haspopup="dialog">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    </button>
+    <a class="btn red" href="products.html">Products</a>
+    <button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <i></i><i></i><i></i>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+  <a href="#living" data-jump><b>01</b>Fans</a>
+  <a href="#hallway" data-jump><b>02</b>Switches</a>
+  <a href="#kitchen" data-jump><b>03</b>Lights</a>
+  <a href="#bedroom" data-jump><b>04</b>ACs</a>
+  <a href="#bathroom" data-jump><b>05</b>Geysers</a>
+  <a href="#utility" data-jump><b>06</b>Wires &amp; MCBs</a>
+  <a href="#visit" data-jump><b>—</b>Visit us</a>
+</nav>
+
+<!-- search ------------------------------------------------------------- -->
+<div class="search-scrim" id="searchScrim" role="dialog" aria-modal="true" aria-label="Search products" hidden>
+  <div class="search-box">
+    <div class="search-field">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false"
+             placeholder="Search fans, MCB, Havells, geyser…" aria-label="Search"
+             aria-controls="searchResults" aria-expanded="true" role="combobox">
+      <kbd>Esc</kbd>
+    </div>
+    <ul class="search-results" id="searchResults" role="listbox" aria-label="Results"></ul>
+    <p class="search-foot">Enter to open · ↑ ↓ to browse</p>
+  </div>
+</div>
+
+<!-- floating room jump -------------------------------------------------- -->
+<div class="jump" id="jump" data-open="false">
+  <div class="jump-list" id="jumpList" role="group" aria-label="Jump to a room"></div>
+  <button class="jump-toggle" id="jumpToggle" aria-expanded="false" aria-controls="jumpList">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    <span>Jump to a room</span>
+  </button>
+</div>
+
+<main class="page" id="top">
+
+  <section class="room hero" id="entry" data-room="0" data-name="Front door">
+    <div class="room-inner">
+      <p class="eyebrow up">Electric Emporium · Gujri Chowk, Balaghat</p>
+      <h1>
+        <span class="mask" style="--i:0"><span>Walk through</span></span>
+        <span class="mask" style="--i:1"><span>a home we</span></span>
+        <span class="mask" style="--i:2"><span class="accent">wired.</span></span>
+      </h1>
+      <p class="lede up d2">Every fan, switch, light and geyser on this page is on the shelf at Gujri Chowk. Scroll to walk through room by room and see where each one actually lives.</p>
+      <div class="actions up d3">
+        <a class="btn red" href="products.html">Browse products</a>
+        <a class="btn ghost" href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" rel="noopener">Ask on WhatsApp</a>
+      </div>
+    </div>
+    <div class="hero-foot up d4">
+      <p class="cue"><span>Scroll to step inside</span><i></i></p>
+      <div class="hero-stats">
+        <div><strong data-count="36">0</strong><span>Years</span></div>
+        <div><strong data-count="15" data-suffix="+">0</strong><span>Brands</span></div>
+        <div><strong data-count="4.9" data-dec="1" data-suffix="★">0</strong><span>72+ reviews</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" id="living" data-room="1" data-name="Living room">
+    <div class="room-inner">
+      <p class="eyebrow up">Living room · 01</p>
+      <h2>
+        <span class="mask" style="--i:0"><span>The fan you</span></span>
+        <span class="mask" style="--i:1"><span>forget is <span class="accent">there.</span></span></span>
+      </h2>
+      <p class="lede up d2">Havells, Atomberg and Crompton — including BLDC models quiet enough to sleep under and cheap enough to leave running all summer.</p>
+      <a class="tag up d3" href="products.html?category=Fans">See all fans</a>
+      <p class="brands-line up d3"><span>Havells</span><span>Atomberg</span><span>Crompton</span></p>
+      <div class="note up d4">
+        <strong>Sized to the room, not the shelf</strong>
+        <p>Sweep, air delivery and mounting height picked for the space you're actually standing in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="room right" id="hallway" data-room="2" data-name="Hallway">
+    <div class="room-inner">
+      <p class="eyebrow up">Hallway · 02</p>
+      <h2>
+        <span class="mask" style="--i:0"><span>The part you</span></span>
+        <span class="mask" style="--i:1"><span>touch every <span class="accent">day.</span></span></span>
+      </h2>
+      <p class="lede up d2">Legrand and Havells modular plates and sockets. Ten years of daily use is a lot to ask of the cheapest option on the shelf.</p>
+      <a class="tag up d3" href="products.html?category=Switches">See switches &amp; sockets</a>
+      <p class="brands-line up d3"><span>Legrand</span><span>Havells</span><span>Indo Asian</span></p>
+      <div class="note up d4">
+        <strong>Authorised Legrand dealer</strong>
+        <p>Full modular ranges on display — feel the throw of the rocker before you commit a whole house to it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="room" id="kitchen" data-room="3" data-name="Kitchen">
+    <div class="room-inner">
+      <p class="eyebrow up">Kitchen · 03</p>
+      <h2>
+        <span class="mask" style="--i:0"><span>Light you can</span></span>
+        <span class="mask" style="--i:1"><span>actually <span class="accent">cook by.</span></span></span>
+      </h2>
+      <p class="lede up d2">Havells, Surya and Nortek — panels, downlights, strips and pendants, every one of them lit on our display wall before you buy it.</p>
+      <a class="tag up d3" href="products.html?category=Lights">See lights &amp; LEDs</a>
+      <p class="brands-line up d3"><span>Havells</span><span>Surya</span><span>Nortek</span></p>
+    </div>
+  </section>
+
+  <section class="room right" id="bedroom" data-room="4" data-name="Bedroom">
+    <div class="room-inner">
+      <p class="eyebrow up">Bedroom · 04</p>
+      <h2>
+        <span class="mask" style="--i:0"><span>Cooling sized</span></span>
+        <span class="mask" style="--i:1"><span>to the <span class="accent">room.</span></span></span>
+      </h2>
+      <p class="lede up d2">Daikin, Mitsubishi and Lloyd split units, with the star rating explained honestly and installation by people who still answer the phone next summer.</p>
+      <a class="tag up d3" href="products.html?category=ACs">See air conditioners</a>
+      <p class="brands-line up d3"><span>Daikin</span><span>Mitsubishi</span><span>Lloyd</span></p>
+    </div>
+  </section>
+
+  <section class="room" id="bathroom" data-room="5" data-name="Bathroom">
+    <div class="room-inner">
+      <p class="eyebrow up">Bathroom · 05</p>
+      <h2>
+        <span class="mask" style="--i:0"><span>Hot water,</span></span>
+        <span class="mask" style="--i:1"><span>first <span class="accent">try.</span></span></span>
+      </h2>
+      <p class="lede up d2">V-Guard and Havells storage and instant heaters — the right capacity and pressure rating, installed safely well before the first cold morning.</p>
+      <a class="tag up d3" href="products.html?category=Geysers">See geysers</a>
+      <p class="brands-line up d3"><span>V-Guard</span><span>Havells</span></p>
+    </div>
+  </section>
+
+  <section class="room right" id="utility" data-room="6" data-name="Utility">
+    <div class="room-inner">
+      <p class="eyebrow up">Utility · 06</p>
+      <h2>
+        <span class="mask" style="--i:0"><span>The board</span></span>
+        <span class="mask" style="--i:1"><span>behind it <span class="accent">all.</span></span></span>
+      </h2>
+      <p class="lede up d2">Polycab, KEI and Havells wire, with MCBs, RCCBs and distribution boards specced for the load your home actually draws — not the one printed on the box.</p>
+      <a class="tag up d3" href="products.html?category=Wires">See wires, MCBs &amp; DBs</a>
+      <p class="brands-line up d3"><span>Polycab</span><span>KEI</span><span>Havells</span><span>V-Guard</span></p>
+      <div class="note up d4">
+        <strong>End of the tour</strong>
+        <p>Everything you just walked past is in stock at Gujri Chowk. Open every day, 10 AM to 9 PM.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<section class="solid sec" id="why" aria-labelledby="whyTitle">
+  <header class="sec-head up">
+    <div>
+      <p class="eyebrow">Why Balaghat keeps coming back</p>
+      <h2 id="whyTitle">Advice first,<br>invoice second.</h2>
+    </div>
+    <p>We are not the cheapest shop in town on every single line, and we don't pretend to be. We're the shop that will tell you when you're buying the wrong thing — which is why contractors, hospitals and three decades of households keep walking back through the same door.</p>
+  </header>
+  <div class="stats up">
+    <div class="stat"><b data-count="4.9" data-dec="1" data-suffix="★">0</b><div><strong>Top rated in Balaghat</strong><span>72+ verified Google reviews</span></div></div>
+    <div class="stat"><b data-count="36">0</b><div><strong>Years of trust</strong><span>Founded 1989, same address since</span></div></div>
+    <div class="stat"><b>ISI</b><div><strong>Genuine stock only</strong><span>Certified brands, no duplicates</span></div></div>
+    <div class="stat"><b data-count="100" data-suffix="km+">0</b><div><strong>Service radius</strong><span>Homes, contractors and institutions</span></div></div>
+  </div>
+</section>
+
+<section class="solid" aria-label="Authorised brands">
+  <div class="marquee">
+    <div class="marquee-track">
+      <img src="logo_havells.png" alt="Havells" loading="lazy"><img src="logo_legrand.jpg" alt="Legrand" loading="lazy">
+      <img src="logo_polycab.png" alt="Polycab" loading="lazy"><img src="logo_kei.png" alt="KEI" loading="lazy">
+      <img src="logo_atomberg.png" alt="Atomberg" loading="lazy"><img src="logo_crompton.png" alt="Crompton" loading="lazy">
+      <img src="logo_vguard.png" alt="V-Guard" loading="lazy"><img src="logo_daikin.png" alt="Daikin" loading="lazy">
+      <img src="logo_mitsubishi.png" alt="Mitsubishi Electric" loading="lazy"><img src="logo_lloyd.png" alt="Lloyd" loading="lazy">
+      <img src="logo_surya.png" alt="Surya" loading="lazy"><img src="logo_nortek.png" alt="Nortek" loading="lazy">
+      <img src="logo_indoasian.png" alt="Indo Asian" loading="lazy">
+      <img src="logo_havells.png" alt="" aria-hidden="true" loading="lazy"><img src="logo_legrand.jpg" alt="" aria-hidden="true" loading="lazy">
+      <img src="logo_polycab.png" alt="" aria-hidden="true" loading="lazy"><img src="logo_kei.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="logo_atomberg.png" alt="" aria-hidden="true" loading="lazy"><img src="logo_crompton.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="logo_vguard.png" alt="" aria-hidden="true" loading="lazy"><img src="logo_daikin.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="logo_mitsubishi.png" alt="" aria-hidden="true" loading="lazy"><img src="logo_lloyd.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="logo_surya.png" alt="" aria-hidden="true" loading="lazy"><img src="logo_nortek.png" alt="" aria-hidden="true" loading="lazy">
+      <img src="logo_indoasian.png" alt="" aria-hidden="true" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="solid sec" style="padding-block:var(--xxxl)" aria-label="About Electric Emporium">
+  <div class="since up">
+    <p><strong>Since 1989.</strong> Balaghat's first dedicated electrical shop, opened by Manoj Katariya on Main Road and run by the same family ever since — now into its third generation.</p>
+    <a class="btn ghost" href="about.html">Read our story</a>
+  </div>
+</section>
+
+<section class="solid sec" id="visit" style="padding-top:0" aria-labelledby="visitTitle">
+  <div class="visit up">
+    <div class="visit-copy">
+      <p class="eyebrow">Come see it powered up</p>
+      <h2 id="visitTitle">Visit us at<br>Gujri Chowk.</h2>
+      <div class="visit-list">
+        <div><strong>Address</strong><span>Main Rd, Gujri Chowk, Chitragupt Nagar<br>Balaghat, MP 481001</span></div>
+        <div><strong>Hours</strong><span>Open every day · 10 AM – 9 PM</span></div>
+        <div><strong>Phone</strong><span><a href="tel:+919425831035">+91 94258 31035</a></span></div>
+      </div>
+      <div class="actions">
+        <a class="btn" href="https://maps.google.com/?q=Electric+Emporium+Gujri+Chowk+Balaghat+MP" target="_blank" rel="noopener">Get directions</a>
+        <a class="btn ghost" href="https://wa.me/919425831035?text=Hello%20Electric%20Emporium!" target="_blank" rel="noopener">WhatsApp us</a>
+      </div>
+    </div>
+    <div class="visit-photo"><img src="shop1.png" alt="Electric Emporium storefront lit up at night on Main Road, Gujri Chowk" loading="lazy"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div class="foot-brand"><img src="logo_icon.png" alt="" width="38" height="38"><span>Electric Emporium</span></div>
+    <nav aria-label="Footer"><a href="products.html">Products</a><a href="about.html">About</a><a href="index.html">Main site</a><a href="tel:+919425831035">Call</a></nav>
+    <p>© 2026 · Gujri Chowk, Balaghat, MP · Home tour concept</p>
+  </div>
+</footer>
+
+<!-- three.js r160 UMD. Without it the page falls back to a static interior
+     wash — see the !window.THREE guard below. -->
+<script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var coarse = matchMedia('(pointer: coarse)').matches;
+var narrow = matchMedia('(max-width: 64rem)').matches;
+
+function clamp(v,a,b){ return v < a ? a : v > b ? b : v; }
+function lerp(a,b,t){ return a + (b-a)*t; }
+/* smootherstep: zero first AND second derivative at both ends, so a chapter
+   hand-off has no visible kick the way plain smoothstep does */
+function ease(t){ return t*t*t*(t*(t*6-15)+10); }
+function damp(a,b,rate,dt){ return lerp(a,b,1-Math.exp(-rate*dt)); }
+
+/* =========================================================================
+   1 · the tour: one entry per room, shared by the DOM, the 3D and the UI
+   ========================================================================= */
+var TOUR = [
+  { id:'entry', room:'Front door', label:null,
+    cam:[0, 1.60,  3.6], look:[0, 1.44, -3.0], ndc:[0, 0] },
+
+  { id:'living', room:'Living room', label:'Ceiling fan', sub:'Havells · Atomberg · BLDC',
+    href:'products.html?category=Fans',
+    cam:[-0.10, 1.56,  0.20], look:[0.55, 2.36, -3.30], ndc:[ 0.44,  0.30], ring:0.72 },
+
+  { id:'hallway', room:'Hallway', label:'Modular switches', sub:'Legrand · Havells',
+    href:'products.html?category=Switches',
+    cam:[ 0.00, 1.47, -8.15], look:[-2.28, 1.32, -9.10], ndc:[-0.44, -0.06], ring:0.34 },
+
+  { id:'kitchen', room:'Kitchen', label:'Pendants & panel', sub:'Havells · Surya · Nortek',
+    href:'products.html?category=Lights',
+    cam:[-0.24, 1.56,-12.70], look:[ 1.34, 1.92,-14.90], ndc:[ 0.42,  0.16], ring:0.34 },
+
+  { id:'bedroom', room:'Bedroom', label:'Split AC', sub:'Daikin · Mitsubishi · Lloyd',
+    href:'products.html?category=ACs',
+    cam:[ 0.34, 1.56,-19.30], look:[-2.24, 2.24,-21.20], ndc:[-0.42,  0.24], ring:0.62 },
+
+  { id:'bathroom', room:'Bathroom', label:'Storage geyser', sub:'V-Guard · Havells',
+    href:'products.html?category=Geysers',
+    cam:[-0.26, 1.54,-25.40], look:[ 2.22, 2.10,-26.90], ndc:[ 0.42,  0.22], ring:0.40 },
+
+  { id:'utility', room:'Utility', label:'MCB distribution board', sub:'Havells · Polycab · KEI',
+    href:'products.html?category=Wires',
+    cam:[ 0.30, 1.52,-30.80], look:[-2.24, 1.76,-32.30], ndc:[-0.42,  0.10], ring:0.44 }
+];
+
+var sections = [].slice.call(document.querySelectorAll('[data-room]'));
+var progressEl = document.getElementById('progress');
+var navLinks = [].slice.call(document.querySelectorAll('#navLinks a'));
+
+var anchors = [], activeRoom = -1, lastY = 0, docSpan = 1;
+var roomRaw = 0, roomSmooth = 0;
+var ptTX = 0, ptTY = 0, ptX = 0, ptY = 0;
+
+function measure(){
+  anchors = sections.map(function(s){
+    return s.getBoundingClientRect().top + scrollY + s.offsetHeight * 0.5 - innerHeight * 0.5;
+  });
+  docSpan = Math.max(1, document.body.scrollHeight - innerHeight);
+}
+
+function roomProgress(){
+  var y = scrollY;
+  if (anchors.length < 2) return 0;
+  if (y <= anchors[0]) return 0;
+  for (var i = 0; i < anchors.length - 1; i++){
+    if (y <= anchors[i+1]){
+      var span = anchors[i+1] - anchors[i] || 1;
+      return i + clamp((y - anchors[i]) / span, 0, 1);
+    }
+  }
+  return anchors.length - 1;
+}
+
+/* =========================================================================
+   2 · eased scrolling — used by every internal link, the room jump and the
+   search, so navigation glides instead of teleporting
+   ========================================================================= */
+var scrollRAF = 0;
+function glideTo(y){
+  cancelAnimationFrame(scrollRAF);
+  y = clamp(y, 0, document.body.scrollHeight - innerHeight);
+  if (reduce){ scrollTo(0, y); return; }
+  var from = scrollY, delta = y - from;
+  if (Math.abs(delta) < 2) return;
+  var dur = clamp(360 + Math.abs(delta) * 0.32, 420, 1500);
+  var t0 = performance.now();
+  (function step(now){
+    var t = clamp((now - t0) / dur, 0, 1);
+    var e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+    scrollTo(0, from + delta * e);
+    if (t < 1) scrollRAF = requestAnimationFrame(step);
+  })(t0);
+}
+/* any real input from the user wins over an in-flight glide */
+['wheel','touchstart','keydown'].forEach(function(evt){
+  addEventListener(evt, function(){ cancelAnimationFrame(scrollRAF); }, { passive: true });
+});
+function glideToId(id){
+  var el = document.getElementById(id);
+  if (el) glideTo(el.getBoundingClientRect().top + scrollY);
+}
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a[data-jump]');
+  if (!a) return;
+  var id = a.getAttribute('href').slice(1);
+  if (!document.getElementById(id)) return;
+  e.preventDefault();
+  closeMenu();
+  glideToId(id);
+});
+
+/* =========================================================================
+   3 · reveals + counters
+   ========================================================================= */
+var revealIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if (!e.isIntersecting) return;
+    e.target.classList.add('shown');
+    revealIO.unobserve(e.target);
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.room, .up').forEach(function(el){ revealIO.observe(el); });
+
+var countIO = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if (!e.isIntersecting) return;
+    countIO.unobserve(e.target);
+    var el = e.target, to = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10);
+    var suffix = el.dataset.suffix || '';
+    if (reduce){ el.textContent = to.toFixed(dec) + suffix; return; }
+    var t0 = performance.now();
+    (function step(now){
+      var t = clamp((now - t0) / 1400, 0, 1);
+      el.textContent = (to * (1 - Math.pow(1 - t, 3))).toFixed(dec) + suffix;
+      if (t < 1) requestAnimationFrame(step);
+    })(t0);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(function(el){ countIO.observe(el); });
+
+/* =========================================================================
+   4 · nav, mobile menu
+   ========================================================================= */
+var nav = document.getElementById('nav');
+var menuToggle = document.getElementById('menuToggle');
+var mobileMenu = document.getElementById('mobileMenu');
+function closeMenu(){
+  mobileMenu.classList.remove('open');
+  document.body.classList.remove('locked');
+  menuToggle.setAttribute('aria-expanded','false');
+}
+menuToggle.addEventListener('click', function(){
+  var open = !mobileMenu.classList.contains('open');
+  mobileMenu.classList.toggle('open', open);
+  document.body.classList.toggle('locked', open);
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+});
+
+function setActiveRoom(n){
+  if (n === activeRoom) return;
+  activeRoom = n;
+  navLinks.forEach(function(a, i){ a.classList.toggle('on', i === n - 1); });
+  jumpButtons.forEach(function(b, i){ b.classList.toggle('on', i === n - 1); });
+}
+
+addEventListener('scroll', function(){
+  var y = scrollY;
+  nav.classList.toggle('hidden', y > lastY && y > 240 && !mobileMenu.classList.contains('open'));
+  lastY = y;
+  roomRaw = roomProgress();
+  setActiveRoom(clamp(Math.round(roomRaw), 0, sections.length - 1));
+  progressEl.style.transform = 'scaleX(' + (y / docSpan).toFixed(4) + ')';
+}, { passive: true });
+
+addEventListener('resize', function(){
+  narrow = matchMedia('(max-width: 64rem)').matches;
+  measure();
+}, { passive: true });
+
+if (!coarse) addEventListener('pointermove', function(e){
+  ptTX = (e.clientX / innerWidth  - 0.5) * 2;
+  ptTY = (e.clientY / innerHeight - 0.5) * 2;
+}, { passive: true });
+
+/* =========================================================================
+   5 · floating room jump
+   ========================================================================= */
+var jump = document.getElementById('jump');
+var jumpList = document.getElementById('jumpList');
+var jumpToggle = document.getElementById('jumpToggle');
+var jumpButtons = [];
+TOUR.slice(1).forEach(function(t, i){
+  var b = document.createElement('button');
+  b.type = 'button';
+  b.innerHTML = '<i></i><em></em><span></span>';
+  b.querySelector('em').textContent = String(i + 1).padStart(2, '0');
+  b.querySelector('span').textContent = t.label ? t.label.replace('MCB distribution board','MCBs & DBs') : t.room;
+  b.setAttribute('aria-label', 'Go to the ' + t.room);
+  b.addEventListener('click', function(){
+    jump.dataset.open = 'false';
+    jumpToggle.setAttribute('aria-expanded','false');
+    glideToId(t.id);
+  });
+  jumpList.appendChild(b);
+  jumpButtons.push(b);
+});
+/* hover opens it on a pointer; tapping opens it on a touchscreen */
+jumpToggle.addEventListener('click', function(){
+  var open = jump.dataset.open !== 'true';
+  jump.dataset.open = String(open);
+  jumpToggle.setAttribute('aria-expanded', String(open));
+});
+document.addEventListener('click', function(e){
+  if (!jump.contains(e.target) && jump.dataset.open === 'true'){
+    jump.dataset.open = 'false';
+    jumpToggle.setAttribute('aria-expanded','false');
+  }
+});
+
+/* =========================================================================
+   6 · search
+   products.html only accepts ?category= and ?brand=, so rather than pretend
+   to do free-text search this maps what you type onto the filters that do
+   exist, plus the rooms on this page.
+   ========================================================================= */
+var INDEX = [
+  { kind:'Shop', name:'Fans',               desc:'Ceiling, table, pedestal & BLDC', href:'products.html?category=Fans',
+    terms:'fan fans ceiling bldc pedestal table exhaust wall air breeze havells atomberg crompton' },
+  { kind:'Shop', name:'Lights & LEDs',      desc:'Bulbs, tubes, panels, downlights, strips', href:'products.html?category=Lights',
+    terms:'light lights led leds bulb tube panel downlight strip lamp batten pendant chandelier surya nortek' },
+  { kind:'Shop', name:'Wires, MCBs & DBs',  desc:'House wiring, MCBs, RCCBs, distribution boards', href:'products.html?category=Wires',
+    terms:'wire wires cable cables mcb mcbs rccb rcbo db distribution board fuse conduit earthing polycab kei' },
+  { kind:'Shop', name:'Switches & Sockets', desc:'Modular plates, sockets, regulators', href:'products.html?category=Switches',
+    terms:'switch switches socket sockets modular plate board regulator dimmer bell legrand indo asian' },
+  { kind:'Shop', name:'Air Conditioners',   desc:'Split & window units', href:'products.html?category=ACs',
+    terms:'ac acs air conditioner conditioning split window cooling inverter ton daikin mitsubishi lloyd' },
+  { kind:'Shop', name:'Geysers',            desc:'Storage & instant water heaters', href:'products.html?category=Geysers',
+    terms:'geyser geysers water heater instant storage bathroom hot vguard v-guard' },
+
+  { kind:'Brand', name:'Havells',   desc:'Fans, lighting, wires, switches', href:'products.html?brand=Havells',   terms:'havells' },
+  { kind:'Brand', name:'Legrand',   desc:'Modular switches & sockets',      href:'products.html?brand=Legrand',   terms:'legrand' },
+  { kind:'Brand', name:'Polycab',   desc:'Wires & cables',                  href:'products.html?brand=Polycab',   terms:'polycab' },
+  { kind:'Brand', name:'V-Guard',   desc:'Geysers, wires, stabilisers',     href:'products.html?brand=V-Guard',   terms:'vguard v-guard guard' },
+  { kind:'Brand', name:'Atomberg',  desc:'BLDC fans',                       href:'products.html?brand=Atomberg',  terms:'atomberg bldc' },
+  { kind:'Brand', name:'Daikin',    desc:'Air conditioning',                href:'products.html?brand=Daikin',    terms:'daikin' },
+  { kind:'Brand', name:'Crompton',  desc:'Fans & lighting',                 href:'products.html?brand=Crompton',  terms:'crompton' },
+  { kind:'Brand', name:'KEI',       desc:'Wires & cables',                  href:'products.html?brand=KEI',       terms:'kei' },
+  { kind:'Brand', name:'Surya',     desc:'Lighting',                        href:'products.html?brand=Surya',     terms:'surya' },
+
+  { kind:'Visit', name:'Visit the store', desc:'Gujri Chowk · open daily 10–9', href:'#visit', terms:'visit store address shop map directions timing hours phone call contact' },
+  { kind:'Visit', name:'Our story',       desc:'Since 1989, three generations',  href:'about.html', terms:'about story history family katariya 1989 since founded' }
+];
+TOUR.slice(1).forEach(function(t){
+  INDEX.push({ kind:'Room', name:t.room, desc:'See it in the tour · ' + t.label, href:'#' + t.id,
+    terms:(t.room + ' ' + t.label + ' ' + t.sub).toLowerCase() });
+});
+
+var searchScrim  = document.getElementById('searchScrim');
+var searchInput  = document.getElementById('searchInput');
+var searchResults= document.getElementById('searchResults');
+var searchOpenBtn= document.getElementById('searchOpen');
+var cursor = 0, lastFocus = null;
+
+function score(item, q){
+  var name = item.name.toLowerCase();
+  if (name === q) return 100;
+  if (name.indexOf(q) === 0) return 80;
+  if (name.indexOf(q) > -1) return 60;
+  var terms = item.terms.split(' ');
+  for (var i = 0; i < terms.length; i++){
+    if (terms[i] === q) return 55;
+    if (terms[i].indexOf(q) === 0) return 40;
+  }
+  return item.terms.indexOf(q) > -1 ? 20 : 0;
+}
+
+function renderResults(){
+  var q = searchInput.value.trim().toLowerCase();
+  var list;
+  if (!q){
+    list = INDEX.filter(function(i){ return i.kind === 'Shop'; });
+  } else {
+    list = INDEX.map(function(i){ return { i: i, s: score(i, q) }; })
+                .filter(function(r){ return r.s > 0; })
+                .sort(function(a, b){ return b.s - a.s; })
+                .slice(0, 8)
+                .map(function(r){ return r.i; });
+  }
+  searchResults.innerHTML = '';
+  if (!list.length){
+    searchResults.innerHTML = '<li class="search-empty">Nothing matched. Try “fan”, “MCB”, “geyser” or a brand — or <a href="https://wa.me/919425831035" style="color:var(--red);font-weight:700">ask us on WhatsApp</a>.</li>';
+    cursor = -1;
+    return;
+  }
+  cursor = 0;
+  list.forEach(function(item, idx){
+    var li = document.createElement('li');
+    var a  = document.createElement('a');
+    a.href = item.href;
+    a.setAttribute('role','option');
+    a.innerHTML = '<span class="res-kind"></span><span class="res-text"><strong></strong><span></span></span><span class="res-go">↵</span>';
+    a.querySelector('.res-kind').textContent = item.kind === 'Shop' ? 'SHOP' : item.kind.toUpperCase();
+    if (item.kind === 'Room' || item.kind === 'Visit') a.querySelector('.res-kind').classList.add('alt');
+    a.querySelector('strong').textContent = item.name;
+    a.querySelector('.res-text span').textContent = item.desc;
+    if (idx === 0) a.classList.add('cursor');
+    a.addEventListener('mousemove', function(){ moveCursor(idx); });
+    a.addEventListener('click', function(e){
+      if (item.href.charAt(0) !== '#') return;      /* let real links navigate */
+      e.preventDefault();
+      closeSearch();
+      glideToId(item.href.slice(1));
+    });
+    li.appendChild(a);
+    searchResults.appendChild(li);
+  });
+}
+function moveCursor(n){
+  var items = searchResults.querySelectorAll('a');
+  if (!items.length) return;
+  cursor = (n + items.length) % items.length;
+  items.forEach(function(a, i){ a.classList.toggle('cursor', i === cursor); });
+  items[cursor].scrollIntoView({ block:'nearest' });
+}
+function openSearch(){
+  lastFocus = document.activeElement;
+  searchScrim.hidden = false;
+  requestAnimationFrame(function(){ searchScrim.classList.add('open'); });
+  document.body.classList.add('locked');
+  renderResults();
+  searchInput.value = '';
+  searchInput.focus();
+}
+function closeSearch(){
+  searchScrim.classList.remove('open');
+  document.body.classList.remove('locked');
+  setTimeout(function(){ searchScrim.hidden = true; }, 300);
+  if (lastFocus) lastFocus.focus();
+}
+searchOpenBtn.addEventListener('click', openSearch);
+searchInput.addEventListener('input', renderResults);
+searchScrim.addEventListener('click', function(e){ if (e.target === searchScrim) closeSearch(); });
+searchInput.addEventListener('keydown', function(e){
+  if (e.key === 'ArrowDown'){ e.preventDefault(); moveCursor(cursor + 1); }
+  else if (e.key === 'ArrowUp'){ e.preventDefault(); moveCursor(cursor - 1); }
+  else if (e.key === 'Enter'){
+    var active = searchResults.querySelectorAll('a')[cursor];
+    if (active){ e.preventDefault(); active.click(); }
+  }
+});
+addEventListener('keydown', function(e){
+  if (e.key === 'Escape' && searchScrim.classList.contains('open')){ closeSearch(); return; }
+  if ((e.key === 'k' || e.key === 'K') && (e.metaKey || e.ctrlKey)){ e.preventDefault(); openSearch(); return; }
+  if (e.key === '/' && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)){
+    e.preventDefault(); openSearch();
+  }
+});
+
+measure();
+roomRaw = roomProgress(); roomSmooth = roomRaw;
+setActiveRoom(clamp(Math.round(roomRaw), 0, sections.length - 1));
+addEventListener('load', measure);
+
+/* =========================================================================
+   7 · the home
+   ========================================================================= */
+if (!window.THREE){ document.documentElement.classList.add('no-webgl'); return; }
+
+var canvas = document.getElementById('world');
+var renderer, scene, camera;
+var quality = Math.min(devicePixelRatio || 1, coarse ? 1.25 : 1.5);
+
+try {
+  renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !coarse, alpha: false, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(quality);
+  renderer.setSize(innerWidth, innerHeight, false);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.82;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0xEFEBE4);
+  scene.fog = new THREE.Fog(0xEFEBE4, 14, 34);
+
+  camera = new THREE.PerspectiveCamera(52, innerWidth / innerHeight, 0.08, 90);
+  camera.position.set(0, 1.6, 3.6);
+} catch (err){
+  document.documentElement.classList.add('no-webgl');
+  return;
+}
+
+/* A tiny gradient sky, pre-filtered into an environment map. This is what
+   stops a bright interior looking like flat matte cardboard — every surface
+   picks up a soft sky-above / floor-below gradient. */
+(function(){
+  var c = document.createElement('canvas'); c.width = 8; c.height = 96;
+  var g = c.getContext('2d');
+  var grad = g.createLinearGradient(0, 0, 0, 96);
+  /* the lower half lights every downward-facing surface — ceilings, soffits,
+     the underside of the archways — so it must not go dark or they turn muddy */
+  grad.addColorStop(0.00, '#ffffff');
+  grad.addColorStop(0.42, '#f0e9df');
+  grad.addColorStop(0.62, '#ddd5c9');
+  grad.addColorStop(1.00, '#b4aca0');
+  g.fillStyle = grad; g.fillRect(0, 0, 8, 96);
+  var tex = new THREE.CanvasTexture(c);
+  tex.mapping = THREE.EquirectangularReflectionMapping;
+  tex.colorSpace = THREE.SRGBColorSpace;
+  var pmrem = new THREE.PMREMGenerator(renderer);
+  pmrem.compileEquirectangularShader();
+  scene.environment = pmrem.fromEquirectangular(tex).texture;
+  scene.environmentIntensity = 0.85;
+  pmrem.dispose(); tex.dispose();
+})();
+
+var sun = new THREE.DirectionalLight(0xfff2e0, 0.95);
+sun.position.set(-6, 7, 4);
+scene.add(sun);
+/* a bright hemisphere doing most of the work keeps the walls even; leaning on
+   the directional instead leaves one side of every room muddy */
+var fill = new THREE.HemisphereLight(0xfaf7f1, 0xdcd5ca, 0.7);
+scene.add(fill);
+/* one lamp that rides along with the camera so the room you are standing in
+   is always the brightest thing on screen */
+/* low decay and a long reach: a tight falloff here paints an obvious bright
+   pool on whichever wall it drifts near */
+var roving = new THREE.PointLight(0xfff0dc, 2.6, 18, 1.0);
+scene.add(roving);
+
+var M = {
+  wall:    new THREE.MeshStandardMaterial({ color: 0xEDE7DD, roughness: 0.96, metalness: 0 }),
+  wallWarm:new THREE.MeshStandardMaterial({ color: 0xE9E1D3, roughness: 0.95, metalness: 0 }),
+  wallCool:new THREE.MeshStandardMaterial({ color: 0xDCE3E3, roughness: 0.9,  metalness: 0 }),
+  ceiling: new THREE.MeshStandardMaterial({ color: 0xF8F5F0, roughness: 1,    metalness: 0 }),
+  wood:    new THREE.MeshStandardMaterial({ color: 0x9C7A57, roughness: 0.66, metalness: 0.02 }),
+  woodDark:new THREE.MeshStandardMaterial({ color: 0x6E4A2E, roughness: 0.6,  metalness: 0.02 }),
+  tile:    new THREE.MeshStandardMaterial({ color: 0xD5D2CB, roughness: 0.28, metalness: 0.04 }),
+  white:   new THREE.MeshStandardMaterial({ color: 0xF6F3EE, roughness: 0.42, metalness: 0.03 }),
+  bone:    new THREE.MeshStandardMaterial({ color: 0xE2DCD2, roughness: 0.7,  metalness: 0 }),
+  charcoal:new THREE.MeshStandardMaterial({ color: 0x2B2A31, roughness: 0.5,  metalness: 0.15 }),
+  red:     new THREE.MeshStandardMaterial({ color: 0xD1121D, roughness: 0.42, metalness: 0.1 }),
+  steel:   new THREE.MeshStandardMaterial({ color: 0xA8ADB5, roughness: 0.3,  metalness: 0.65 }),
+  fabric:  new THREE.MeshStandardMaterial({ color: 0x69707E, roughness: 0.95, metalness: 0 }),
+  fabric2: new THREE.MeshStandardMaterial({ color: 0xB6A992, roughness: 0.95, metalness: 0 }),
+  plant:   new THREE.MeshStandardMaterial({ color: 0x4E7A46, roughness: 0.85, metalness: 0 }),
+  glass:   new THREE.MeshStandardMaterial({ color: 0xEAF2F6, roughness: 0.08, metalness: 0.1, transparent: true, opacity: 0.42 })
+};
+function glow(hex, i){
+  return new THREE.MeshStandardMaterial({ color: 0xF7F5F1, emissive: new THREE.Color(hex), emissiveIntensity: i, roughness: 0.5 });
+}
+
+function box(w,h,d,mat,x,y,z,g){
+  var m = new THREE.Mesh(new THREE.BoxGeometry(w,h,d), mat);
+  m.position.set(x,y,z);
+  (g || scene).add(m);
+  return m;
+}
+function cyl(rt,rb,h,seg,mat,x,y,z,g){
+  var m = new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg), mat);
+  m.position.set(x,y,z);
+  (g || scene).add(m);
+  return m;
+}
+
+/* ---- shell ------------------------------------------------------------ */
+/* the living room runs further forward than the tour needs, so that the
+   pulled-back portrait camera still has floor and walls around it */
+var HALF = 2.5, CEIL = 2.78, Z0 = 6.2, Z1 = -34.6;
+var ROOMS = [
+  { z0:  6.2, z1: -6.0, floor: M.wood,  wall: M.wall     },  /* living   */
+  { z0: -6.0, z1:-11.2, floor: M.wood,  wall: M.wallWarm },  /* hallway  */
+  { z0:-11.2, z1:-17.4, floor: M.wood,  wall: M.wall     },  /* kitchen  */
+  { z0:-17.4, z1:-23.6, floor: M.wood,  wall: M.wallWarm },  /* bedroom  */
+  { z0:-23.6, z1:-29.0, floor: M.tile,  wall: M.wallCool },  /* bathroom */
+  { z0:-29.0, z1:-34.6, floor: M.tile,  wall: M.wall     }   /* utility  */
+];
+
+ROOMS.forEach(function(r){
+  var d = r.z0 - r.z1, mid = (r.z0 + r.z1) / 2;
+  box(HALF*2, 0.08, d, r.floor, 0, -0.04, mid);              /* floor  */
+  box(HALF*2, 0.08, d, M.ceiling, 0, CEIL + 0.04, mid);      /* soffit */
+  box(0.12, CEIL, d, r.wall, -HALF, CEIL/2, mid);            /* left   */
+  box(0.12, CEIL, d, r.wall,  HALF, CEIL/2, mid);            /* right  */
+  /* skirting reads as a real room edge for almost nothing */
+  box(0.04, 0.11, d, M.white, -HALF + 0.08, 0.055, mid);
+  box(0.04, 0.11, d, M.white,  HALF - 0.08, 0.055, mid);
+});
+
+/* partitions between rooms, each with a wide archway the camera walks through */
+var GAP = 1.5, ARCH = 2.24;
+[-6.0, -11.2, -17.4, -23.6, -29.0].forEach(function(z){
+  var side = HALF - GAP;
+  box(side, CEIL, 0.14, M.wall, -(HALF + GAP) / 2 - 0.0, CEIL/2, z);
+  box(side, CEIL, 0.14, M.wall,  (HALF + GAP) / 2 + 0.0, CEIL/2, z);
+  box(GAP*2, CEIL - ARCH, 0.14, M.wall, 0, ARCH + (CEIL - ARCH)/2, z);
+});
+/* the wall you face at the very end of the tour */
+box(HALF*2, CEIL, 0.14, M.wall, 0, CEIL/2, Z1);
+
+/* ---- windows ---------------------------------------------------------- */
+function window_(x, z, w, side){
+  var g = new THREE.Group();
+  var sx = side * (HALF - 0.055);
+  box(0.06, 1.32, w, M.white, sx, 1.55, z, g);                     /* frame face */
+  var pane = box(0.02, 1.14, w - 0.18, glow(0xFFF6E4, 1.5), sx - side * 0.03, 1.55, z, g);
+  box(0.05, 0.06, w - 0.18, M.white, sx - side * 0.04, 1.55, z, g); /* glazing bar */
+  box(0.09, 0.06, w + 0.1, M.white, sx - side * 0.05, 0.94, z, g);  /* sill */
+  var spill = new THREE.PointLight(0xFFEBCF, 3.2, 6.5, 1.6);
+  spill.position.set(sx - side * 0.5, 1.7, z);
+  g.add(spill);
+  scene.add(g);
+  return pane;
+}
+window_(0, -3.0, 1.9, -1);    /* living  */
+window_(0,-14.2, 1.5,  1);    /* kitchen */
+window_(0,-22.5, 1.6, -1);    /* bedroom — clear of the AC above it */
+
+/* ---- room 1 · living: the fan ---------------------------------------- */
+var fan = (function(){
+  var g = new THREE.Group();
+  g.position.set(0.55, 2.36, -3.30);
+  cyl(0.045, 0.045, 0.34, 10, M.steel, 0, 0.3, 0, g);
+  cyl(0.14, 0.1, 0.07, 18, M.steel, 0, 0.48, 0, g);
+  cyl(0.19, 0.22, 0.14, 26, M.red, 0, 0.06, 0, g);
+  cyl(0.13, 0.13, 0.04, 22, M.steel, 0, -0.03, 0, g);
+  var blades = new THREE.Group();
+  blades.position.y = 0.02;
+  for (var i = 0; i < 3; i++){
+    var arm = new THREE.Group();
+    arm.rotation.y = i * Math.PI * 2 / 3;
+    var b = box(0.62, 0.012, 0.19, M.white, 0.44, 0, 0, arm);
+    b.rotation.x = 0.2;
+    box(0.2, 0.02, 0.07, M.steel, 0.17, 0.004, 0, arm);
+    blades.add(arm);
+  }
+  g.add(blades);
+  g.userData.blades = blades;
+  scene.add(g);
+  return g;
+})();
+/* sofa, rug, table, lamp, art */
+box(3.4, 0.01, 2.3, M.fabric2, -0.5, 0.005, -3.4);
+box(2.0, 0.4, 0.8, M.fabric, -1.2, 0.28, -4.3);
+box(2.0, 0.5, 0.24, M.fabric, -1.2, 0.6, -4.62);
+box(0.24, 0.42, 0.8, M.fabric, -2.1, 0.5, -4.3);
+box(0.24, 0.42, 0.8, M.fabric, -0.3, 0.5, -4.3);
+box(1.0, 0.06, 0.55, M.woodDark, -0.6, 0.4, -3.0);
+cyl(0.03, 0.03, 0.38, 8, M.steel, -1.0, 0.19, -3.0);
+cyl(0.03, 0.03, 0.38, 8, M.steel, -0.2, 0.19, -3.0);
+/* hung on the partition at the end of the room, not floating mid-air */
+box(0.62, 0.85, 0.03, M.woodDark, 1.45, 1.66, -5.9);
+box(0.5, 0.73, 0.01, M.fabric2, 1.45, 1.66, -5.87);
+cyl(0.16, 0.13, 0.3, 14, M.bone, 2.0, 0.15, -2.6);
+[0.32, 0.46, 0.4].forEach(function(h, i){
+  cyl(0.02, 0.02, h, 6, new THREE.MeshStandardMaterial({ color: 0x4E7A46, roughness: .9 }), 2.0 + (i-1)*0.09, 0.3 + h/2, -2.6);
+});
+
+/* ---- room 2 · hallway: the switch plate ------------------------------- */
+var switchPlate = (function(){
+  var g = new THREE.Group();
+  g.position.set(-2.28, 1.32, -9.10);
+  g.rotation.y = Math.PI / 2;
+  box(0.42, 0.3, 0.022, M.white, 0, 0, 0, g);       /* plate */
+  box(0.34, 0.22, 0.014, M.bone, 0, 0, 0.016, g);   /* recess */
+  var rockers = [];
+  for (var i = 0; i < 3; i++){
+    var p = new THREE.Group();
+    p.position.set(-0.105 + i * 0.105, 0.03, 0.024);
+    box(0.075, 0.13, 0.016, M.white, 0, 0, 0.008, p);
+    g.add(p); rockers.push(p);
+  }
+  var led = box(0.018, 0.018, 0.01, glow(0xFF3A2A, 0.2), 0.135, -0.1, 0.026, g);
+  /* a socket underneath, because that is how it really looks on a wall */
+  box(0.3, 0.24, 0.02, M.white, 0, -0.42, 0, g);
+  box(0.07, 0.07, 0.012, M.bone, -0.05, -0.4, 0.014, g);
+  box(0.07, 0.07, 0.012, M.bone,  0.05, -0.4, 0.014, g);
+  g.userData.rockers = rockers;
+  g.userData.led = led.material;
+  scene.add(g);
+  return g;
+})();
+box(0.9, 0.05, 0.34, M.woodDark, -1.85, 0.78, -8.6);
+cyl(0.02,0.02,0.78,8,M.steel,-2.2,0.39,-8.7); cyl(0.02,0.02,0.78,8,M.steel,-1.5,0.39,-8.7);
+box(1.1, 0.01, 2.6, M.fabric2, 0, 0.008, -8.8);
+/* framed prints + a mirror break up what is otherwise a big blank wall */
+[[-9.85, 0.46, 0.58], [-10.5, 0.34, 0.42]].forEach(function(f){
+  box(0.03, f[1], f[2], M.woodDark, -HALF + 0.09, 1.62, f[0]);
+  box(0.01, f[1] - 0.08, f[2] - 0.08, M.bone, -HALF + 0.11, 1.62, f[0]);
+});
+box(0.04, 1.05, 0.5, M.glass, -HALF + 0.09, 1.55, -7.55);
+cyl(0.14, 0.14, 0.26, 16, M.bone, -1.62, 0.92, -8.5);
+cyl(0.02, 0.02, 0.3, 6, new THREE.MeshStandardMaterial({ color: 0x4E7A46, roughness: .9 }), -1.62, 1.18, -8.5);
+
+/* ---- room 3 · kitchen: the lighting ----------------------------------- */
+var kitchenLights = (function(){
+  var g = new THREE.Group();
+  var bulbs = [], lampMat = [];
+  [[1.34, -14.60], [1.34, -15.30]].forEach(function(p){
+    /* cone apex up / mouth down — a pendant shade, not a funnel */
+    var shade = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.2, 20, 1, true), M.charcoal);
+    shade.position.set(p[0], 1.98, p[1]);
+    shade.material.side = THREE.DoubleSide;
+    g.add(shade);
+    var m = glow(0xFFC978, 0.15);
+    var b = new THREE.Mesh(new THREE.SphereGeometry(0.062, 18, 14), m);
+    b.position.set(p[0], 1.9, p[1]);
+    g.add(b); lampMat.push(m);
+    cyl(0.005, 0.005, 0.78, 5, M.charcoal, p[0], 2.44, p[1], g);
+  });
+  /* ceiling panel + under-cabinet strip */
+  var panelMat = glow(0xFFF4E2, 0.2);
+  box(0.9, 0.03, 0.5, panelMat, -0.4, CEIL - 0.03, -14.9, g);
+  var stripMat = glow(0xFFEBC8, 0.2);
+  box(0.04, 0.03, 1.7, stripMat, HALF - 0.62, 1.44, -15.0, g);
+  var lamp = new THREE.PointLight(0xFFC978, 0, 5.5, 1.5);
+  lamp.position.set(1.34, 1.85, -14.95);
+  g.add(lamp);
+  g.userData = { bulbs: lampMat, panel: panelMat, strip: stripMat, lamp: lamp };
+  scene.add(g);
+  return g;
+})();
+/* counter + cabinets on the right wall */
+box(0.66, 0.9, 3.0, M.bone,  HALF - 0.4, 0.45, -15.0);
+box(0.7, 0.05, 3.06, M.charcoal, HALF - 0.4, 0.92, -15.0);
+box(0.42, 0.62, 2.4, M.white, HALF - 0.28, 1.9, -15.0);
+box(0.5, 0.03, 0.36, M.steel, HALF - 0.5, 0.95, -14.2);
+box(1.5, 0.75, 0.9, M.bone, -1.2, 0.375, -13.4);
+box(1.6, 0.05, 1.0, M.woodDark, -1.2, 0.78, -13.4);
+
+/* ---- room 4 · bedroom: the AC ---------------------------------------- */
+var ac = (function(){
+  var g = new THREE.Group();
+  g.position.set(-2.24, 2.24, -21.20);
+  g.rotation.y = Math.PI / 2;
+  box(1.02, 0.3, 0.24, M.white, 0, 0, 0, g);
+  box(0.94, 0.14, 0.02, M.bone, 0, 0.05, 0.125, g);
+  box(0.9, 0.09, 0.02, M.charcoal, 0, -0.09, 0.12, g);
+  var louver = box(0.88, 0.06, 0.02, M.white, 0, -0.12, 0.12, g);
+  louver.rotation.x = -0.5;
+  var disp = box(0.12, 0.016, 0.01, glow(0x5EC8FF, 0.3), 0.36, 0.09, 0.13, g);
+  var ribbons = [];
+  for (var i = 0; i < 5; i++){
+    var m = new THREE.Mesh(
+      new THREE.PlaneGeometry(0.14, 1.05),
+      new THREE.MeshBasicMaterial({ color: 0xBFE6FF, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false })
+    );
+    m.position.set(-0.36 + i * 0.18, -0.62, 0.2);
+    m.rotation.x = -0.42;
+    g.add(m);
+    ribbons.push({ m: m, phase: i * 0.5 });
+  }
+  g.userData = { louver: louver, disp: disp.material, ribbons: ribbons };
+  scene.add(g);
+  return g;
+})();
+box(1.7, 0.32, 2.1, M.woodDark, -1.2, 0.16, -21.4);
+box(1.62, 0.22, 2.0, M.white, -1.2, 0.42, -21.4);
+box(1.5, 0.16, 0.4, M.fabric2, -1.2, 0.6, -22.2);
+box(1.66, 0.5, 0.08, M.woodDark, -1.2, 0.6, -22.5);
+box(0.4, 0.42, 0.4, M.woodDark, 0.1, 0.21, -22.3);
+cyl(0.08, 0.11, 0.2, 14, M.bone, 0.1, 0.52, -22.3);
+box(1.2, 0.01, 1.6, M.fabric2, -1.1, 0.008, -19.9);
+
+/* ---- room 5 · bathroom: the geyser ----------------------------------- */
+var geyser = (function(){
+  var g = new THREE.Group();
+  g.position.set(2.22, 2.10, -26.90);
+  g.rotation.y = -Math.PI / 2;
+  cyl(0.23, 0.23, 0.52, 26, M.white, 0, 0, 0, g);
+  var top = new THREE.Mesh(new THREE.SphereGeometry(0.23, 26, 14, 0, Math.PI*2, 0, Math.PI/2), M.white);
+  top.position.y = 0.26; g.add(top);
+  var bot = new THREE.Mesh(new THREE.SphereGeometry(0.23, 26, 14, 0, Math.PI*2, 0, Math.PI/2), M.white);
+  bot.position.y = -0.26; bot.rotation.x = Math.PI; g.add(bot);
+  cyl(0.235, 0.235, 0.07, 26, M.red, 0, -0.14, 0, g);
+  var lampRing = box(0.05, 0.05, 0.012, glow(0xFF3A2A, 0.3), 0.0, 0.02, 0.235, g);
+  cyl(0.022, 0.022, 0.2, 8, M.steel, -0.1, -0.42, 0.0, g);
+  cyl(0.022, 0.022, 0.2, 8, M.steel,  0.1, -0.42, 0.0, g);
+  g.userData = { led: lampRing.material };
+  scene.add(g);
+  return g;
+})();
+box(0.55, 0.8, 1.1, M.white, HALF - 0.35, 0.4, -25.6);
+box(0.6, 0.06, 1.16, M.tile, HALF - 0.35, 0.83, -25.6);
+cyl(0.16, 0.16, 0.1, 20, M.white, HALF - 0.4, 0.88, -25.6);
+cyl(0.014, 0.014, 0.22, 8, M.steel, HALF - 0.14, 0.97, -25.6);
+box(0.04, 0.85, 0.7, M.glass, HALF - 0.09, 1.62, -25.6);
+box(0.9, 1.9, 0.06, M.glass, -1.5, 0.95, -27.9);
+box(0.06, 0.03, 0.55, M.steel, -HALF + 0.14, 1.3, -26.4);
+/* a tiled dado on both walls is what actually makes the room read "bathroom" */
+[-1, 1].forEach(function(s){
+  box(0.03, 1.18, 5.3, new THREE.MeshStandardMaterial({ color: 0xCFDCDD, roughness: 0.22, metalness: 0.05 }),
+      s * (HALF - 0.07), 0.6, -26.3);
+  box(0.045, 0.035, 5.3, M.white, s * (HALF - 0.07), 1.2, -26.3);
+});
+/* towel rail + towel */
+cyl(0.015, 0.015, 0.6, 8, M.steel, -HALF + 0.16, 1.42, -26.4).rotation.x = Math.PI / 2;
+box(0.09, 0.44, 0.28, M.fabric2, -HALF + 0.22, 1.2, -26.4);
+
+/* ---- room 6 · utility: the MCB board --------------------------------- */
+var board = (function(){
+  var g = new THREE.Group();
+  g.position.set(-2.24, 1.76, -32.30);
+  g.rotation.y = Math.PI / 2;
+  box(0.62, 0.46, 0.1, M.white, 0, 0, 0, g);
+  box(0.56, 0.4, 0.02, M.charcoal, 0, 0, 0.052, g);
+  var toggles = [];
+  for (var i = 0; i < 7; i++){
+    var body = box(0.05, 0.19, 0.05, M.white, -0.24 + i * 0.08, 0.06, 0.075, g);
+    var t = new THREE.Group();
+    t.position.set(-0.24 + i * 0.08, 0.1, 0.1);
+    box(0.03, 0.055, 0.02, i === 0 ? M.red : M.charcoal, 0, 0, 0, t);
+    g.add(t);
+    toggles.push(t);
+  }
+  box(0.5, 0.06, 0.04, M.bone, 0, -0.13, 0.07, g);
+  var pilot = box(0.026, 0.026, 0.012, glow(0x54E08A, 0.3), 0.24, -0.13, 0.092, g);
+  g.userData = { toggles: toggles, pilot: pilot.material };
+  scene.add(g);
+  return g;
+})();
+/* conduit runs + a coil of cable on the floor */
+[-0.55, -0.42].forEach(function(off){
+  cyl(0.018, 0.018, 1.4, 8, M.bone, -HALF + 0.16, 2.05, -32.3 + off);
+});
+cyl(0.018, 0.018, 1.3, 8, M.bone, -HALF + 0.16, 2.42, -31.6).rotation.x = Math.PI/2;
+for (var ci = 0; ci < 5; ci++){
+  var ring = new THREE.Mesh(new THREE.TorusGeometry(0.2 - ci*0.006, 0.022, 6, 26), M.charcoal);
+  ring.position.set(-1.5, 0.03 + ci * 0.045, -33.2);
+  ring.rotation.x = Math.PI / 2;
+  scene.add(ring);
+}
+box(1.5, 0.05, 0.4, M.woodDark, 1.4, 1.5, -33.0);
+box(0.34, 0.3, 0.3, M.bone, 1.2, 1.68, -33.0);
+box(0.28, 0.26, 0.28, M.fabric2, 1.7, 1.66, -33.0);
+
+/* ---- highlight rings -------------------------------------------------- */
+/* a soft ring on the wall behind whatever the current room is selling */
+var ringBase = [];
+var rings = TOUR.map(function(t, i){
+  ringBase[i] = null;
+  if (!t.label) return null;
+  var m = new THREE.Mesh(
+    new THREE.RingGeometry(t.ring, t.ring + 0.035, 48),
+    /* drawn without depth testing: a billboarded ring around a wall-mounted
+       product always has part of its circumference inside the wall */
+    new THREE.MeshBasicMaterial({ color: 0xE30613, transparent: true, opacity: 0,
+                                  side: THREE.DoubleSide, depthWrite: false, depthTest: false })
+  );
+  m.renderOrder = 3;
+  m.position.set(t.look[0], t.look[1], t.look[2]);
+  ringBase[i] = m.position.clone();
+  scene.add(m);
+  return m;
+});
+
+/* ---- dust in the window light ---------------------------------------- */
+var motes = (function(){
+  var n = coarse ? 160 : 320, pos = new Float32Array(n * 3);
+  for (var i = 0; i < n; i++){
+    pos[i*3]   = (Math.random() - 0.5) * 4.4;
+    pos[i*3+1] =  Math.random() * 2.6;
+    pos[i*3+2] =  Z0 - Math.random() * (Z0 - Z1);
+  }
+  var geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  var p = new THREE.Points(geo, new THREE.PointsMaterial({
+    color: 0xC9A87C, size: 0.017, transparent: true, opacity: 0.5, depthWrite: false
+  }));
+  scene.add(p);
+  return p;
+})();
+
+/* =========================================================================
+   8 · framing
+   Offsetting the look-at target perpendicular to the view puts the product
+   at a chosen spot in frame. Deriving that offset from the live FOV and
+   aspect means it lands correctly on any screen instead of being tuned to
+   one width.
+   ========================================================================= */
+var camPos = [], camLook = [];
+var vA = new THREE.Vector3(), vB = new THREE.Vector3(), vUp = new THREE.Vector3(0,1,0);
+var vFwd = new THREE.Vector3(), vRight = new THREE.Vector3(), vLift = new THREE.Vector3();
+
+function buildFraming(){
+  camPos.length = 0; camLook.length = 0;
+  var halfV = THREE.MathUtils.degToRad(camera.fov * 0.5);
+  var tanV  = Math.tan(halfV);
+  var tanH  = Math.tan(Math.atan(tanV * camera.aspect));
+
+  TOUR.forEach(function(t, i){
+    var cam = new THREE.Vector3(t.cam[0], t.cam[1], t.cam[2]);
+    var tgt = new THREE.Vector3(t.look[0], t.look[1], t.look[2]);
+
+    /* A portrait viewport sees a far narrower slice of the world at the same
+       distance, so every prop reads as enormous. Back the camera off along the
+       floor — keeping eye height — rather than widening the lens. */
+    if (narrow){
+      var pull = i === 0 ? 1.15 : 1.42;
+      cam.set(tgt.x + (cam.x - tgt.x) * pull, cam.y, tgt.z + (cam.z - tgt.z) * pull);
+    }
+    var dist = cam.distanceTo(tgt);
+
+    /* portrait has far less width to play with, so the product moves toward
+       the middle and rides above the copy instead of beside it */
+    var ndcX = narrow ? t.ndc[0] * 0.34 : t.ndc[0];
+    var ndcY = narrow ? Math.max(t.ndc[1], 0) + 0.32 : t.ndc[1];
+
+    vFwd.copy(tgt).sub(cam).normalize();
+    vRight.crossVectors(vFwd, vUp).normalize();
+    vLift.crossVectors(vRight, vFwd).normalize();
+
+    var look = tgt.clone()
+      .addScaledVector(vRight, -ndcX * dist * tanH)
+      .addScaledVector(vLift,  -ndcY * dist * tanV);
+
+    camPos.push(cam);
+    camLook.push(look);
+  });
+}
+
+var curPos = new THREE.Vector3(), curLook = new THREE.Vector3();
+var tmpPos = new THREE.Vector3(), tmpLook = new THREE.Vector3();
+
+function frame(dt){
+  var f = clamp(roomSmooth, 0, TOUR.length - 1);
+  var i = Math.min(Math.floor(f), TOUR.length - 2);
+  var t = ease(clamp(f - i, 0, 1));
+
+  tmpPos.copy(camPos[i]).lerp(camPos[i+1], t);
+  tmpLook.copy(camLook[i]).lerp(camLook[i+1], t);
+
+  /* a second, gentler pass of damping on top of the eased interpolation is
+     what turns "correct" motion into motion that feels unhurried */
+  curPos.x  = damp(curPos.x,  tmpPos.x  + ptX * 0.1,  9, dt);
+  curPos.y  = damp(curPos.y,  tmpPos.y  - ptY * 0.05, 9, dt);
+  curPos.z  = damp(curPos.z,  tmpPos.z,               9, dt);
+  curLook.x = damp(curLook.x, tmpLook.x + ptX * 0.16, 7, dt);
+  curLook.y = damp(curLook.y, tmpLook.y - ptY * 0.1,  7, dt);
+  curLook.z = damp(curLook.z, tmpLook.z,              7, dt);
+
+  camera.position.copy(curPos);
+  camera.lookAt(curLook);
+  roving.position.set(curPos.x, 2.55, curPos.z - 1.6);
+}
+
+/* how strongly each room is "the one you are looking at", 0..1. Products
+   cross-fade on this so a fan does not stop dead mid-transition. */
+function activity(i){ return clamp(1 - Math.abs(roomSmooth - i) / 0.85, 0, 1); }
+/* labels and rings use the stricter version — only ever one on screen, or the
+   previous room's card hangs around while the next one fades in */
+function focus(i){
+  return Math.round(roomSmooth) === i ? clamp(1 - Math.abs(roomSmooth - i) / 0.62, 0, 1) : 0;
+}
+
+/* =========================================================================
+   9 · hotspot labels tracking their product in screen space
+   ========================================================================= */
+var hotWrap = document.getElementById('hotspots');
+var hots = TOUR.map(function(t){
+  if (!t.label) return null;
+  var el = document.createElement('div');
+  el.className = 'hot';
+  el.innerHTML = '<span class="hot-dot"></span><a class="hot-card"><strong></strong><span></span></a>';
+  el.querySelector('strong').textContent = t.label;
+  el.querySelector('.hot-card span').textContent = t.sub;
+  el.querySelector('.hot-card').href = t.href;
+  hotWrap.appendChild(el);
+  /* prefer hanging the card away from the copy column */
+  return { el: el, v: new THREE.Vector3(t.look[0], t.look[1], t.look[2]),
+           shown: false, prefer: t.ndc[0] < 0, flipped: null };
+});
+
+function placeHotspots(){
+  for (var i = 0; i < hots.length; i++){
+    var h = hots[i];
+    if (!h) continue;
+    var a = focus(i);
+    if (a < 0.02){
+      if (h.shown){ h.el.style.opacity = '0'; h.el.style.visibility = 'hidden'; h.shown = false; }
+      continue;
+    }
+    vA.copy(h.v).project(camera);
+    var behind = vA.z > 1;
+    var x = (vA.x * 0.5 + 0.5) * innerWidth;
+    var y = (-vA.y * 0.5 + 0.5) * innerHeight;
+    /* keep the preferred side unless the card would run off that edge */
+    var flip = h.prefer;
+    if (flip && x < 190) flip = false;
+    else if (!flip && x > innerWidth - 190) flip = true;
+    if (flip !== h.flipped){ h.el.classList.toggle('flip', flip); h.flipped = flip; }
+    h.el.style.transform = 'translate3d(' + Math.round(x) + 'px,' + Math.round(y) + 'px,0)';
+    h.el.style.opacity = behind ? '0' : String(a);
+    h.el.style.visibility = 'visible';
+    h.shown = true;
+  }
+}
+
+/* =========================================================================
+   10 · frame loop
+   ========================================================================= */
+function resize(){
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight, false);
+  buildFraming();
+}
+addEventListener('resize', resize, { passive: true });
+buildFraming();
+curPos.copy(camPos[0]); curLook.copy(camLook[0]);
+
+var visible = true;
+new IntersectionObserver(function(e){
+  visible = e[0].isIntersecting;
+  if (visible && !running){ running = true; last = performance.now(); requestAnimationFrame(tick); }
+}, { threshold: 0 }).observe(document.querySelector('.page'));
+
+var running = true, last = 0, clock = 0;
+document.addEventListener('visibilitychange', function(){
+  if (document.hidden) running = false;
+  else if (!running){ running = true; last = performance.now(); requestAnimationFrame(tick); }
+});
+
+var perfN = 0, perfT = 0, perfSteps = 0;
+function watchBudget(dt){
+  if (perfSteps >= 2) return;
+  perfT += dt; perfN++;
+  if (perfN < 110) return;
+  if (perfT / perfN > 1 / 38){
+    quality = Math.max(0.75, quality * 0.75);
+    renderer.setPixelRatio(quality);
+    renderer.setSize(innerWidth, innerHeight, false);
+    perfSteps++;
+  }
+  perfN = 0; perfT = 0;
+}
+
+function tick(now){
+  if (!running) return;
+  var dt = Math.min(0.05, (now - (last || now)) / 1000);
+  last = now; clock += dt;
+
+  roomRaw = roomProgress();
+  roomSmooth = reduce ? roomRaw : damp(roomSmooth, roomRaw, 3.1, dt);
+  ptX = damp(ptX, ptTX, 2.6, dt);
+  ptY = damp(ptY, ptTY, 2.6, dt);
+
+  if (visible){
+    watchBudget(dt);
+
+    var aFan = activity(1), aSw = activity(2), aLt = activity(3),
+        aAc  = activity(4), aGy = activity(5), aBd = activity(6);
+
+    fan.userData.blades.rotation.y += dt * (0.7 + aFan * 7.5);
+
+    switchPlate.userData.rockers.forEach(function(r, i){
+      r.rotation.x = lerp(-0.24, 0.24, ease(clamp((aSw - i * 0.1) / 0.7, 0, 1)));
+    });
+    switchPlate.userData.led.emissiveIntensity = 0.15 + aSw * 2.2;
+
+    var flick = 0.94 + Math.sin(clock * 3.4) * 0.06;
+    kitchenLights.userData.bulbs.forEach(function(m, i){
+      m.emissiveIntensity = 0.15 + aLt * 2.6 * (i ? flick : 1);
+    });
+    kitchenLights.userData.panel.emissiveIntensity = 0.2 + aLt * 2.0;
+    kitchenLights.userData.strip.emissiveIntensity = 0.2 + aLt * 2.4;
+    kitchenLights.userData.lamp.intensity = aLt * 6;
+
+    ac.userData.disp.emissiveIntensity = 0.3 + aAc * 2.6;
+    ac.userData.louver.rotation.x = -0.5 - aAc * 0.35;
+    ac.userData.ribbons.forEach(function(r){
+      var w = Math.sin(clock * 1.5 + r.phase) * 0.5 + 0.5;
+      r.m.material.opacity = aAc * w * 0.26;
+    });
+
+    geyser.userData.led.emissiveIntensity = 0.3 + aGy * (2.4 + Math.sin(clock * 2.2) * 0.5);
+
+    board.userData.toggles.forEach(function(t, i){
+      t.rotation.x = lerp(0.3, -0.3, ease(clamp((aBd - i * 0.06) / 0.7, 0, 1)));
+    });
+    board.userData.pilot.emissiveIntensity = 0.3 + aBd * 2.6;
+
+    for (var i = 0; i < rings.length; i++){
+      if (!rings[i]) continue;
+      var a = focus(i);
+      rings[i].material.opacity = a * 0.24;
+      rings[i].scale.setScalar(0.85 + a * 0.3 + Math.sin(clock * 1.6) * 0.02);
+      rings[i].quaternion.copy(camera.quaternion);
+      /* these products sit flat against a wall, so a billboarded ring would be
+         half-buried in it — float it off the surface toward the viewer */
+      vB.copy(camera.position).sub(ringBase[i]).normalize();
+      rings[i].position.copy(ringBase[i]).addScaledVector(vB, 0.16);
+    }
+
+    motes.rotation.y = clock * 0.006;
+
+    frame(dt);
+    placeHotspots();
+    renderer.render(scene, camera);
+  }
+  requestAnimationFrame(tick);
+}
+requestAnimationFrame(tick);
+
+})();
+</script>
+</body>
+</html>
