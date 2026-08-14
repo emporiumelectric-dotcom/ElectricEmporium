@@ -205,8 +205,15 @@ body.on-paper .jump-list button em{color:var(--ink-3)}
   transition:transform var(--fast) var(--ease),border-color var(--fast) var(--ease)}
 .hot-card:hover{transform:translateY(-2px);border-color:var(--brass)}
 .hot.flip .hot-card{left:auto;right:var(--off,1.3rem)}
+/* a portrait viewport is too narrow to hang the card beside the product,
+   so it sits centred underneath instead */
+@media(max-width:64rem){
+  .hot-card,.hot.flip .hot-card{left:50%;right:auto;top:1rem;transform:translateX(-50%)}
+  .hot-card:hover,.hot.flip .hot-card:hover{transform:translateX(-50%)}
+}
 .hot-card strong{font-size:.75rem;font-weight:700;letter-spacing:-.005em;white-space:nowrap}
 .hot-card span{color:var(--dim);font-size:.61rem;font-weight:500;white-space:nowrap}
+.hot-card b{margin-top:.14rem;color:var(--brass);font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums}
 
 /* ---------- rooms ---------- */
 .page{position:relative;z-index:10}
@@ -481,7 +488,7 @@ footer{position:relative;z-index:14;padding:var(--xl) calc(var(--pad) + 4.2rem) 
         <span class="mask" style="--i:1"><span>touch every <span class="accent">day.</span></span></span>
       </h2>
       <p class="lede up d2">Legrand and Havells modular plates and sockets. Ten years of daily use is a lot to ask of the cheapest option on the shelf.</p>
-      <a class="tag up d3" href="products.html?category=Switches">See switches &amp; sockets</a>
+      <a class="tag up d3" href="products.html">See switches &amp; sockets</a>
       <p class="brands-line up d3"><span>Legrand</span><span>Havells</span><span>Indo Asian</span></p>
       <div class="note up d4">
         <strong>Authorised Legrand dealer</strong>
@@ -498,7 +505,7 @@ footer{position:relative;z-index:14;padding:var(--xl) calc(var(--pad) + 4.2rem) 
         <span class="mask" style="--i:1"><span>actually <span class="accent">cook by.</span></span></span>
       </h2>
       <p class="lede up d2">Havells, Surya and Nortek — panels, downlights, strips and pendants, every one of them lit on our display wall before you buy it.</p>
-      <a class="tag up d3" href="products.html?category=Lights">See lights &amp; LEDs</a>
+      <a class="tag up d3" href="products.html?category=Lights%20and%20LEDs">See lights &amp; LEDs</a>
       <p class="brands-line up d3"><span>Havells</span><span>Surya</span><span>Nortek</span></p>
     </div>
   </section>
@@ -511,7 +518,7 @@ footer{position:relative;z-index:14;padding:var(--xl) calc(var(--pad) + 4.2rem) 
         <span class="mask" style="--i:1"><span>to the <span class="accent">room.</span></span></span>
       </h2>
       <p class="lede up d2">Daikin, Mitsubishi and Lloyd split units, with the star rating explained honestly and installation by people who still answer the phone next summer.</p>
-      <a class="tag up d3" href="products.html?category=ACs">See air conditioners</a>
+      <a class="tag up d3" href="products.html?category=ACs%20and%20Freezers">See air conditioners</a>
       <p class="brands-line up d3"><span>Daikin</span><span>Mitsubishi</span><span>Lloyd</span></p>
     </div>
   </section>
@@ -537,7 +544,7 @@ footer{position:relative;z-index:14;padding:var(--xl) calc(var(--pad) + 4.2rem) 
         <span class="mask" style="--i:1"><span>behind it <span class="accent">all.</span></span></span>
       </h2>
       <p class="lede up d2">Polycab, KEI and Havells wire, with MCBs, RCCBs and distribution boards specced for the load your home actually draws — not the one printed on the box.</p>
-      <a class="tag up d3" href="products.html?category=Wires">See wires, MCBs &amp; DBs</a>
+      <a class="tag up d3" href="products.html?category=Wires%20and%20Cables">See wires, MCBs &amp; DBs</a>
       <p class="brands-line up d3"><span>Polycab</span><span>KEI</span><span>Havells</span><span>V-Guard</span></p>
       <div class="note up d4">
         <strong>End of the tour</strong>
@@ -640,28 +647,28 @@ var TOUR = [
   { id:'entry', room:'Front door', label:null,
     cam:[0, 1.60,  3.6], look:[0, 1.40, -3.0], ndc:[0, 0] },
 
-  { id:'living', room:'Living room', label:'Ceiling fan', sub:'Havells · Atomberg · BLDC',
+  { id:'living', room:'Living room', label:'Atomberg Aris Contour', sub:'Smart BLDC ceiling fan', price:'₹6,999',
     href:'products.html?category=Fans',
     cam:[-0.10, 1.56,  0.20], look:[0.55, 2.36, -3.30], ndc:[ 0.44,  0.28], ring:0.72 },
 
-  { id:'hallway', room:'Hallway', label:'Modular switches', sub:'Legrand · Havells',
-    href:'products.html?category=Switches',
+  { id:'hallway', room:'Hallway', label:'Legrand modular range', sub:'Switches &amp; sockets · in store', price:'',
+    href:'products.html',
     cam:[ 0.00, 1.47, -8.15], look:[-2.28, 1.32, -9.10], ndc:[-0.44, -0.04], ring:0.34 },
 
-  { id:'kitchen', room:'Kitchen', label:'Pendants & panel', sub:'Havells · Surya · Nortek',
-    href:'products.html?category=Lights',
+  { id:'kitchen', room:'Kitchen', label:'Havells Octane+ LED Panel', sub:'Round surface panel', price:'₹750',
+    href:'products.html?category=Lights%20and%20LEDs',
     cam:[-0.24, 1.56,-12.70], look:[ 1.34, 1.92,-14.90], ndc:[ 0.42,  0.16], ring:0.34 },
 
-  { id:'bedroom', room:'Bedroom', label:'Split AC', sub:'Daikin · Mitsubishi · Lloyd',
-    href:'products.html?category=ACs',
+  { id:'bedroom', room:'Bedroom', label:'Daikin 1.5 Ton Split Inverter', sub:'3 star · 2026 model', price:'₹37,490',
+    href:'products.html?category=ACs%20and%20Freezers',
     cam:[ 0.34, 1.56,-19.30], look:[-2.24, 2.24,-21.20], ndc:[-0.42,  0.22], ring:0.62 },
 
-  { id:'bathroom', room:'Bathroom', label:'Storage geyser', sub:'V-Guard · Havells',
+  { id:'bathroom', room:'Bathroom', label:'Havells Instanio Prime 15L', sub:'Storage water heater', price:'₹8,490',
     href:'products.html?category=Geysers',
     cam:[-0.26, 1.54,-25.40], look:[ 2.22, 2.10,-26.90], ndc:[ 0.42,  0.20], ring:0.40 },
 
-  { id:'utility', room:'Utility', label:'MCB distribution board', sub:'Havells · Polycab · KEI',
-    href:'products.html?category=Wires',
+  { id:'utility', room:'Utility', label:'Havells Life Guard FR-LSH', sub:'1.0–6.0 sq mm cable', price:'',
+    href:'products.html?category=Wires%20and%20Cables',
     cam:[ 0.30, 1.52,-30.80], look:[-2.24, 1.76,-32.30], ndc:[-0.42,  0.08], ring:0.44 }
 ];
 
@@ -815,7 +822,7 @@ TOUR.slice(1).forEach(function(t, i){
   b.type = 'button';
   b.innerHTML = '<i></i><em></em><span></span>';
   b.querySelector('em').textContent = String(i + 1).padStart(2, '0');
-  b.querySelector('span').textContent = t.label.replace('MCB distribution board','MCBs & DBs');
+  b.querySelector('span').textContent = t.room;
   b.setAttribute('aria-label', 'Go to the ' + t.room);
   b.addEventListener('click', function(){
     jump.dataset.open = 'false';
@@ -844,13 +851,13 @@ document.addEventListener('click', function(e){
 var INDEX = [
   { kind:'Shop', name:'Fans',               desc:'Ceiling, table, pedestal & BLDC', href:'products.html?category=Fans',
     terms:'fan fans ceiling bldc pedestal table exhaust wall air breeze havells atomberg crompton' },
-  { kind:'Shop', name:'Lights & LEDs',      desc:'Bulbs, tubes, panels, downlights, strips', href:'products.html?category=Lights',
+  { kind:'Shop', name:'Lights & LEDs',      desc:'Bulbs, tubes, panels, downlights, strips', href:'products.html?category=Lights%20and%20LEDs',
     terms:'light lights led leds bulb tube panel downlight strip lamp batten pendant chandelier surya nortek' },
-  { kind:'Shop', name:'Wires, MCBs & DBs',  desc:'House wiring, MCBs, RCCBs, distribution boards', href:'products.html?category=Wires',
+  { kind:'Shop', name:'Wires, MCBs & DBs',  desc:'House wiring, MCBs, RCCBs, distribution boards', href:'products.html?category=Wires%20and%20Cables',
     terms:'wire wires cable cables mcb mcbs rccb rcbo db distribution board fuse conduit earthing polycab kei' },
-  { kind:'Shop', name:'Switches & Sockets', desc:'Modular plates, sockets, regulators', href:'products.html?category=Switches',
+  { kind:'Shop', name:'Switches & Sockets', desc:'Modular plates, sockets, regulators', href:'products.html',
     terms:'switch switches socket sockets modular plate board regulator dimmer bell legrand indo asian' },
-  { kind:'Shop', name:'Air Conditioners',   desc:'Split & window units', href:'products.html?category=ACs',
+  { kind:'Shop', name:'Air Conditioners',   desc:'Split & window units', href:'products.html?category=ACs%20and%20Freezers',
     terms:'ac acs air conditioner conditioning split window cooling inverter ton daikin mitsubishi lloyd' },
   { kind:'Shop', name:'Geysers',            desc:'Storage & instant water heaters', href:'products.html?category=Geysers',
     terms:'geyser geysers water heater instant storage bathroom hot vguard v-guard' },
@@ -1543,9 +1550,11 @@ var hots = TOUR.map(function(t){
   if (!t.label) return null;
   var el = document.createElement('div');
   el.className = 'hot';
-  el.innerHTML = '<span class="hot-dot"></span><a class="hot-card"><strong></strong><span></span></a>';
+  el.innerHTML = '<span class="hot-dot"></span><a class="hot-card"><strong></strong><span></span><b></b></a>';
   el.querySelector('strong').textContent = t.label;
   el.querySelector('.hot-card span').textContent = t.sub;
+  var priceEl = el.querySelector('.hot-card b');
+  if (t.price) priceEl.textContent = t.price; else priceEl.remove();
   el.querySelector('.hot-card').href = t.href;
   hotWrap.appendChild(el);
   return { el: el, v: new THREE.Vector3(t.look[0], t.look[1], t.look[2]), r: t.ring,
@@ -1568,6 +1577,9 @@ function placeHotspots(){
     vB.copy(h.v).addScaledVector(camRight, h.r).project(camera);
     var off = clamp(Math.abs((vB.x - vA.x) * 0.5 * innerWidth) + 14, 20, 240) | 0;
     if (off !== h.off){ h.el.style.setProperty('--off', off + 'px'); h.off = off; }
+    /* card is centred under the dot on narrow screens, so keep the whole
+       anchor far enough from either edge for it to stay on screen */
+    if (narrow) x = clamp(x, 96, innerWidth - 96);
     var x = (vA.x * 0.5 + 0.5) * innerWidth;
     var y = (-vA.y * 0.5 + 0.5) * innerHeight;
     var flip = h.prefer;
