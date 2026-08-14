@@ -171,6 +171,34 @@ h2{font-size:var(--t-section);text-transform:uppercase}
   padding:var(--xl) var(--lg);border:var(--rule) solid var(--line-l);border-radius:var(--r-md);background:#F6F4F1}
 .since p{margin:0;max-width:60ch;color:var(--ink-3);line-height:1.72}
 .since strong{color:var(--ink);font-weight:800}
+.prod{display:flex;align-items:center;gap:.8rem;max-width:25rem;margin:var(--md) 0 0;
+  padding:.55rem .95rem .55rem .55rem;border-radius:var(--r-sm);background:var(--white);color:var(--ink);
+  box-shadow:0 20px 44px -24px rgba(0,0,0,.95);
+  transition:transform var(--fast) var(--ease),box-shadow var(--fast) var(--ease)}
+.prod:hover{transform:translateY(-3px);box-shadow:0 26px 54px -24px rgba(0,0,0,1)}
+.prod-shot{position:relative;flex:none;width:3.3rem;height:3.3rem;border-radius:.45rem;overflow:hidden;
+  background:#F1EEE9;display:grid;place-items:center}
+.prod-shot::before{content:attr(data-b);position:absolute;color:var(--muted);font-size:1.1rem;font-weight:800}
+.prod-shot img{position:relative;width:100%;height:100%;object-fit:contain;padding:.22rem;background:#F1EEE9}
+.prod-text{display:grid;min-width:0;gap:.1rem}
+.prod-text b{font-size:.84rem;font-weight:800;letter-spacing:-.012em;line-height:1.2}
+.prod-text>span{color:var(--muted-2);font-size:.7rem;font-weight:600}
+.prod i{margin-left:auto;font-style:normal;color:var(--red);font-size:1rem;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.prod i.soft{color:var(--muted-2);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+.ask{display:inline-flex;align-items:center;gap:.4rem;margin-top:.7rem;color:var(--muted);
+  font-size:.72rem;font-weight:700;letter-spacing:.02em}
+.ask::before{content:"";width:.42rem;height:.42rem;border-radius:50%;background:#25D366}
+.ask:hover{color:var(--white)}
+.certs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--md);margin-top:var(--xl)}
+.certs figure{margin:0}
+.certs img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r-sm);border:var(--rule) solid var(--line-l)}
+.certs figcaption{margin-top:.55rem;color:var(--ink-3);font-size:.72rem;font-weight:700;line-height:1.4}
+.certs b{display:block;color:var(--ink);font-size:.76rem;font-weight:800}
+.openstate{display:inline-flex;align-items:center;gap:.45rem;margin-bottom:var(--md);padding:.3rem .7rem;
+  border:var(--rule) solid rgba(255,255,255,.35);border-radius:99px;font-size:.66rem;font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase}
+.openstate i{width:.45rem;height:.45rem;border-radius:50%;background:#7CE0A0;box-shadow:0 0 8px #7CE0A0}
+.openstate.shut i{background:#FFB4B4;box-shadow:none}
 .featured{display:flex;align-items:baseline;flex-wrap:wrap;gap:.45rem;margin:var(--md) 0 0;font-size:.78rem}
 .featured b{font-weight:800;letter-spacing:-.01em}
 .featured span{color:var(--muted)}
@@ -322,7 +350,7 @@ figure.shot figcaption{position:absolute;left:.8rem;right:.8rem;bottom:.8rem;pad
 .visit-panel .btn.ghost:hover{background:rgba(255,255,255,.12);border-color:var(--white)}
 
 /* must be positioned, or a static footer paints beneath the fixed WebGL canvas */
-footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(--white);color:var(--ink);border-top:var(--rule) solid var(--line-l)}
+footer{position:relative;z-index:12;padding:var(--xl) calc(var(--pad) + 4.2rem) var(--xl) var(--pad);background:var(--white);color:var(--ink);border-top:var(--rule) solid var(--line-l)}
 .foot{display:flex;align-items:center;justify-content:space-between;gap:var(--lg);flex-wrap:wrap}
 .foot-brand{display:flex;align-items:center;gap:.65rem;font-weight:800;letter-spacing:-.01em}
 .foot-brand img{width:2.6rem;height:2.6rem;object-fit:contain}
@@ -497,7 +525,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">Polycab, KEI and Havells house wiring, backed by MCBs, RCCBs and distribution boards chosen for the load your home actually carries — not the one on the box.</p>
       <a class="tag reveal d3" href="products.html?category=Wires%20and%20Cables">Explore wires &amp; cables</a>
-      <p class="featured reveal d3"><b>Havells Life Guard FR-LSH</b><span>1.0–6.0 sq mm cable</span></p>
+      <a class="prod reveal d3" href="products.html?category=Wires%20and%20Cables"><span class="prod-shot" data-b="H"><img src="https://havells.com/media/catalog/product/import/flexible_cables/life_guard/90m/black.jpg" alt="Havells Life Guard FR-LSH" loading="lazy" onerror="this.remove()"></span><span class="prod-text"><b>Havells Life Guard FR-LSH</b><span>1.0–6.0 sq mm · FR-LSH</span></span><i class="soft">In store</i></a>
+      <a class="ask reveal d4" href="https://wa.me/919425831035?text=Hi%20Electric%20Emporium%2C%20I%20want%20to%20know%20about%20house%20wiring" target="_blank" rel="noopener">Ask about house wiring on WhatsApp</a>
       <p class="brand-line reveal d3"><span>Polycab</span><span>KEI</span><span>Havells</span><span>V-Guard</span></p>
       <div class="chapter-card reveal d4">
         <strong>Gauge matters more than price</strong>
@@ -516,7 +545,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">Legrand and Havells modular switches and sockets — the one part of the wiring you touch every day, so it is the last place to save fifty rupees.</p>
       <a class="tag reveal d3" href="products.html">Explore switches &amp; sockets</a>
-      <p class="featured reveal d3"><b>Legrand modular range</b><span>Full range on display in store</span></p>
+      <a class="prod reveal d3" href="products.html"><span class="prod-shot" data-b="L"></span><span class="prod-text"><b>Legrand modular range</b><span>Approved Sales Centre since 2016</span></span><i class="soft">In store</i></a>
+      <a class="ask reveal d4" href="https://wa.me/919425831035?text=Hi%20Electric%20Emporium%2C%20I%20want%20to%20know%20about%20modular%20switches" target="_blank" rel="noopener">Ask about modular switches on WhatsApp</a>
       <p class="brand-line reveal d3"><span>Legrand</span><span>Havells</span><span>Indo Asian</span></p>
       <div class="chapter-card reveal d4">
         <strong>Authorised Legrand dealer</strong>
@@ -535,7 +565,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">Havells, Surya and Nortek — from everyday bulbs and tube lights to panels, downlights and decorative fixtures worth designing a room around.</p>
       <a class="tag reveal d3" href="products.html?category=Lights%20and%20LEDs">Explore lights &amp; LEDs</a>
-      <p class="featured reveal d3"><b>Havells Octane+ LED Panel</b><span>Round surface panel</span><i>₹750</i></p>
+      <a class="prod reveal d3" href="products.html?category=Lights%20and%20LEDs"><span class="prod-shot" data-b="H"><img src="https://havells.com/media/catalog/product/o/c/octane_led_round_18w_230518_12_1.jpg" alt="Havells Octane+ LED Panel" loading="lazy" onerror="this.remove()"></span><span class="prod-text"><b>Havells Octane+ LED Panel</b><span>Round surface panel · 18W</span></span><i>₹750</i></a>
+      <a class="ask reveal d4" href="https://wa.me/919425831035?text=Hi%20Electric%20Emporium%2C%20I%20want%20to%20know%20about%20LED%20lights" target="_blank" rel="noopener">Ask about LED lights on WhatsApp</a>
       <p class="brand-line reveal d3"><span>Havells</span><span>Surya</span><span>Nortek</span></p>
       <div class="chapter-card reveal d4">
         <strong>Lit before you buy it</strong>
@@ -553,7 +584,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">Havells, Atomberg and Crompton — familiar ceiling models through to quiet BLDC fans that run an entire Balaghat summer on a fraction of the power.</p>
       <a class="tag reveal d3" href="products.html?category=Fans">Explore fans</a>
-      <p class="featured reveal d3"><b>Atomberg Aris Contour</b><span>Smart BLDC ceiling fan</span><i>₹6,999</i></p>
+      <a class="prod reveal d3" href="products.html?category=Fans"><span class="prod-shot" data-b="A"><img src="https://dnmzzckeuctnkqbphwdg.supabase.co/storage/v1/object/public/product-photos/1781073283939_bylp7z.jpg" alt="Atomberg Aris Contour" loading="lazy" onerror="this.remove()"></span><span class="prod-text"><b>Atomberg Aris Contour</b><span>Smart BLDC · 1200mm</span></span><i>₹6,999</i></a>
+      <a class="ask reveal d4" href="https://wa.me/919425831035?text=Hi%20Electric%20Emporium%2C%20I%20want%20to%20know%20about%20ceiling%20fans" target="_blank" rel="noopener">Ask about ceiling fans on WhatsApp</a>
       <p class="brand-line reveal d3"><span>Havells</span><span>Atomberg</span><span>Crompton</span></p>
       <div class="chapter-card reveal d4">
         <strong>Matched to the room</strong>
@@ -572,7 +604,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">Daikin, Mitsubishi and Lloyd split units — sized honestly to the room, sold with the star rating explained, and installed by people who still answer the phone next summer.</p>
       <a class="tag reveal d3" href="products.html?category=ACs%20and%20Freezers">Explore air conditioners</a>
-      <p class="featured reveal d3"><b>Daikin 1.5 Ton Split Inverter</b><span>3 star · 2026 model</span><i>₹37,490</i></p>
+      <a class="prod reveal d3" href="products.html?category=ACs%20and%20Freezers"><span class="prod-shot" data-b="D"><img src="https://dnmzzckeuctnkqbphwdg.supabase.co/storage/v1/object/public/product-photos/products/DAIKIN_DAIKIN_2026_MODEL_1_5_TON_3_STAR_SP_01.jpg" alt="Daikin 1.5 Ton Split Inverter" loading="lazy" onerror="this.remove()"></span><span class="prod-text"><b>Daikin 1.5 Ton Split Inverter</b><span>3 star · 2026 model</span></span><i>₹37,490</i></a>
+      <a class="ask reveal d4" href="https://wa.me/919425831035?text=Hi%20Electric%20Emporium%2C%20I%20want%20to%20know%20about%20air%20conditioners" target="_blank" rel="noopener">Ask about air conditioners on WhatsApp</a>
       <p class="brand-line reveal d3"><span>Daikin</span><span>Mitsubishi</span><span>Lloyd</span></p>
     </div>
   </section>
@@ -586,7 +619,8 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       </h2>
       <p class="lede reveal d2">V-Guard and Havells water heaters — the right capacity, proper pressure rating and safe installation, ready before the first cold morning.</p>
       <a class="tag reveal d3" href="products.html?category=Geysers">Explore geysers</a>
-      <p class="featured reveal d3"><b>Havells Instanio Prime 15L</b><span>Storage water heater</span><i>₹8,490</i></p>
+      <a class="prod reveal d3" href="products.html?category=Geysers"><span class="prod-shot" data-b="H"><img src="https://m.media-amazon.com/images/I/51ffCqwdIjL.jpg" alt="Havells Instanio Prime 15L" loading="lazy" onerror="this.remove()"></span><span class="prod-text"><b>Havells Instanio Prime 15L</b><span>Storage water heater</span></span><i>₹8,490</i></a>
+      <a class="ask reveal d4" href="https://wa.me/919425831035?text=Hi%20Electric%20Emporium%2C%20I%20want%20to%20know%20about%20geysers" target="_blank" rel="noopener">Ask about geysers on WhatsApp</a>
       <p class="brand-line reveal d3"><span>V-Guard</span><span>Havells</span></p>
       <div class="chapter-card reveal d4">
         <strong>End of the line, start of the visit</strong>
@@ -627,6 +661,18 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
     <figure class="shot w2"><img src="shop8.png" alt="Pedestal fans lined up on the shop floor" loading="lazy"><figcaption>Fans, running on the floor</figcaption></figure>
     <figure class="shot w2"><img src="shop12.png" alt="Pendant bulbs suspended from the ceiling" loading="lazy"><figcaption>Pendants, hung as you would live with them</figcaption></figure>
     <figure class="shot w2"><img src="shop4.png" alt="Havells lighting counter and hanging fixtures" loading="lazy"><figcaption>The Havells counter</figcaption></figure>
+  </div>
+</section>
+
+<section class="light sec" id="proof" style="padding-block:var(--xxxl)" aria-labelledby="proofTitle">
+  <p class="eyebrow reveal">Not a claim — a certificate</p>
+  <h2 class="reveal" id="proofTitle">Authorised,<br>on paper.</h2>
+  <div class="certs reveal d2">
+      <figure><img src="cert_legrand.jpg" alt="Legrand certificate held by Electric Emporium, Balaghat" loading="lazy"><figcaption><b>Legrand</b>Approved Sales Centre since 2016</figcaption></figure>
+      <figure><img src="cert_surya.jpg" alt="Surya certificate held by Electric Emporium, Balaghat" loading="lazy"><figcaption><b>Surya</b>Authorised channel partner · lighting</figcaption></figure>
+      <figure><img src="cert_pressfit.jpg" alt="Pressfit certificate held by Electric Emporium, Balaghat" loading="lazy"><figcaption><b>Pressfit</b>Authorised channel partner</figcaption></figure>
+      <figure><img src="cert_havells_aspiration.jpg" alt="Havells certificate held by Electric Emporium, Balaghat" loading="lazy"><figcaption><b>Havells</b>Sales aspiration partner, FY 2026-27</figcaption></figure>
+      <figure><img src="cert_havells_trophy.jpg" alt="Havells certificate held by Electric Emporium, Balaghat" loading="lazy"><figcaption><b>Havells</b>One Havells recognition</figcaption></figure>
   </div>
 </section>
 
@@ -674,6 +720,7 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
 <section class="light sec" id="visit" style="padding-top:0" aria-labelledby="visitTitle">
   <div class="visit-panel reveal">
     <div class="visit-copy">
+      <p class="openstate" id="openState" hidden><i></i><span></span></p>
       <p class="eyebrow">The current leads here</p>
       <h2 id="visitTitle">Visit us at<br>Gujri Chowk.</h2>
       <div class="visit-list">
@@ -900,6 +947,23 @@ footer{position:relative;z-index:12;padding:var(--xl) var(--pad);background:var(
       e.preventDefault(); open_();
     }
   });
+  /* open / closed, worked out from the visitor's own clock. Shop hours are
+     10:00-21:00 every day. */
+  (function(){
+    var el = document.getElementById('openState');
+    if (!el) return;
+    function paint(){
+      var now = new Date(), h = now.getHours() + now.getMinutes() / 60;
+      var open = h >= 10 && h < 21;
+      el.hidden = false;
+      el.classList.toggle('shut', !open);
+      el.querySelector('span').textContent = open
+        ? 'Open now · closes 9 PM'
+        : (h < 10 ? 'Closed · opens 10 AM' : 'Closed · opens 10 AM tomorrow');
+    }
+    paint();
+    setInterval(paint, 60000);
+  })();
 })();
 </script>
 <script src="https://unpkg.com/three@0.160.1/build/three.min.js"></script>
@@ -1075,12 +1139,12 @@ if (!window.THREE){ document.documentElement.classList.add('no-webgl'); return; 
    · halo = radius of the ring set · scale = prop size                        */
 var SCENES = [
   { pos:[ 0.0, 0.30,    0], side: 1, dist:10.5,  halo: 2.05, scale: 0.80 },  /* hero     · filament   */
-  { pos:[ 3.4, 0.00,  -20], side: 1, dist:10.4,  halo: 2.45, scale: 0.95 },  /* wires    · cable drum */
-  { pos:[-3.4, 0.10,  -40], side:-1, dist:10.2,  halo: 2.55, scale: 0.95 },  /* switches · the flip   */
-  { pos:[ 3.4, 0.35,  -60], side: 1, dist:10.6,  halo: 2.60, scale: 1.00 },  /* lights   · pendants   */
-  { pos:[-3.4, 0.55,  -80], side:-1, dist:12.6,  halo: 3.15, scale: 0.86 },  /* fans     · ceiling fan*/
-  { pos:[ 3.4, 0.45, -100], side: 1, dist:13.0,  halo: 3.00, scale: 0.85 },  /* acs      · split unit */
-  { pos:[-3.4, 0.00, -120], side:-1, dist:10.8,  halo: 2.45, scale: 0.80 }   /* geysers  · heater     */
+  { pos:[ 3.4, 0.00,  -20], side: 1, dist:10.4,  halo: 2.45, scale: 1.05 },  /* wires    · cable drum */
+  { pos:[-3.4, 0.10,  -40], side:-1, dist:10.2,  halo: 2.55, scale: 1.05 },  /* switches · the flip   */
+  { pos:[ 3.4, 0.35,  -60], side: 1, dist:10.6,  halo: 2.60, scale: 1.30 },  /* lights   · pendants   */
+  { pos:[-3.4, 0.55,  -80], side:-1, dist:12.6,  halo: 3.15, scale: 1.25 },  /* fans     · ceiling fan*/
+  { pos:[ 3.4, 0.45, -100], side: 1, dist:13.0,  halo: 3.00, scale: 1.05 },  /* acs      · split unit */
+  { pos:[-3.4, 0.00, -120], side:-1, dist:10.8,  halo: 2.45, scale: 1.20 }   /* geysers  · heater     */
 ];
 
 var canvas = document.getElementById('world');
@@ -1155,7 +1219,6 @@ function placeAt(i, group){
   var s = SCENES[i];
   group.scale.setScalar(s.scale);
   group.position.set(s.pos[0], s.pos[1], s.pos[2]);
-  addHalo(group, s.halo / s.scale);   /* keep the ring set the same world size */
   scene.add(group);
   props.push(group);
   return group;
@@ -1194,237 +1257,146 @@ var filament = (function(){
   return placeAt(0, g);
 })();
 
-/* --- 1 · cable drum ---------------------------------------------- */
-var wireDrum = (function(){
+/* ------------------------------------------------------------------
+   The props below are deliberately NOT models of products.
+   A fan built from three boxes sitting beside a card that reads
+   "Atomberg Aris Contour" reads as a lie, and the eye catches it.
+   So each chapter shows the phenomenon the category delivers -
+   current, control, light, air, cool, warmth - and the real product
+   is shown as an actual photograph in the copy alongside.
+   ------------------------------------------------------------------ */
+
+/* --- 1 · current arriving ----------------------------------------- */
+var current = (function(){
   var g = new THREE.Group();
-  /* everything that turns lives on one axle so the loose end stays put */
-  var spin = new THREE.Group();
-  var core = new THREE.Mesh(new THREE.CylinderGeometry(1.15, 1.15, 1.85, 40), M.dark);
-  core.rotation.z = Math.PI / 2;
-  spin.add(core);
-  [-0.98, 0.98].forEach(function(x){
-    var flange = new THREE.Mesh(new THREE.CylinderGeometry(1.95, 1.95, 0.11, 44), M.red);
-    flange.rotation.z = Math.PI / 2;
-    flange.position.x = x;
-    spin.add(flange);
-  });
-  /* wound cable */
-  for (var i = 0; i < 15; i++){
-    var ring = new THREE.Mesh(new THREE.TorusGeometry(1.42, 0.055, 6, 52), M.copper);
-    ring.rotation.y = Math.PI / 2;
-    ring.position.x = -0.86 + i * 0.123;
-    spin.add(ring);
+  var strands = [];
+  for (var i = 0; i < 16; i++){
+    var a = (i / 16) * Math.PI * 2, r = 2.4 + (i % 3) * 0.28, pts = [];
+    for (var j = 0; j <= 26; j++){
+      var t = j / 26, rr = r * (1 - t) * (1 - t), spin = a + t * 2.4;
+      pts.push(new THREE.Vector3(Math.cos(spin) * rr, Math.sin(spin) * rr * 0.62, 1.8 - t * 3.6));
+    }
+    var m = new THREE.Mesh(
+      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 44, 0.013, 5, false),
+      new THREE.MeshBasicMaterial({ color: 0xff2a3a, transparent: true, opacity: 0.45, depthWrite: false })
+    );
+    g.add(m);
+    strands.push({ m: m, phase: i * 0.4 });
   }
-  g.add(spin);
-  /* the loose end feeding away */
-  var tail = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0.9, -1.4, 0.4), new THREE.Vector3(1.9, -1.9, 1.3),
-    new THREE.Vector3(3.4, -1.2, 1.9), new THREE.Vector3(4.6, -2.1, 1.2)
-  ]);
-  g.add(new THREE.Mesh(new THREE.TubeGeometry(tail, 60, 0.075, 8, false), M.dark));
-  var stripped = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.5, 8), M.copper);
-  stripped.position.set(4.75, -2.2, 1.1);
-  stripped.rotation.z = 0.9;
-  g.add(stripped);
-  g.userData.spin = spin;
+  var coreMat = glowMat(0xffd9dc, 1.6);
+  var core = new THREE.Mesh(new THREE.SphereGeometry(0.17, 22, 16), coreMat);
+  core.position.z = -1.8;
+  g.add(core);
+  var lamp = new THREE.PointLight(0xff4a52, 12, 12, 1.5);
+  lamp.position.z = -1.8;
+  g.add(lamp);
+  g.userData = { strands: strands, coreMat: coreMat, lamp: lamp };
   return placeAt(1, g);
 })();
 
-/* --- 2 · modular switch plate ------------------------------------ */
-var switchPlate = (function(){
+/* --- 2 · control: a field that switches ---------------------------- */
+var control = (function(){
   var g = new THREE.Group();
-  var plate = new THREE.Mesh(new THREE.BoxGeometry(3.15, 4.4, 0.3), M.white);
-  g.add(plate);
-  /* a dark recess behind the rockers — without it a white rocker on a white
-     plate disappears entirely at this lighting angle */
-  var bezel = new THREE.Mesh(new THREE.BoxGeometry(2.62, 3.94, 0.16), M.dark);
-  bezel.position.z = 0.18;
-  g.add(bezel);
-
-  var rockers = [];
-  for (var i = 0; i < 3; i++){
-    var pivot = new THREE.Group();
-    pivot.position.set(0, 1.15 - i * 1.15, 0.27);
-    var r = new THREE.Mesh(new THREE.BoxGeometry(2.06, 0.94, 0.26), M.white);
-    r.position.z = 0.13;
-    pivot.add(r);
-    g.add(pivot);
-    rockers.push(pivot);
+  var bars = [];
+  for (var i = 0; i < 5; i++){
+    for (var j = 0; j < 4; j++){
+      var pivot = new THREE.Group();
+      pivot.position.set((i - 2) * 0.66, (j - 1.5) * 0.66, 0);
+      var mat = glowMat(0xff2a3a, 0.12);
+      pivot.add(new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.085, 0.085), mat));
+      g.add(pivot);
+      bars.push({ p: pivot, mat: mat, d: (i * 0.5 + j) / 6 });
+    }
   }
-  /* the indicator that lights when the circuit goes live */
-  var ledMat = glowMat(0xff2a3a, 0.15);
-  var led = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 12), ledMat);
-  led.position.set(1.02, 1.72, 0.28);
-  g.add(led);
-
-  g.rotation.y = 0.26;
-  g.userData.rockers = rockers;
-  g.userData.ledMat = ledMat;
+  g.userData = { bars: bars };
   return placeAt(2, g);
 })();
 
-/* --- 3 · pendant cluster ----------------------------------------- */
-var pendants = (function(){
+/* --- 3 · light ----------------------------------------------------- */
+var lightField = (function(){
   var g = new THREE.Group();
-  var bulbs = [];
-  var layout = [[-1.75,0.5],[-0.85,-0.75],[0.1,0.95],[1.0,-0.35],[1.9,0.25]];
-  layout.forEach(function(p, i){
-    var x = p[0], drop = p[1];
-    var mat = glowMat(0xffb35c, 0.1);
-    var bulb = new THREE.Mesh(new THREE.SphereGeometry(0.42, 26, 20), mat);
-    bulb.position.set(x, -0.3 + drop, (i % 2 ? 0.45 : -0.45));
-    g.add(bulb);
-    var neck = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.19, 0.34, 14), M.dark);
-    neck.position.set(x, bulb.position.y + 0.5, bulb.position.z);
-    g.add(neck);
-    var len = 3.2 - drop;
-    var cord = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, len, 6), M.hair);
-    cord.position.set(x, bulb.position.y + 0.67 + len / 2, bulb.position.z);
-    g.add(cord);
-    bulbs.push({ mat: mat, phase: i * 0.62 });
-  });
-  /* one shared lamp for the whole cluster — five point lights here would push
-     the scene to ten, and every extra light is paid per fragment */
-  var lamp = new THREE.PointLight(0xffb35c, 0, 17, 1.5);
-  lamp.position.set(0, -0.2, 0);
+  var rings = [], orbs = [];
+  for (var i = 0; i < 5; i++){
+    var m = new THREE.Mesh(
+      new THREE.RingGeometry(0.9, 0.925, 72),
+      new THREE.MeshBasicMaterial({ color: 0xffdcae, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false })
+    );
+    g.add(m);
+    rings.push({ m: m, o: i / 5 });
+  }
+  for (var k = 0; k < 3; k++){
+    var om = glowMat(0xffc98a, 0.15);
+    var o = new THREE.Mesh(new THREE.SphereGeometry(0.26 - k * 0.05, 26, 18), om);
+    o.position.set((k - 1) * 0.95, Math.sin(k * 2.1) * 0.42, k * -0.55);
+    g.add(o);
+    orbs.push({ mat: om, phase: k * 0.8 });
+  }
+  var lamp = new THREE.PointLight(0xffb35c, 0, 15, 1.5);
   g.add(lamp);
-  g.userData.bulbs = bulbs;
-  g.userData.lamp = lamp;
+  g.userData = { rings: rings, orbs: orbs, lamp: lamp };
   return placeAt(3, g);
 })();
 
-/* --- 4 · ceiling fan --------------------------------------------- */
-var ceilingFan = (function(){
+/* --- 4 · air ------------------------------------------------------- */
+var airflow = (function(){
   var g = new THREE.Group();
-  var rod = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.11, 2.5, 14), M.steel);
-  rod.position.y = 2.35;
-  g.add(rod);
-  var canopy = new THREE.Mesh(new THREE.ConeGeometry(0.58, 0.5, 22), M.steel);
-  canopy.position.y = 3.5;
-  canopy.rotation.x = Math.PI;   /* flares up to the ceiling, not down like a dart */
-  g.add(canopy);
-  var motor = new THREE.Mesh(new THREE.CylinderGeometry(0.78, 0.9, 0.72, 34), M.red);
-  motor.position.y = 0.9;
-  g.add(motor);
-  var trim = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.5, 0.16, 30), M.steel);
-  trim.position.y = 0.5;
-  g.add(trim);
-
-  var blades = new THREE.Group();
-  blades.position.y = 0.72;
-  for (var i = 0; i < 3; i++){
-    var arm = new THREE.Group();
-    arm.rotation.y = i * Math.PI * 2 / 3;
-    var blade = new THREE.Mesh(new THREE.BoxGeometry(3.1, 0.06, 1.02), M.white);
-    blade.position.set(2.05, 0, 0);
-    blade.rotation.x = 0.24;                    /* pitch */
-    arm.add(blade);
-    var hubArm = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.1, 0.34), M.steel);
-    hubArm.position.set(0.7, 0.02, 0);
-    arm.add(hubArm);
-    blades.add(arm);
+  var arcs = [];
+  for (var i = 0; i < 8; i++){
+    var r = 0.65 + i * 0.31;
+    var m = new THREE.Mesh(
+      new THREE.TorusGeometry(r, 0.011, 5, 56, Math.PI * (0.75 + (i % 3) * 0.28)),
+      new THREE.MeshBasicMaterial({ color: 0xf4efe8, transparent: true, opacity: 0.22, depthWrite: false })
+    );
+    m.rotation.x = Math.PI / 2 * (0.42 + (i % 4) * 0.21);
+    m.rotation.y = i * 0.74;
+    m.rotation.z = i * 0.5;
+    g.add(m);
+    arcs.push({ m: m, s: (i % 2 ? 1 : -1) * (0.42 + i * 0.05) });
   }
-  g.add(blades);
-  g.userData.blades = blades;
+  var hub = new THREE.Mesh(new THREE.SphereGeometry(0.12, 18, 14), glowMat(0xff2a3a, 1.1));
+  g.add(hub);
+  g.userData = { arcs: arcs };
   return placeAt(4, g);
 })();
-ceilingFan.position.y = SCENES[4].pos[1] - 0.9;
 
-/* --- 5 · split AC ------------------------------------------------- */
-var acUnit = (function(){
+/* --- 5 · cool ------------------------------------------------------ */
+var coolFall = (function(){
   var g = new THREE.Group();
-  var body = new THREE.Mesh(new THREE.BoxGeometry(5.1, 1.5, 1.15), M.white);
-  g.add(body);
-  /* intake grille along the top, recessed face, dark outlet below —
-     without these the unit reads as a blank white slab */
-  var grille = new THREE.Mesh(new THREE.BoxGeometry(4.66, 0.07, 0.86), M.bone);
-  grille.position.set(0, 0.77, -0.06);
-  g.add(grille);
-  var face = new THREE.Mesh(new THREE.BoxGeometry(4.78, 0.66, 0.07), M.bone);
-  face.position.set(0, 0.22, 0.6);
-  g.add(face);
-  var mouth = new THREE.Mesh(new THREE.BoxGeometry(4.5, 0.42, 0.1), M.dark);
-  mouth.position.set(0, -0.44, 0.58);
-  g.add(mouth);
-  var louver = new THREE.Mesh(new THREE.BoxGeometry(4.44, 0.26, 0.09), M.white);
-  louver.position.set(0, -0.6, 0.58);
-  louver.rotation.x = -0.55;
-  g.add(louver);
-  var strip = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.07, 0.05), glowMat(0x63c8ff, 1.6));
-  strip.position.set(1.86, 0.46, 0.63);
-  g.add(strip);
-
-  /* airflow: short cool arcs falling out of the louver, not long streaks */
-  var ribbons = [];
-  for (var i = 0; i < 6; i++){
-    var x0 = -1.75 + i * 0.7, pts = [];
-    for (var j = 0; j <= 14; j++){
-      var t = j / 14;
-      pts.push(new THREE.Vector3(
-        x0 + t * t * (x0 * 0.28),
-        -0.82 - t * 1.75,
-        0.55 + t * 1.5
-      ));
-    }
-    var ribbon = new THREE.Mesh(
-      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 22, 0.022, 5, false),
-      new THREE.MeshBasicMaterial({ color: 0x9fdcff, transparent: true, opacity: 0, depthWrite: false })
+  var streams = [];
+  for (var i = 0; i < 16; i++){
+    var m = new THREE.Mesh(
+      new THREE.BoxGeometry(0.016, 1.5, 0.016),
+      new THREE.MeshBasicMaterial({ color: 0x9fd8ff, transparent: true, opacity: 0, depthWrite: false })
     );
-    g.add(ribbon);
-    ribbons.push({ mesh: ribbon, phase: i * 0.45 });
+    m.position.set(((i % 8) - 3.5) * 0.62, 0, (Math.floor(i / 8) - 0.5) * 1.1);
+    g.add(m);
+    streams.push({ m: m, o: (i * 0.137) % 1, sp: 0.42 + (i % 5) * 0.07 });
   }
-  g.userData.ribbons = ribbons;
+  g.userData = { streams: streams };
   return placeAt(5, g);
 })();
-acUnit.position.y = SCENES[5].pos[1] + 1.0;
 
-/* --- 6 · geyser --------------------------------------------------- */
-var geyser = (function(){
+/* --- 6 · warmth ---------------------------------------------------- */
+var warmth = (function(){
   var g = new THREE.Group();
-  var tank = new THREE.Mesh(new THREE.CylinderGeometry(1.35, 1.35, 3.1, 40), M.white);
-  g.add(tank);
-  [1.55, -1.55].forEach(function(y){
-    var domeGeo = new THREE.SphereGeometry(1.35, 40, 20, 0, Math.PI * 2, 0, Math.PI / 2);
-    var dome = new THREE.Mesh(domeGeo, M.white);
-    dome.position.y = y;
-    if (y < 0) dome.rotation.x = Math.PI;
-    g.add(dome);
-  });
-  var band = new THREE.Mesh(new THREE.CylinderGeometry(1.38, 1.38, 0.4, 40), M.red);
-  band.position.y = -0.85;
-  g.add(band);
-  /* inlet / outlet */
-  [[-0.62, 0x63c8ff], [0.62, 0xff5a3d]].forEach(function(p){
-    var pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 1.0, 14), M.steel);
-    pipe.position.set(p[0], -2.55, 0.35);
-    g.add(pipe);
-    var collar = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.06, 8, 20), glowMat(p[1], 1.0));
-    collar.position.set(p[0], -3.0, 0.35);
-    collar.rotation.x = Math.PI / 2;
-    g.add(collar);
-  });
-  var dial = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.07, 8, 26), M.steel);
-  dial.position.set(0, -1.9, 1.3);
-  g.add(dial);
-  var dialFace = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.08, 24), glowMat(0xff3a2a, 0.9));
-  dialFace.position.set(0, -1.9, 1.3);
-  dialFace.rotation.x = Math.PI / 2;
-  g.add(dialFace);
-
-  /* heat rings rising off the tank */
   var rings = [];
-  for (var i = 0; i < 4; i++){
-    var ring = new THREE.Mesh(
-      new THREE.TorusGeometry(1.5, 0.028, 8, 60),
-      new THREE.MeshBasicMaterial({ color: 0xff6a3a, transparent: true, opacity: 0 })
+  for (var i = 0; i < 6; i++){
+    var m = new THREE.Mesh(
+      new THREE.TorusGeometry(0.85, 0.013, 6, 64),
+      new THREE.MeshBasicMaterial({ color: 0xff7a3d, transparent: true, opacity: 0, side: THREE.DoubleSide, depthWrite: false })
     );
-    ring.rotation.x = Math.PI / 2;
-    g.add(ring);
-    rings.push({ mesh: ring, offset: i / 4 });
+    m.rotation.x = Math.PI / 2;
+    g.add(m);
+    rings.push({ m: m, o: i / 6 });
   }
-  g.userData.rings = rings;
+  var coreMat = glowMat(0xff6a3a, 0.9);
+  g.add(new THREE.Mesh(new THREE.SphereGeometry(0.44, 28, 20), coreMat));
+  var lamp = new THREE.PointLight(0xff7a3d, 0, 13, 1.5);
+  g.add(lamp);
+  g.userData = { rings: rings, coreMat: coreMat, lamp: lamp };
   return placeAt(6, g);
 })();
+
 
 /* --- the live wire threading the whole corridor ------------------- */
 var wirePath = (function(){
@@ -1597,48 +1569,62 @@ function tick(now){
     filamentGlow.emissiveIntensity = 1.0 + Math.sin(clock * 1.7) * 0.18;
     filament.userData.bloom.intensity = 20 + Math.sin(clock * 1.7) * 4;
 
-    /* cable drum unspools slowly */
-    wireDrum.userData.spin.rotation.x = clock * 0.34;
-    wireDrum.rotation.y = Math.sin(clock * 0.3) * 0.07;
+    /* current: strands breathe, core pulses */
+    current.userData.strands.forEach(function(st, i){
+      st.m.material.opacity = 0.3 + Math.sin(clock * 1.6 + st.phase) * 0.16;
+    });
+    current.rotation.z = clock * 0.09;
+    current.userData.coreMat.emissiveIntensity = 1.3 + Math.sin(clock * 2.4) * 0.5;
+    current.userData.lamp.intensity = 10 + Math.sin(clock * 2.4) * 4;
 
-    /* the switch throws as you pass it */
+    /* control: the field switches as you pass, in a wave */
     var throwT = smoothstep(clamp((sceneSmooth - 1.72) / 0.62, 0, 1));
-    switchPlate.userData.rockers.forEach(function(r, i){
-      r.rotation.x = lerp(-0.34, 0.34, smoothstep(clamp((throwT - i * 0.12) / 0.64, 0, 1)));
+    control.userData.bars.forEach(function(b){
+      var t = smoothstep(clamp((throwT - b.d * 0.35) / 0.65, 0, 1));
+      b.p.rotation.z = lerp(-0.5, 0.5, t);
+      b.mat.emissiveIntensity = 0.12 + t * 2.4;
     });
-    switchPlate.userData.ledMat.emissiveIntensity = 0.12 + power * 2.6;
-    switchPlate.rotation.y = 0.26 + Math.sin(clock * 0.4) * 0.05;
+    control.rotation.y = Math.sin(clock * 0.35) * 0.12;
 
-    /* pendants ignite one by one once the power is on */
-    var lit = 0;
-    pendants.userData.bulbs.forEach(function(b, i){
-      var on = clamp((power - i * 0.055) * 1.5, 0, 1);
-      var flick = 0.86 + Math.sin(clock * (4.1 + i) + b.phase) * 0.14;
-      b.mat.emissiveIntensity = 0.08 + on * 1.9 * flick;
-      lit += on * flick;
+    /* light: rings bloom outward, orbs ignite */
+    var litSum = 0;
+    lightField.userData.rings.forEach(function(r){
+      var t = (clock * 0.22 + r.o) % 1;
+      r.m.scale.setScalar(0.4 + t * 1.9);
+      r.m.material.opacity = power * (1 - t) * 0.62;
     });
-    pendants.userData.lamp.intensity = lit * 5.4;
-    pendants.rotation.y = Math.sin(clock * 0.22) * 0.09;
+    lightField.userData.orbs.forEach(function(o, i){
+      var on = clamp((power - i * 0.12) * 1.6, 0, 1);
+      var flick = 0.88 + Math.sin(clock * (3.6 + i) + o.phase) * 0.12;
+      o.mat.emissiveIntensity = 0.15 + on * 5.0 * flick;
+      litSum += on * flick;
+    });
+    lightField.userData.lamp.intensity = litSum * 6;
+    lightField.rotation.y = Math.sin(clock * 0.2) * 0.1;
 
-    /* fan speeds up with power and with how fast you are scrolling */
-    var fanSpeed = 0.5 + power * 3.2 + clamp(Math.abs(scrollVel) * 0.0012, 0, 2.4);
-    ceilingFan.userData.blades.rotation.y += dt * fanSpeed;
-    ceilingFan.rotation.z = Math.sin(clock * 0.7) * 0.012;
-
-    /* AC ribbons breathe outward */
-    acUnit.userData.ribbons.forEach(function(r){
-      var w = (Math.sin(clock * 1.5 + r.phase) * 0.5 + 0.5);
-      r.mesh.material.opacity = power * w * 0.34;
-      r.mesh.scale.set(1, 0.85 + w * 0.3, 0.8 + w * 0.35);
+    /* air: arcs sweep, faster with power and scroll speed */
+    var airSpeed = 0.35 + power * 1.5 + clamp(Math.abs(scrollVel) * 0.0009, 0, 1.6);
+    airflow.userData.arcs.forEach(function(a){
+      a.m.rotation.z += dt * a.s * airSpeed;
+      a.m.material.opacity = 0.13 + power * 0.24;
     });
 
-    /* geyser heat rings rise and fade */
-    geyser.userData.rings.forEach(function(r){
-      var t = (clock * 0.34 + r.offset) % 1;
-      r.mesh.position.y = -1.5 + t * 3.6;
-      r.mesh.scale.setScalar(0.75 + t * 0.55);
-      r.mesh.material.opacity = power * Math.sin(t * Math.PI) * 0.5;
+    /* cool: streams fall */
+    coolFall.userData.streams.forEach(function(st){
+      st.o = (st.o + dt * st.sp * 0.28) % 1;
+      st.m.position.y = 1.9 - st.o * 3.8;
+      st.m.material.opacity = power * Math.sin(st.o * Math.PI) * 0.5;
     });
+
+    /* warmth: rings rise off the core */
+    warmth.userData.rings.forEach(function(r){
+      var t = (clock * 0.3 + r.o) % 1;
+      r.m.position.y = -1.3 + t * 3.2;
+      r.m.scale.setScalar(0.7 + t * 0.6);
+      r.m.material.opacity = power * Math.sin(t * Math.PI) * 0.5;
+    });
+    warmth.userData.coreMat.emissiveIntensity = 0.7 + power * (1.4 + Math.sin(clock * 1.8) * 0.35);
+    warmth.userData.lamp.intensity = power * 9;
 
     /* current running down the wire */
     wireCore.material.opacity = 0.2 + power * 0.55;
