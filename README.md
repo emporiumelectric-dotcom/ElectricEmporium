@@ -10,20 +10,20 @@ Repo: `emporiumelectric-dotcom/ElectricEmporium`
 
 | File | Role |
 |---|---|
-| [`index.html`](index.html) | Homepage. Static marketing content — hero, CSS/DOM 3D globe, category cards, brand carousel, contact. No product fetch; category cards link out to `products.html?category=…` |
+| [`index.html`](index.html) | Approved V3 showroom: scroll-driven aerial fly-in, category hotspots, complete mobile overview, wide brand carousel and live featured products |
 | [`products.html`](products.html) | Catalogue listing. Fetches products from Supabase, filters by `?category=` |
 | [`product-detail.html`](product-detail.html) | Single product. Fetches product + images + stock. Variant switching, WhatsApp enquiry |
 | [`2products.html`](2products.html) | Second catalogue variant, also Supabase-backed. Both are tracked; check which one is linked before editing |
-| [`about.html`](about.html) | Static about page |
+| [`about.html`](about.html) | Store story, newspaper archive and real shop photo galleries |
 | [`electric_emporium_v4.html`](electric_emporium_v4.html) | Older full-site version, tracked but not linked from navigation |
 | `google0cd5ba9994b42635.html` | Google Search Console verification |
 | `robots.txt`, `sitemap.xml`, `CNAME` | Site plumbing |
 
-The globe and torch-bloom effects are disabled under 900px (`index.html:157`)
-and under `prefers-reduced-motion` (`index.html:374`) — deliberate, mobile
-performance.
+The fly-in follows scroll position only. Reduced-motion users see the showroom
+directly. Mobile users receive a complete overview, direct category links and
+an optional zoomable closer view.
 
-Analytics: GA4 `G-V14YKCWGSH`, inline in every page head.
+Analytics: existing GA4 `G-V14YKCWGSH`, configured in `analytics.js`.
 
 ## Untracked working files
 
@@ -40,9 +40,11 @@ motion-landing-sample.html
 ## Data
 
 Supabase project `dnmzzckeuctnkqbphwdg`, read directly from the browser via
-PostgREST. Tables used: `products`, `product_images`. The anon key is embedded
-in the catalogue pages — it is a publishable client credential, and the site is
-read-only.
+PostgREST. Tables used: `products`, `product_images`, `product_variants`.
+`catalogue.js` reads current prices, stock, photos and variant selections using
+the existing public browser key in `data.js`. No database writes or admin
+changes are made. Display references are enquiry-only. An API outage shows a
+retry and enquiry notice rather than stale catalogue prices.
 
 Same Supabase project as [AccountPortal](../AccountPortal) and
 [AdminPanel](../AdminPanel). AdminPanel is what writes the product rows this
@@ -93,6 +95,10 @@ template.
 
 GitHub Pages from `main`. Pushing publishes — there is no build gate and no
 deploy workflow. Custom domain via `CNAME` (`electricemporium.in`).
+
+V3 release: `release.json`. Styles and scripts use content-versioned URLs.
+The previous main site is preserved in `rollback/pre-showroom-20260930`.
+Original preview directories are maintained separately from this repository.
 
 ## Local development
 
