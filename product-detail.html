@@ -76,6 +76,7 @@ footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:cen
   .wrap{padding:1.5rem 1rem}
   footer{flex-direction:column;text-align:center;padding:1.5rem}
 }
+.product-details{margin:48px;display:grid;gap:36px}.product-details section{border-top:1px solid #ddd;padding-top:24px}.product-details h2{font-size:1.45rem;margin-bottom:20px}.product-details h3{font-size:1rem;line-height:1.5;margin:0 0 10px}.product-details p{font-size:.9rem;line-height:1.8;color:#555}.product-feature-grid,.product-spec-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 40px}.product-spec-grid>div{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;border-bottom:1px solid #eee;padding:12px 0;font-size:.85rem;line-height:1.6}.product-spec-grid dt{font-weight:600}.product-spec-grid dd{margin:0;overflow-wrap:anywhere}@media(max-width:700px){.product-feature-grid,.product-spec-grid{grid-template-columns:1fr;gap:16px}.product-details{margin:30px 20px}}
 </style>
 </head>
 <body>
@@ -116,6 +117,7 @@ footer{background:var(--black2);padding:1.8rem 3rem;display:flex;align-items:cen
   <a href="products.html" style="font-size:0.64rem;font-weight:700;color:rgba(255,255,255,0.32);text-decoration:none;letter-spacing:0.12em;text-transform:uppercase">&larr; All Products</a>
 </footer>
 
+<script src="product-content.js"></script>
 <script>
 var SURL = "https://dnmzzckeuctnkqbphwdg.supabase.co";
 var SKEY = "sb_publishable_TkuJuy1AF1wixYRIPCh2WA_U8A-Pxn3";
@@ -319,15 +321,6 @@ function renderProduct() {
   }
   info.appendChild(priceWrap);
 
-  if (product.Spec) {
-    var spec = makeEl("div", "pi-spec", "");
-    var specLines = product.Spec.split("\n");
-    specLines.forEach(function(line, i) {
-      if (i > 0) spec.appendChild(document.createElement("br"));
-      spec.appendChild(document.createTextNode(line));
-    });
-    info.appendChild(spec);
-  }
 
   var stockEl = makeEl("span", "stock-status " + (product.in_stock ? "stock-in" : "stock-out"), "");
   var dot = makeEl("span", "stock-dot", "");
@@ -407,6 +400,7 @@ function renderProduct() {
   wrap.appendChild(gallery);
   wrap.appendChild(info);
   container.appendChild(wrap);
+  if(product.Spec)container.appendChild(ProductContent.render(product.Spec,document));
 
   document.getElementById("bc-name").textContent = product.Name || "";
   document.title = (product.Name || "Product") + " - Electric Emporium";
