@@ -7,7 +7,9 @@
   const icon=n=>icons[n]||icons.ArrowRight;
   const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(n);
   const categoryUrl=id=>`products.html?category=${encodeURIComponent(id)}`;
-  const productUrl=id=>`product-detail.html?id=${encodeURIComponent(id)}`;
+  // Catalogue products have pre-rendered pages; display/reference items use the dynamic page.
+  const productUrl=id=>/^\d+$/.test(String(id))?`products/${id}.html`:`product-detail.html?id=${encodeURIComponent(id)}`;
+  const setMeta=(selector,attr,value)=>{const n=$(selector);if(n)n.setAttribute(attr,value);};
   const wa=text=>`https://wa.me/919425831035?text=${encodeURIComponent(text)}`;
   const enquiry=p=>wa(`Hello Electric Emporium, I am interested in ${p.brand} ${p.name}. Please share the current price and availability.`);
   const page=document.body.dataset.page;
@@ -27,13 +29,16 @@
   $$('dialog').forEach(d=>d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}}));
   const searchDialog=$('#search-dialog');
   searchDialog.innerHTML=`<div class="dialog-header">${icon('Search')}<input id="global-search" type="search" aria-label="Search all products" placeholder="What are you looking for?"><button class="icon-button" id="close-search" aria-label="Close search">${icon('X')}</button></div><div class="search-results" id="search-results" aria-live="polite"><p class="search-hint">Search by product, category or brand.</p></div>`;
-  $('#open-search').onclick=()=>{searchDialog.showModal();$('#global-search').focus();};
+  // The full list is only fetched once someone opens search.
+  const loadAll=()=>window.EE_DATA.allLoaded||!window.EE_LOAD_ALL?Promise.resolve():window.EE_LOAD_ALL();
+  $('#open-search').onclick=()=>{searchDialog.showModal();$('#global-search').focus();loadAll().then(runSearch,()=>{});};
   $('#close-search').onclick=()=>searchDialog.close();
-  $('#global-search').addEventListener('input',e=>{const q=e.target.value.trim().toLowerCase();const found=q?products.filter(p=>`${p.name} ${p.brand} ${categories.find(c=>c.id===p.category)?.name}`.toLowerCase().includes(q)).slice(0,8):[];$('#search-results').innerHTML=!q?'<p class="search-hint">Search by product, category or brand.</p>':found.length?found.map(p=>`<a class="search-item" href="${productUrl(p.id)}">${p.image?`<img src="${esc(p.image)}" alt="">`:''}<div><strong>${esc(p.name)}</strong><p>${esc(p.brand)} &middot; ${p.price==null?'Price on enquiry':money(p.price)}</p></div>${icon('ArrowUpRight')}</a>`).join('')+`<a class="text-link search-hint" href="products.html?q=${encodeURIComponent(q)}">See all results ${icon('ArrowRight')}</a>`:'<p class="search-hint">No matching products. Try a category or brand name.</p>';});
+  function runSearch(){const q=$('#global-search').value.trim().toLowerCase();if(q&&!window.EE_DATA.allLoaded){$('#search-results').innerHTML='<p class="search-hint">Searching the catalogue…</p>';loadAll().then(runSearch,()=>{$('#search-results').innerHTML=`<p class="search-hint">Search is unavailable right now. <a href="${wa('Hello Electric Emporium, I am looking for '+q+'.')}" target="_blank" rel="noopener">Ask us on WhatsApp</a>.</p>`;});return;}const found=q?products.filter(p=>`${p.name} ${p.brand} ${categories.find(c=>c.id===p.category)?.name}`.toLowerCase().includes(q)).slice(0,8):[];$('#search-results').innerHTML=!q?'<p class="search-hint">Search by product, category or brand.</p>':found.length?found.map(p=>`<a class="search-item" href="${productUrl(p.id)}">${p.image?`<img src="${esc(p.image)}" alt="">`:''}<div><strong>${esc(p.name)}</strong><p>${esc(p.brand)} &middot; ${p.price==null?'Price on enquiry':money(p.price)}</p></div>${icon('ArrowUpRight')}</a>`).join('')+`<a class="text-link search-hint" href="products.html?q=${encodeURIComponent(q)}">See all results ${icon('ArrowRight')}</a>`:'<p class="search-hint">No matching products. Try a category or brand name.</p>';}
+  $('#global-search').addEventListener('input',runSearch);
   if(page==='home'){setupShowroom();setupBrands();}
   if(page==='about')setupStory();
   if(window.EE_CATALOGUE_READY)await window.EE_CATALOGUE_READY;
-  if(window.EE_DATA.catalogueState==='unavailable'){
+  if(window.EE_DATA.catalogueState==='unavailable'&&(page==='catalogue'||page==='product')){
     const notice=document.createElement('div');notice.className='catalogue-notice';notice.setAttribute('role','status');notice.innerHTML=`<span>Product availability is temporarily unavailable.</span><button class="text-button">Try again</button><a href="${wa('Hello Electric Emporium, please help me with current product prices and availability.')}" target="_blank" rel="noopener">Enquire on WhatsApp</a>`;$('#main').prepend(notice);$('button',notice).onclick=()=>location.reload();
   }
   if(page==='home'){
@@ -61,8 +66,9 @@
     document.addEventListener('visibilitychange',schedule);reduced.addEventListener('change',()=>{paused=reduced.matches;render();schedule();});render();
   }
   function setupStory(){
-    $('#archive-image').src=archive;
-    $('#story-galleries').innerHTML=galleries.map(g=>`<section class="section story-gallery" id="gallery-${g.id}"><div class="section-heading"><div><p class="eyebrow">${esc(g.caption.toUpperCase())}</p><h2>${esc(g.title)}</h2></div><span class="gallery-count">${g.photos.length} photographs</span></div><div class="story-gallery-grid">${g.photos.map((p,i)=>`<button class="gallery-photo" data-gallery="${g.id}" data-photo="${i}" aria-label="Open ${esc(p.alt)}"><img src="${p.src}" alt="${esc(p.alt)}" loading="lazy"><span>${icon('ZoomIn')}</span></button>`).join('')}</div></section>`).join('');
+    const thumb=src=>src.replace(/^media\//,'media/thumbs/');
+    $('#archive-image').src=thumb(archive);
+    $('#story-galleries').innerHTML=galleries.map(g=>`<section class="section story-gallery" id="gallery-${g.id}"><div class="section-heading"><div><p class="eyebrow">${esc(g.caption.toUpperCase())}</p><h2>${esc(g.title)}</h2></div><span class="gallery-count">${g.photos.length} photographs</span></div><div class="story-gallery-grid">${g.photos.map((p,i)=>`<button class="gallery-photo" data-gallery="${g.id}" data-photo="${i}" aria-label="Open ${esc(p.alt)}"><img src="${thumb(p.src)}" alt="${esc(p.alt)}" loading="lazy" decoding="async"><span>${icon('ZoomIn')}</span></button>`).join('')}</div></section>`).join('');
     const dialog=$('#display-dialog');let activePhotos=[],activeIndex=0,title='',zoomed=false;
     function render(){const p=activePhotos[activeIndex];dialog.innerHTML=`<div class="dialog-header"><div><h2>${esc(title)}</h2><p class="lightbox-count">${activeIndex+1} / ${activePhotos.length}</p></div><button class="icon-button photo-zoom" aria-label="${zoomed?'Fit image':'Enlarge image'}" title="${zoomed?'Fit image':'Enlarge image'}">${icon(zoomed?'Minus':'ZoomIn')}</button><button class="icon-button close-dialog" aria-label="Close gallery">${icon('X')}</button></div><div class="photo-lightbox ${zoomed?'zoomed':''}"><img src="${p.src}" alt="${esc(p.alt)}"></div>${activePhotos.length>1?`<div class="lightbox-navigation"><button class="icon-button gallery-prev" aria-label="Previous photograph" title="Previous photograph">${icon('ArrowLeft')}</button><span>${esc(p.alt)}</span><button class="icon-button gallery-next" aria-label="Next photograph" title="Next photograph">${icon('ArrowRight')}</button></div>`:''}`;$('.close-dialog',dialog).onclick=()=>dialog.close();$('.photo-zoom',dialog).onclick=()=>{zoomed=!zoomed;render();$('.photo-zoom',dialog).focus();};if(activePhotos.length>1){$('.gallery-prev',dialog).onclick=()=>move(-1);$('.gallery-next',dialog).onclick=()=>move(1);}}
     function move(d){activeIndex=(activeIndex+d+activePhotos.length)%activePhotos.length;zoomed=false;render();$(d<0?'.gallery-prev':'.gallery-next',dialog)?.focus();}
@@ -81,7 +87,8 @@
     $('#catalogue-title').textContent=c?.name||'All products';
     $('#catalogue-description').textContent=c?.summary||'Considered choices for every corner of your space.';
     $('#breadcrumb-current').textContent=c?.name||'Products';
-    document.title=`${c?.name||'Products'} | Electric Emporium`;
+    document.title=c?`${c.name} in Balaghat | Electric Emporium`:'Products | Electric Emporium';
+    if(c){const url=`https://electricemporium.in/${categoryUrl(c.id)}`,description=`${c.summary}. Browse ${c.name.toLowerCase()} at Electric Emporium, Balaghat, and enquire on WhatsApp.`;setMeta('link[rel=canonical]','href',url);setMeta('meta[property="og:url"]','content',url);setMeta('meta[name=description]','content',description);setMeta('meta[property="og:description"]','content',description);setMeta('meta[property="og:title"]','content',document.title);}
     if(c){$('#view-display').hidden=false;$('#view-display').onclick=()=>display(c);}
     $('#category-tabs').innerHTML=`<a href="products.html" ${!c?'aria-current="page"':''}>All products</a>`+categories.map(x=>`<a href="${categoryUrl(x.id)}" ${x.id===c?.id?'aria-current="page"':''}>${esc(x.name)}</a>`).join('');
     const current=$('[aria-current=page]',$('#category-tabs'));if(current)$('#category-tabs').scrollLeft=Math.max(0,current.offsetLeft-30);
@@ -104,9 +111,10 @@
     $$('.filters input').forEach(n=>n.addEventListener('input',render));$('#sort').onchange=render;$('#clear-filters').onclick=reset;$('#empty-reset').onclick=reset;render();
   }
   function setupProduct(){
-    const p=products.find(p=>p.id===new URLSearchParams(location.search).get('id'));
-    if(!p){$('#main').innerHTML=`<div class="not-found"><p class="eyebrow">ELECTRIC EMPORIUM</p><h1>${window.EE_DATA.catalogueState==='unavailable'?'Product temporarily unavailable.':'Product not found.'}</h1><p>Explore the collection or ask our team for help.</p><a class="button primary" href="products.html">Browse all products</a><a class="button secondary" href="${wa('Hello Electric Emporium, please help me with product '+new URLSearchParams(location.search).get('id'))}">Enquire on WhatsApp</a></div>`;return;}
-    const c=categories.find(c=>c.id===p.category);document.title=`${p.name} | Electric Emporium`;
+    const id=window.EE_DATA.productId,p=products.find(p=>p.id===id);
+    if(!p&&window.EE_DATA.catalogueState==='unavailable'&&$('#main').dataset.prerendered!=null)return;
+    if(!p){$('#main').innerHTML=`<div class="not-found"><p class="eyebrow">ELECTRIC EMPORIUM</p><h1>${window.EE_DATA.catalogueState==='unavailable'?'Product temporarily unavailable.':'Product not found.'}</h1><p>Explore the collection or ask our team for help.</p><a class="button primary" href="products.html">Browse all products</a><a class="button secondary" href="${wa('Hello Electric Emporium, please help me with product '+id)}">Enquire on WhatsApp</a></div>`;return;}
+    const c=categories.find(c=>c.id===p.category),prerendered=$('#main').dataset.prerendered!=null;if(!prerendered)document.title=`${p.name} | Electric Emporium`;
     $('#main').innerHTML=`<nav class="breadcrumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span>/</span><a href="products.html">Products</a><span>/</span><a href="${categoryUrl(c.id)}">${esc(c.name)}</a></nav><article class="product-detail"><div class="detail-photo">${p.image?`<img class="display-zoom" src="${p.image}" alt="${esc(p.brand+' '+p.name)}">`:'<span class="missing-image">Product image coming soon</span>'}</div><div class="detail-info"><p class="eyebrow">${esc(p.brand.toUpperCase())}</p><h1>${esc(p.name)}</h1><p class="detail-price">${p.price==null?'Price on enquiry':money(p.price)}</p><p class="availability">${p.outOfStock?'Currently listed out of stock. Ask about the next availability.':p.origin==='catalogue'?'From our published catalogue. Confirm current availability.':'Selected display range. Enquire for availability.'}</p><a class="button primary" href="${enquiry(p)}" target="_blank" rel="noopener">Enquire on WhatsApp ${icon('MessageCircle')}</a><a class="button secondary" href="tel:+919425831035">Call the store ${icon('Phone')}</a><p class="detail-note">${p.note?'':'Speak to our team about the right model, finish and specifications for your space.'} ${p.price!=null?'Please confirm the current price before purchase.':''}</p><div class="detail-facts"><div>${icon('MapPin')}<span>Visit us at Gujri Chowk, Balaghat</span></div><div>${icon('Clock')}<span>Open every day, 10 AM to 9 PM</span></div><div>${icon('MessageCircle')}<span>Personal guidance, from selection to enquiry</span></div></div></div></article><h2 class="related-heading">More in ${esc(c.name.toLowerCase())}</h2><div class="product-grid">${products.filter(x=>x.category===p.category&&x.id!==p.id).slice(0,4).map(card).join('')}</div>`;
     const photo=$('.display-zoom');if(photo){photo.tabIndex=0;photo.setAttribute('role','button');photo.setAttribute('aria-label','Enlarge product image');const open=()=>{const d=$('#display-dialog');d.innerHTML=`<div class="dialog-header"><h2>${esc(p.name)}</h2><button class="icon-button close-dialog" aria-label="Close image">${icon('X')}</button></div><img src="${esc(photo.src)}" alt="${esc(p.name)}">`;d.showModal();$('.close-dialog',d).onclick=()=>d.close();};photo.onclick=open;photo.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}};}
     if(p.origin==='catalogue')$('.availability').textContent=p.outOfStock?'Currently out of stock. Ask about the next availability.':'In stock. Contact us to confirm your preferred model and delivery.';
@@ -170,11 +178,11 @@
     viewport.addEventListener('scroll',updateArrows,{passive:true});
     // Decode a small neighbourhood of frames. Scroll position is the only clock.
     const cache=new Map(),pending=new Set(),failed=new Set();let queue=[],active=0,target=1,lastDrawn=0,progress=0,raf=0,roomCentered=false;
-    const cacheLimit=touch.matches?20:36;
+    const cacheLimit=touch.matches?20:36,lookahead=touch.matches?4:8; // phones: smaller prefetch window, less data up front
     function framePath(i){return `${window.EE_DATA.framePath||'media/flight/'}${String(i).padStart(4,'0')}.webp`;}
     function draw(img,index){if(!ctx||reduced.matches)return;const w=canvas.width,h=canvas.height,scale=Math.max(w/img.naturalWidth,h/img.naturalHeight);ctx.drawImage(img,(w-img.naturalWidth*scale)/2,(h-img.naturalHeight*scale)/2,img.naturalWidth*scale,img.naturalHeight*scale);lastDrawn=index;canvas.dataset.frame=String(index);canvas.style.opacity='1';}
     function pump(){while(active<4&&queue.length){const n=queue.shift();if(cache.has(n)||pending.has(n)||failed.has(n))continue;active++;pending.add(n);const img=new Image();img.decoding='async';img.onload=()=>{active--;pending.delete(n);cache.set(n,img);while(cache.size>cacheLimit){const far=[...cache.keys()].filter(k=>k!==target).sort((a,b)=>Math.abs(b-target)-Math.abs(a-target))[0];cache.delete(far);}if(n===target)draw(img,n);else if(!lastDrawn)draw(img,n);pump();};img.onerror=()=>{active--;pending.delete(n);failed.add(n);pump();};img.src=framePath(n);}}
-    function requestFrame(n){target=n;if(cache.has(n))draw(cache.get(n),n);queue=[n];for(let d=1;d<=8;d++){if(n+d<=frameCount)queue.push(n+d);if(n-d>0)queue.push(n-d);}pump();}
+    function requestFrame(n){target=n;if(cache.has(n))draw(cache.get(n),n);queue=[n];for(let d=1;d<=lookahead;d++){if(n+d<=frameCount)queue.push(n+d);if(n-d>0)queue.push(n-d);}pump();}
     function update(){raf=0;const r=journey.getBoundingClientRect();const top=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header'))||80;const travel=journey.offsetHeight-stage.offsetHeight;progress=reduced.matches?1:Math.max(0,Math.min(1,(top-r.top)/Math.max(1,travel)));
       // The model's endpoint is the centre 80% of the wide room. Match that crop,
       // swap opaque images, then reveal the whole photograph using scroll alone.

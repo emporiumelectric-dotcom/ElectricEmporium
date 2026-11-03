@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#b51d32"><meta name="robots" content="noindex"><title>Page not found | Electric Emporium</title>
+<script>
+// GitHub Pages serves this for any missing path. Forward URLs that have a live
+// equivalent before anything renders:
+//  - /products/<id>.html for a product added since the last nightly build
+//  - pages from the previous site
+(function(){
+  var path=location.pathname,m=path.match(/^\/products\/(\d+)\.html$/);
+  var legacy={'/2products.html':'/products.html','/electric_emporium_v4.html':'/'};
+  var target=m?'/product-detail.html?id='+m[1]:legacy[path]?legacy[path]+(legacy[path]==='/'?'':location.search):null;
+  if(target)location.replace(target+location.hash);
+})();
+</script>
+<link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/styles.css?v=bd315a36ea14"></head>
+<body data-page="missing"><main id="main" class="section"><div class="not-found"><p class="eyebrow">ELECTRIC EMPORIUM</p><h1>Page not found.</h1><p>The page you are looking for has moved or no longer exists.</p><a class="button primary" href="/products.html">Browse all products</a> <a class="button secondary" href="/">Go to the homepage</a></div></main></body></html>
