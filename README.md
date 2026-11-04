@@ -20,7 +20,21 @@ Repo: `emporiumelectric-dotcom/ElectricEmporium`
 | `robots.txt`, `sitemap.xml`, `CNAME`, `og-image.jpg` | Site plumbing. `og-image.jpg` (1200×630) is the default share image |
 
 The fly-in follows scroll position only. Reduced-motion users see the showroom
-directly. Phones prefetch a smaller window of frames.
+directly and download no frames.
+
+Fly-in frames live in `media/flight-v3/`: `d/` holds 160 frames at 1440×900
+(~10.6 MB), `m/` holds 80 portrait 750×1000 centre crops for phones (~3.4 MB).
+The engine in `setupShowroom()` (app.js):
+
+- picks `m/` when the stage is 3:4 or narrower, otherwise `d/`;
+- fetches a coarse pass (every 16th frame) on load, and the rest coarse-to-fine
+  once the visitor first scrolls, with frames at the scroll position jumping
+  the queue. Save-Data / 2G stops at every 4th frame;
+- keeps frames compressed and decodes only the 8 nearest the scroll target
+  into `ImageBitmap`s off the main thread, so drawing never decodes;
+- eases toward the scroll target and crossfades between the nearest decoded
+  frames while gaps are still loading;
+- never backs the canvas with more pixels than the frame provides.
 
 Analytics: GA4 `G-V14YKCWGSH`, configured in `analytics.js`. WhatsApp and call
 clicks are sent as `whatsapp_click` / `call_click` with `item_name` and

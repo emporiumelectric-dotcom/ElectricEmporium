@@ -176,36 +176,118 @@
     $$('[data-pan]').forEach(b=>b.onclick=()=>viewport.scrollBy({left:Number(b.dataset.pan)*viewport.clientWidth*.75,behavior:reduced.matches?'instant':'smooth'}));
     function updateArrows(){const max=scene.offsetWidth-viewport.clientWidth; $('[data-pan="-1"]').disabled=viewport.scrollLeft<2;$('[data-pan="1"]').disabled=viewport.scrollLeft>max-2;}
     viewport.addEventListener('scroll',updateArrows,{passive:true});
-    // Decode a small neighbourhood of frames. Scroll position is the only clock.
-    const cache=new Map(),pending=new Set(),failed=new Set();let queue=[],active=0,target=1,lastDrawn=0,progress=0,raf=0,roomCentered=false;
-    const cacheLimit=touch.matches?20:36,lookahead=touch.matches?4:8; // phones: smaller prefetch window, less data up front
-    function framePath(i){return `${window.EE_DATA.framePath||'media/flight/'}${String(i).padStart(4,'0')}.webp`;}
-    function draw(img,index){if(!ctx||reduced.matches)return;const w=canvas.width,h=canvas.height,scale=Math.max(w/img.naturalWidth,h/img.naturalHeight);ctx.drawImage(img,(w-img.naturalWidth*scale)/2,(h-img.naturalHeight*scale)/2,img.naturalWidth*scale,img.naturalHeight*scale);lastDrawn=index;canvas.dataset.frame=String(index);canvas.style.opacity='1';}
-    function pump(){while(active<4&&queue.length){const n=queue.shift();if(cache.has(n)||pending.has(n)||failed.has(n))continue;active++;pending.add(n);const img=new Image();img.decoding='async';img.onload=()=>{active--;pending.delete(n);cache.set(n,img);while(cache.size>cacheLimit){const far=[...cache.keys()].filter(k=>k!==target).sort((a,b)=>Math.abs(b-target)-Math.abs(a-target))[0];cache.delete(far);}if(n===target)draw(img,n);else if(!lastDrawn)draw(img,n);pump();};img.onerror=()=>{active--;pending.delete(n);failed.add(n);pump();};img.src=framePath(n);}}
-    function requestFrame(n){target=n;if(cache.has(n))draw(cache.get(n),n);queue=[n];for(let d=1;d<=lookahead;d++){if(n+d<=frameCount)queue.push(n+d);if(n-d>0)queue.push(n-d);}pump();}
-    function update(){raf=0;const r=journey.getBoundingClientRect();const top=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header'))||80;const travel=journey.offsetHeight-stage.offsetHeight;progress=reduced.matches?1:Math.max(0,Math.min(1,(top-r.top)/Math.max(1,travel)));
+    // ---- Fly-in frames -----------------------------------------------------
+    // Scroll position is the only clock. Frames load coarse-to-fine (every 32nd,
+    // 16th, ... frame) so every part of the journey gets a nearby frame early.
+    // The canvas always shows the nearest loaded frame and eases toward the
+    // scroll target, so wheel steps and slow networks never freeze the image.
+    // Frames are kept compressed; only a small window around the scroll position
+    // is decoded (off the main thread) into ImageBitmaps, so drawing never decodes.
+    const frameBase=window.EE_DATA.framePath||'media/flight-v3/';
+    const conn=navigator.connection||{},saveData=!!conn.saveData||/(^|-)2g$/.test(conn.effectiveType||'');
+    const blobs=new Map(),bitmaps=new Map(),decodingSet=new Set(),loading=new Set(),failed=new Set();
+    const KEEP=8; // decoded frames held at once (~3-5 MB each)
+    const toBitmap=window.createImageBitmap?blob=>createImageBitmap(blob):blob=>{const img=new Image(),url=URL.createObjectURL(blob);img.src=url;return img.decode().then(()=>{URL.revokeObjectURL(url);return img;});};
+    let set=null,order=[],orderAt=0,coarseCount=0,fullLoad=false,active=0,decoding=0;
+    let wantF=1,eased=1,shown='',easing=0,lastTick=0,progress=0,raf=0,roomCentered=false;
+    let headerH=80,travel=1,stageW=1,stageH=1,narrow=false,sceneKey='';
+    const frameUrl=(s,n)=>`${s.dir}${String(n).padStart(4,'0')}.webp`;
+    function chooseSet(){
+      // Portrait phones get a 3:4 centre crop with half the frames; everything else the 16:10 set.
+      const next=stageW/stageH<=.75?{dir:frameBase+'m/',count:80,w:750,h:1000}:{dir:frameBase+'d/',count:160,w:1440,h:900};
+      if(set&&set.dir===next.dir)return;
+      bitmaps.forEach(b=>b.close?.());bitmaps.clear();blobs.clear();decodingSet.clear();loading.clear();failed.clear();
+      set=next;shown='';orderAt=0;active=0;decoding=0;
+      // Both ends first, then progressively finer passes. Save-Data stops at every 4th frame.
+      const seen=new Set([1,set.count]);order=[1,set.count];
+      for(let step=32;step>=1;step/=2){if(saveData&&step<4)break;for(let i=1;i<=set.count;i+=step)if(!seen.has(i)){seen.add(i);order.push(i);}if(step===16)coarseCount=order.length;}
+    }
+    function nextFrame(){
+      const want=Math.round(wantF),usable=n=>n>=1&&n<=set.count&&!blobs.has(n)&&!loading.has(n)&&!failed.has(n);
+      // Frames right around the scroll position jump the queue once the user is scrolling.
+      if(fullLoad)for(let d=0;d<=3;d++){if(usable(want+d))return want+d;if(usable(want-d))return want-d;}
+      const limit=fullLoad?order.length:coarseCount;
+      while(orderAt<limit){const n=order[orderAt++];if(usable(n))return n;}
+      return 0;
+    }
+    function pump(){
+      if(reduced.matches||!set)return;
+      const s=set;
+      while(active<6){const n=nextFrame();if(!n)return;active++;loading.add(n);
+        fetch(frameUrl(s,n)).then(r=>{if(!r.ok)throw new Error(r.status);return r.blob();})
+          .then(blob=>{if(s===set){blobs.set(n,blob);warm();}},()=>{if(s===set)failed.add(n);})
+          .finally(()=>{if(s!==set)return;active--;loading.delete(n);pump();});}
+    }
+    // Decode the KEEP loaded frames nearest the scroll target; release the rest.
+    function warm(){
+      if(!set||reduced.matches)return;
+      const s=set,keep=new Set([...blobs.keys()].sort((x,y)=>Math.abs(x-wantF)-Math.abs(y-wantF)).slice(0,KEEP));
+      for(const [n,b] of bitmaps)if(!keep.has(n)){bitmaps.delete(n);b.close?.();}
+      for(const n of keep){
+        if(decoding>=3)break;if(bitmaps.has(n)||decodingSet.has(n))continue;
+        decoding++;decodingSet.add(n);
+        toBitmap(blobs.get(n)).then(b=>{if(s===set){bitmaps.set(n,b);kick();}else b.close?.();},()=>{})
+          .finally(()=>{if(s!==set)return;decoding--;decodingSet.delete(n);warm();});
+      }
+    }
+    function below(x){for(let n=Math.floor(x);n>=1;n--)if(bitmaps.has(n))return n;return 0;}
+    function above(x){for(let n=Math.ceil(x);n<=set.count;n++)if(bitmaps.has(n))return n;return 0;}
+    function paint(img,alpha){const w=canvas.width,h=canvas.height,iw=img.width,ih=img.height,scale=Math.max(w/iw,h/ih);ctx.globalAlpha=alpha;ctx.drawImage(img,(w-iw*scale)/2,(h-ih*scale)/2,iw*scale,ih*scale);}
+    // Blend the loaded frames either side of x. While frames are still arriving the
+    // gaps are wide, and a crossfade reads as motion where a hard cut would stutter.
+    function draw(x){
+      if(!ctx||reduced.matches)return;
+      const lo=below(x),hi=above(x);if(!lo&&!hi)return;
+      const a=lo||hi,b=hi||lo,mix=a===b||b-a===1||b-a>16?(x-a<b-x?0:1):(x-a)/(b-a); // adjacent frames: plain cut, one draw
+      const key=mix===0?String(a):mix===1?String(b):`${a}|${b}|${Math.round(mix*48)}`;if(key===shown)return;shown=key;
+      if(mix===1)paint(bitmaps.get(b),1);else{paint(bitmaps.get(a),1);if(mix>0)paint(bitmaps.get(b),mix);}ctx.globalAlpha=1;
+      canvas.dataset.frame=String(Math.round((mix<.5?a:b)*160/set.count));canvas.style.opacity='1';
+    }
+    function tick(now){
+      easing=0;const dt=Math.min(64,lastTick?now-lastTick:16);lastTick=now;
+      eased+=(wantF-eased)*(1-Math.exp(-dt/70));if(Math.abs(wantF-eased)<.05)eased=wantF;
+      draw(eased);
+      if(eased!==wantF)easing=requestAnimationFrame(tick);else lastTick=0;
+    }
+    function kick(){if(!easing&&set&&!reduced.matches)easing=requestAnimationFrame(tick);}
+    function startFullLoad(){if(fullLoad)return;fullLoad=true;pump();}
+    ['scroll','wheel','touchstart','keydown'].forEach(type=>addEventListener(type,startFullLoad,{passive:true,once:true}));
+    function measure(){
+      headerH=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header'))||80;
+      travel=Math.max(1,journey.offsetHeight-stage.offsetHeight);stageW=stage.clientWidth;stageH=stage.clientHeight;
+      narrow=matchMedia('(max-width: 700px)').matches;sceneKey='';
+    }
+    function update(){raf=0;const r=journey.getBoundingClientRect();progress=reduced.matches?1:Math.max(0,Math.min(1,(headerH-r.top)/travel));
       // The model's endpoint is the centre 80% of the wide room. Match that crop,
       // swap opaque images, then reveal the whole photograph using scroll alone.
       const photoVisible=reduced.matches||progress>=.84;
       const t=Math.max(0,Math.min(1,(progress-.84)/.14)),settle=t*t*(3-2*t);
-      const narrow=matchMedia('(max-width: 700px)').matches;
-      const frameHeight=Math.max(stage.clientHeight,stage.clientWidth/1.6);
-      const finalHeight=narrow?stage.clientWidth/2:Math.min(stage.clientHeight,stage.clientWidth/2);
+      const frameHeight=Math.max(stageH,stageW/1.6);
+      const finalHeight=narrow?stageW/2:Math.min(stageH,stageW/2);
       const height=reduced.matches?finalHeight:frameHeight+(finalHeight-frameHeight)*settle;
-      scene.style.width=(height*2)+'px';scene.style.height=height+'px';
-      scene.style.top=narrow?((reduced.matches?1:settle)*58)+'px':'';
+      const top=narrow?((reduced.matches?1:settle)*58)+'px':'';
+      // Only touch the room's layout when it actually changes.
+      const key=`${height.toFixed(1)}|${top}`;if(key!==sceneKey){sceneKey=key;scene.style.width=(height*2)+'px';scene.style.height=height+'px';scene.style.top=top;}
       const ready=reduced.matches||progress>=.98;
       layer.style.opacity=photoVisible?'1':'0';layer.classList.toggle('ready',ready);layer.inert=!ready;layer.setAttribute('aria-hidden',String(!ready));
       stage.dataset.phase=ready?'explore':photoVisible?'settle':'flight';
       $('.hero-copy').style.opacity=String(Math.max(0,1-progress*5));$('.hero-copy').inert=progress>.2;$('.hero-shade').style.opacity=String(Math.max(0,1-progress*4));$('.journey-caption').style.opacity=String(Math.max(0,1-progress*5));$('.journey-caption').inert=progress>.2;$('.scroll-track span').style.width=(progress*100)+'%';stage.dataset.progress=progress.toFixed(3);
       if(!ready)hide();
-      if(narrow&&(!roomCentered||!ready)){viewport.scrollLeft=Math.max(0,(scene.offsetWidth-viewport.clientWidth)/2);roomCentered=true;}else if(!narrow)viewport.scrollLeft=0;
-      updateArrows();
-      if(!reduced.matches&&r.bottom>0&&r.top<innerHeight&&!photoVisible){const n=Math.max(1,Math.min(frameCount,Math.round(Math.min(1,progress/.84)*(Math.min(160,frameCount)-1))+1));if(n!==target||!lastDrawn)requestFrame(n);}
+      if(photoVisible){
+        if(narrow&&(!roomCentered||!ready)){viewport.scrollLeft=Math.max(0,(scene.offsetWidth-viewport.clientWidth)/2);roomCentered=true;}else if(!narrow&&viewport.scrollLeft)viewport.scrollLeft=0;
+        updateArrows();
+      }
+      if(!reduced.matches&&!photoVisible&&r.bottom>0&&r.top<innerHeight){wantF=1+Math.min(1,progress/.84)*(set.count-1);kick();warm();pump();}
     }
     function schedule(){if(!raf)raf=requestAnimationFrame(update);}
-    function resize(){const dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(stage.clientWidth*dpr);canvas.height=Math.round(stage.clientHeight*dpr);if(cache.has(target))draw(cache.get(target),target);updateArrows();schedule();}
-    addEventListener('scroll',schedule,{passive:true});addEventListener('resize',resize);reduced.addEventListener('change',schedule);resize();
+    function resize(){
+      measure();chooseSet();
+      // Never back the canvas with more pixels than the frame provides.
+      const cover=Math.max(stageW/set.w,stageH/set.h),dpr=Math.min(devicePixelRatio||1,2,Math.max(1,1/cover));
+      canvas.width=Math.round(stageW*dpr);canvas.height=Math.round(stageH*dpr);
+      shown='';kick();pump();updateArrows();schedule();
+    }
+    addEventListener('scroll',schedule,{passive:true});addEventListener('resize',resize);reduced.addEventListener('change',()=>{measure();schedule();});resize();
     $('.enter-room').addEventListener('click',e=>{e.preventDefault();const y=journey.offsetTop+journey.offsetHeight-stage.offsetHeight-parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header'));scrollTo({top:y,behavior:reduced.matches?'instant':'smooth'});});
   }
 })();
