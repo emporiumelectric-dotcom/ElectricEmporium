@@ -246,10 +246,23 @@
     function tick(now){
       easing=0;const dt=Math.min(64,lastTick?now-lastTick:16);lastTick=now;
       eased+=(wantF-eased)*(1-Math.exp(-dt/70));if(Math.abs(wantF-eased)<.05)eased=wantF;
-      draw(eased);
-      if(eased!==wantF)easing=requestAnimationFrame(tick);else lastTick=0;
+      const moving=eased!==wantF;
+      if(moving&&sharp){sharp=false;setDensity(false);}
+      draw(eased);clearTimeout(sharpTimer);
+      if(moving)easing=requestAnimationFrame(tick);else{lastTick=0;sharpTimer=setTimeout(sharpen,150);}
     }
     function kick(){if(!easing&&set&&!reduced.matches)easing=requestAnimationFrame(tick);}
+    // While the frame is moving the canvas runs at the frame's own resolution (cheap to
+    // repaint). Once it rests, it switches to the screen's full density (up to 2x) and
+    // repaints once, so a still frame, including the opening one, stays sharp.
+    let sharp=false,sharpTimer=0;
+    function setDensity(full){
+      const fit=Math.max(1,1/Math.max(stageW/set.w,stageH/set.h)),dpr=Math.min(devicePixelRatio||1,2,full?2:fit);
+      const w=Math.round(stageW*dpr),h=Math.round(stageH*dpr);
+      if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+      if(ctx)ctx.imageSmoothingQuality=full?'high':'low';shown='';
+    }
+    function sharpen(){if(!set||reduced.matches||easing||sharp)return;sharp=true;setDensity(true);draw(eased);}
     function startFullLoad(){if(fullLoad)return;fullLoad=true;pump();}
     ['scroll','wheel','touchstart','keydown'].forEach(type=>addEventListener(type,startFullLoad,{passive:true,once:true}));
     function measure(){
@@ -282,10 +295,8 @@
     function schedule(){if(!raf)raf=requestAnimationFrame(update);}
     function resize(){
       measure();chooseSet();
-      // Never back the canvas with more pixels than the frame provides.
-      const cover=Math.max(stageW/set.w,stageH/set.h),dpr=Math.min(devicePixelRatio||1,2,Math.max(1,1/cover));
-      canvas.width=Math.round(stageW*dpr);canvas.height=Math.round(stageH*dpr);
-      shown='';kick();pump();updateArrows();schedule();
+      sharp=false;setDensity(false);clearTimeout(sharpTimer);sharpTimer=setTimeout(sharpen,150);
+      kick();pump();updateArrows();schedule();
     }
     addEventListener('scroll',schedule,{passive:true});addEventListener('resize',resize);reduced.addEventListener('change',()=>{measure();schedule();});resize();
     $('.enter-room').addEventListener('click',e=>{e.preventDefault();const y=journey.offsetTop+journey.offsetHeight-stage.offsetHeight-parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header'));scrollTo({top:y,behavior:reduced.matches?'instant':'smooth'});});
