@@ -26,6 +26,11 @@ STATIC_PAGES = [
     ("/", "1.0", "weekly"),
     ("/products.html", "0.9", "weekly"),
     ("/about.html", "0.6", "monthly"),
+    ("/guides.html", "0.7", "monthly"),
+    ("/guide-led-bulbs.html", "0.7", "monthly"),
+    ("/guide-frls-wire.html", "0.7", "monthly"),
+    ("/guide-mcb-rccb.html", "0.7", "monthly"),
+    ("/guide-genuine-wire.html", "0.7", "monthly"),
 ]
 # Category ids from data.js; each has its own canonical URL (set in app.js).
 CATEGORIES = ["fans", "lighting", "switches", "appliances", "ac", "geysers", "outdoor", "wires", "protection"]

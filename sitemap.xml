@@ -16,6 +16,31 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://electricemporium.in/guides.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://electricemporium.in/guide-led-bulbs.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://electricemporium.in/guide-frls-wire.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://electricemporium.in/guide-mcb-rccb.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://electricemporium.in/guide-genuine-wire.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://electricemporium.in/products.html?category=fans</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

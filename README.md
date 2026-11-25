@@ -14,6 +14,7 @@ Repo: `emporiumelectric-dotcom/ElectricEmporium`
 | [`products.html`](products.html) | Catalogue listing. Filters by `?category=`; each category sets its own canonical, title and description |
 | `products/<id>.html` | **Generated.** One crawlable page per catalogue product (see below). This is the canonical product URL |
 | [`product-detail.html`](product-detail.html) | Template for the generated pages, and the dynamic fallback (`?id=`) for display/reference items and brand-new products |
+| [`guides.html`](guides.html), `guide-*.html` | Buying guides: static articles with Article + FAQPage schema, written for search and AI assistants. `llms.txt` lists them |
 | [`about.html`](about.html) | Store story, newspaper archive and shop photo galleries |
 | [`404.html`](404.html) | GitHub Pages 404. Forwards `/products/<id>.html` that has not been built yet to `product-detail.html?id=<id>`, and the retired `2products.html` / `electric_emporium_v4.html` to their replacements |
 | `google0cd5ba9994b42635.html` | Google Search Console verification |

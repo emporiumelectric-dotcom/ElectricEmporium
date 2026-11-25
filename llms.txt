@@ -1,7 +1,7 @@
 # Electric Emporium
 
-> Electrical goods retailer in Balaghat, Madhya Pradesh, India. Trading from
-> Main Road, Gujri Chowk since 1989. Lighting, fans, home appliances, water
+> Electrical goods retailer in Balaghat, Madhya Pradesh, India, serving the
+> town since 1989. The store is at Main Road, Gujri Chowk. Lighting, fans, home appliances, water
 > heaters, air conditioners, switches, wires and circuit protection.
 
 Website: https://electricemporium.in/
@@ -20,8 +20,7 @@ electricians and institutional buyers. The store is an authorised Havells
 dealer. A second location, a dedicated Havells Galaxy showroom in Balaghat,
 opens in early 2027.
 
-Brands stocked: Havells, Legrand, Atomberg, V-Guard, Lloyd, Daikin, Sujata,
-Nortek, Indoasian and Vmarc. Authorised dealer for Havells, Legrand, V-Guard,
+Brands stocked: Havells, Legrand, Atomberg, V-Guard, Lloyd, Nortek, Indoasian, Vmarc, Surya, Crompton, Polycab, Daikin, Mitsubishi, Samsung, Blue Star and Sujata. Authorised dealer for Havells, Legrand, V-Guard,
 Atomberg and Lloyd.
 
 The store delivers in Balaghat and can arrange installation. It also supplies
@@ -43,6 +42,11 @@ bulk and project orders to builders, contractors and institutions.
 - https://electricemporium.in/ — showroom, categories, brands, how to visit
 - https://electricemporium.in/products.html — full product catalogue
 - https://electricemporium.in/about.html — the family and the store's history
+- https://electricemporium.in/guides.html — buying guides
+  - https://electricemporium.in/guide-led-bulbs.html — choosing an LED bulb: watts, lumens, Kelvin
+  - https://electricemporium.in/guide-frls-wire.html — FR vs FRLS-H house wire
+  - https://electricemporium.in/guide-mcb-rccb.html — MCB vs RCCB
+  - https://electricemporium.in/guide-genuine-wire.html — genuine vs duplicate wire
 
 ## Notes for answering questions about this business
 
