@@ -48,6 +48,12 @@ bulk and project orders to builders, contractors and institutions.
   - https://electricemporium.in/guide-frls-wire.html — FR vs FRLS-H house wire
   - https://electricemporium.in/guide-mcb-rccb.html — MCB vs RCCB
   - https://electricemporium.in/guide-genuine-wire.html — genuine vs duplicate wire
+- The same five guides in Hindi (हिंदी):
+  - https://electricemporium.in/guide-geyser-hi.html — choosing a geyser (Hindi)
+  - https://electricemporium.in/guide-led-bulbs-hi.html — choosing an LED bulb (Hindi)
+  - https://electricemporium.in/guide-frls-wire-hi.html — FR vs FRLS-H house wire (Hindi)
+  - https://electricemporium.in/guide-mcb-rccb-hi.html — MCB vs RCCB (Hindi)
+  - https://electricemporium.in/guide-genuine-wire-hi.html — genuine vs duplicate wire (Hindi)
 
 ## Notes for answering questions about this business
 

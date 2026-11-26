@@ -111,3 +111,10 @@ body.closeup-open{overflow:hidden}
 .guide:lang(hi) .guide-answer p:not(.eyebrow){font-size:18.5px;line-height:1.8}
 .guide:lang(hi) .eyebrow{font-size:13px}
 .guide:lang(hi) .breadcrumbs{font-size:13px}
+.guide-jump{margin:-26px 0 40px;font-size:15px;font-weight:700}
+.guide-jump a{color:var(--red)}
+.guide-sub{font-size:1.6rem;line-height:1.5;margin:64px 0 24px;scroll-margin-top:calc(var(--header) + 20px)}
+.guide-card:lang(hi) h2{line-height:1.5}
+.guide-card:lang(hi) p:not(.eyebrow){font-size:15px;line-height:1.8}
+.guide-card:lang(hi) .eyebrow{font-size:13px}
+.nb{white-space:nowrap}

@@ -32,6 +32,11 @@ STATIC_PAGES = [
     ("/guide-frls-wire.html", "0.7", "monthly"),
     ("/guide-mcb-rccb.html", "0.7", "monthly"),
     ("/guide-genuine-wire.html", "0.7", "monthly"),
+    ("/guide-geyser-hi.html", "0.7", "monthly"),
+    ("/guide-led-bulbs-hi.html", "0.7", "monthly"),
+    ("/guide-frls-wire-hi.html", "0.7", "monthly"),
+    ("/guide-mcb-rccb-hi.html", "0.7", "monthly"),
+    ("/guide-genuine-wire-hi.html", "0.7", "monthly"),
 ]
 # Category ids from data.js; each has its own canonical URL (set in app.js).
 CATEGORIES = ["fans", "lighting", "switches", "appliances", "ac", "geysers", "outdoor", "wires", "protection"]
