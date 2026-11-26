@@ -25,6 +25,7 @@ PAGE_SIZE = 1000
 STATIC_PAGES = [
     ("/", "1.0", "weekly"),
     ("/products.html", "0.9", "weekly"),
+    ("/wires.html", "0.9", "weekly"),
     ("/about.html", "0.6", "monthly"),
     ("/guides.html", "0.7", "monthly"),
     ("/guide-geyser.html", "0.7", "monthly"),

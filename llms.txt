@@ -41,6 +41,7 @@ bulk and project orders to builders, contractors and institutions.
 
 - https://electricemporium.in/ — showroom, categories, brands, how to visit
 - https://electricemporium.in/products.html — full product catalogue
+- https://electricemporium.in/wires.html — wire and cable: brands stocked, sizes, FR / FRLS-H / halogen-free grades, pump and armoured cable, bulk orders
 - https://electricemporium.in/about.html — the family and the store's history
 - https://electricemporium.in/guides.html — buying guides
   - https://electricemporium.in/guide-geyser.html — choosing a geyser: instant or storage, and what size
