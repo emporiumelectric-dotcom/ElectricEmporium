@@ -101,3 +101,13 @@ body.closeup-open{overflow:hidden}
 .guide-card p:not(.eyebrow){font-size:14px;line-height:1.7;color:var(--muted);flex:1}
 .guide-card .eyebrow{margin:0}
 .guide p a{color:var(--red);text-decoration:underline;text-underline-offset:2px}
+
+/* Hindi guide pages: Devanagari needs more line height and no negative tracking */
+.breadcrumbs .guide-lang{margin-left:auto;color:var(--red);font-weight:700}
+.guide-lang:lang(hi){font-size:14px;line-height:1.2}
+.guide:lang(hi) h1{line-height:1.32;letter-spacing:0}
+.guide:lang(hi) h2{line-height:1.5}
+.guide:lang(hi) p:not(.eyebrow){font-size:17px;line-height:1.9}
+.guide:lang(hi) .guide-answer p:not(.eyebrow){font-size:18.5px;line-height:1.8}
+.guide:lang(hi) .eyebrow{font-size:13px}
+.guide:lang(hi) .breadcrumbs{font-size:13px}
