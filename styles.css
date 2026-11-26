@@ -100,3 +100,4 @@ body.closeup-open{overflow:hidden}
 .guide-card h2{font-size:1.3rem;line-height:1.25;text-wrap:balance}
 .guide-card p:not(.eyebrow){font-size:14px;line-height:1.7;color:var(--muted);flex:1}
 .guide-card .eyebrow{margin:0}
+.guide p a{color:var(--red);text-decoration:underline;text-underline-offset:2px}

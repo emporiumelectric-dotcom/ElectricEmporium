@@ -43,6 +43,7 @@ bulk and project orders to builders, contractors and institutions.
 - https://electricemporium.in/products.html — full product catalogue
 - https://electricemporium.in/about.html — the family and the store's history
 - https://electricemporium.in/guides.html — buying guides
+  - https://electricemporium.in/guide-geyser.html — choosing a geyser: instant or storage, and what size
   - https://electricemporium.in/guide-led-bulbs.html — choosing an LED bulb: watts, lumens, Kelvin
   - https://electricemporium.in/guide-frls-wire.html — FR vs FRLS-H house wire
   - https://electricemporium.in/guide-mcb-rccb.html — MCB vs RCCB

@@ -27,6 +27,7 @@ STATIC_PAGES = [
     ("/products.html", "0.9", "weekly"),
     ("/about.html", "0.6", "monthly"),
     ("/guides.html", "0.7", "monthly"),
+    ("/guide-geyser.html", "0.7", "monthly"),
     ("/guide-led-bulbs.html", "0.7", "monthly"),
     ("/guide-frls-wire.html", "0.7", "monthly"),
     ("/guide-mcb-rccb.html", "0.7", "monthly"),
